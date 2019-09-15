@@ -4,14 +4,10 @@
         <div class="collapse-btn" @click="collapseChange">
             <i class="el-icon-menu"></i>
         </div>
-        <div class="logo">后台界面管理</div>
+        <div class="logo">商户后台管理系统</div>
         <!-- 右边内容 -->
         <div class="header-right">
             <div class="header-user-icon">
-                <!-- 全屏展示 -->
-                <div class="btn-fullscreen">
-                    <i class="el-icon-rank"></i>
-                </div>
                 <!-- 头像 -->
                 <div class="user-avator">
                     <img src="@/assets/img.png" alt="">

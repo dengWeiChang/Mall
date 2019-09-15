@@ -11,14 +11,28 @@
                 <i class="el-icon-setting"></i>
                 <span slot="title">首页</span>
             </el-menu-item>
+
+            <el-submenu index="3">
+              <template slot="title">
+                <i class="el-icon-date"></i>
+                <span slot="title">商品管理</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="category">类目管理</el-menu-item>
+                <el-menu-item index="brand">品牌管理</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+
             <el-menu-item index="table">
                 <i class="el-icon-tickets"></i>
                 <span slot="title">基础表格</span>
             </el-menu-item>
+
             <el-menu-item index="tabs">
                 <i class="el-icon-message"></i>
                 <span slot="title">tab选项卡</span>
             </el-menu-item>
+
             <el-submenu index="4">
                 <template slot="title">
                     <i class="el-icon-date"></i>
@@ -78,7 +92,7 @@ export default {
 		background-color: rgb(50, 65, 87);
 }
 .sidebar-el-menu{
-    width: 250px;
+    width: 200px;
 }
 .sidebar>ul{
     height: 100%;

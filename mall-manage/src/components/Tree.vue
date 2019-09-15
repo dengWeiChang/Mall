@@ -1,0 +1,73 @@
+<template>
+  <div>
+    <el-tree
+      class="tree"
+      :props="props"
+      :load="loadNode"
+      lazy
+      show-checkbox
+      @check-change="handleCheckChange">
+    </el-tree>
+  </div>
+</template>
+
+<script>
+    export default {
+      name: "mTree",
+      data() {
+        return {
+          props: {
+            label: 'name',
+            children: 'zones'
+          },
+          count: 1
+        };
+      },
+      methods: {
+        handleCheckChange(data, checked, indeterminate) {
+          console.log(data, checked, indeterminate);
+        },
+        handleNodeClick(data) {
+          console.log(data);
+        },
+        loadNode(node, resolve) {
+          // 每次点击都是一个node
+          if (node.level === 0) {
+            return resolve([{ name: 'region1' }, { name: 'region2' }]);
+          }
+          var hasChild;
+          if (node.data.name === 'region1') {
+            hasChild = true;
+          } else if (node.data.name === 'region2') {
+            hasChild = false;
+          } else {
+            hasChild = true;
+          }
+
+          setTimeout(() => {
+            var data;
+            if (hasChild) {
+              data = [{
+                name: 'zone' + this.count++
+              }, {
+                name: 'zone' + this.count++
+              }];
+            } else {
+              data = [];
+            }
+
+            resolve(data);
+          }, 500);
+        }
+      }
+    }
+</script>
+
+<style scoped>
+  .tree {
+    margin: 0px;
+    padding: 5px;
+    width: 150px;
+    height: 400px;
+  }
+</style>

@@ -20,8 +20,13 @@ export default new Router({
           meta: { title: '首页' },
         },
         {
+          path: '/category',
+          component: resolve => require(['@/views/Category'], resolve),
+          meta: { title: '类目' },
+        },
+        {
           path: '/tabs',
-          component: resolve => require(['@/components/Tabs.vue'], resolve),
+          component: resolve => require(['@/views/Tabs.vue'], resolve),
           meta: { title: 'tab选项卡' },
         },
         {
