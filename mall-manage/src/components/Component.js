@@ -1,3 +1,7 @@
+/**
+ * 组件全局配置
+ */
+
 const component = {};
 
 component.install = function (Vue) {
