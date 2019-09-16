@@ -1,16 +1,23 @@
 <template>
   <div>
-    <mTree></mTree>
+    <mTree class="tree"
+           :props="props"
+           :load="loadNode"
+           lazy
+           show-checkbox
+           @check-change="handleCheckChange"></mTree>
   </div>
 </template>
 
 <script>
+  import {getAllCategoryTree as getCategoryTree} from '@/api/category';
+
   export default {
     data() {
       return {
         props: {
           label: 'name',
-          children: 'zones'
+          children: 'children'
         },
         count: 2
       };
@@ -24,13 +31,19 @@
         console.log(data);
       },
       loadNode(node, resolve) {
+        // console.log("CHILDREN")
+        // getCategoryTree(null).then(response=>{
+        //   resolve(response)
+        //   console.log("333333")
+        // });
+        console.log("222222222")
         if (node.level === 0) {
-          return resolve([{ name: 'region1' }, { name: 'region2' }]);
+          return resolve([{ name: 'region3' }, { name: 'region4' }]);
         }
         if (node.level > 3) return resolve([]);
 
         var hasChild;
-        if (node.data.name === 'region1') {
+        if (node.data.name === 'region3') {
           hasChild = true;
         } else if (node.data.name === 'region2') {
           hasChild = false;

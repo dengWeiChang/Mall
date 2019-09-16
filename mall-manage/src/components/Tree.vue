@@ -12,13 +12,15 @@
 </template>
 
 <script>
-    export default {
+  import {getAllCategoryTree as getCategoryTree} from '@/api/category';
+
+  export default {
       name: "mTree",
       data() {
         return {
           props: {
             label: 'name',
-            children: 'zones'
+            children: 'children'
           },
           count: 1
         };
@@ -31,33 +33,21 @@
           console.log(data);
         },
         loadNode(node, resolve) {
-          // 每次点击都是一个node
+          // // 每次点击都是一个node
           if (node.level === 0) {
-            return resolve([{ name: 'region1' }, { name: 'region2' }]);
-          }
-          var hasChild;
-          if (node.data.name === 'region1') {
-            hasChild = true;
-          } else if (node.data.name === 'region2') {
-            hasChild = false;
+            getCategoryTree(null).then(response=>{
+              return resolve(response)
+            });
           } else {
-            hasChild = true;
-          }
-
-          setTimeout(() => {
-            var data;
-            if (hasChild) {
-              data = [{
-                name: 'zone' + this.count++
-              }, {
-                name: 'zone' + this.count++
-              }];
-            } else {
-              data = [];
+            console.log(node.data.isParent)
+            console.log(node.data.id)
+            params = {
+              id:node.data.id
             }
-
-            resolve(data);
-          }, 500);
+            getCategoryTree(params).then(response=>{
+              return resolve(response)
+            });
+          }
         }
       }
     }
