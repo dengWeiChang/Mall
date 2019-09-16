@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 @TableName(value = "tb_category")
-public class TCategory {
+public class CategoryPo {
     @TableId
     private Long id;
     @TableField(value = "name")
