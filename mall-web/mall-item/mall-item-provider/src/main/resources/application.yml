@@ -1,5 +1,6 @@
 server:
   name: mall-item-provider
+  port: 80
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource

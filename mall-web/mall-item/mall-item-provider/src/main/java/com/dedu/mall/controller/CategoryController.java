@@ -2,21 +2,66 @@ package com.dedu.mall.controller;
 
 import com.dedu.mall.model.Result;
 import com.dedu.mall.model.ResultCode;
+import com.dedu.mall.model.mysql.CategoryVo;
 import com.dedu.mall.service.CategoryService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
 
 @RestController()
-@RequestMapping("/category")
+@RequestMapping("/api/category")
+@CrossOrigin
 public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("")
-    public Result getAllCategory() {
-        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), categoryService.getAllCategoryTree());
+    /**
+     * 获取所有类目树形结构
+     * @param parentId
+     * @return
+     */
+    @GetMapping("/tree")
+    @ApiOperation(value = "根据父级类目Id查询类目树-dedu", notes = "类目")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "parentId", value = "父级类目Id", required = true)
+    })
+    public Result getAllCategoryTreeByParentId(@RequestParam Integer parentId) {
+        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), categoryService.getAllCategoryTreeByParentId(parentId));
+    }
+
+    /**
+     * 获取所有类目列表
+     * @return
+     */
+    @GetMapping("/list")
+    @ApiOperation(value = "查询所有类目列表-dedu", notes = "类目")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "parentId", value = "父级类目Id", required = true)
+    })
+    public Result getAllCategoryList() {
+        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), categoryService.getAllCategoryList());
+    }
+
+    @PutMapping("")
+    @ApiOperation(value = "根据Id修改类目信息-dedu", notes = "类目")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "body", dataType = "CategoryVo", name = "request", value = "类目Model")
+    })
+    public Result modifyCategoryById(@NotNull @RequestBody CategoryVo request) throws Exception {
+        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), categoryService.modifyInfoById(request));
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "根据Id逻辑删除类目信息-dedu", notes = "类目")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", dataType = "long", name = "id", value = "类目主键id", required = true)
+    })
+    public Result deleteCategoryById(@PathVariable Long id) throws Exception {
+        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), categoryService.deleteCategoryById(id));
     }
 }

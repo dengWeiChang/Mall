@@ -22,7 +22,8 @@
             label: 'name',
             children: 'children'
           },
-          count: 1
+          count: 1,
+
         };
       },
       methods: {
@@ -33,21 +34,7 @@
           console.log(data);
         },
         loadNode(node, resolve) {
-          // // 每次点击都是一个node
-          if (node.level === 0) {
-            getCategoryTree(null).then(response=>{
-              return resolve(response)
-            });
-          } else {
-            console.log(node.data.isParent)
-            console.log(node.data.id)
-            params = {
-              id:node.data.id
-            }
-            getCategoryTree(params).then(response=>{
-              return resolve(response)
-            });
-          }
+
         }
       }
     }
@@ -57,7 +44,7 @@
   .tree {
     margin: 0px;
     padding: 5px;
-    width: 150px;
+    width: 200px;
     height: 400px;
   }
 </style>

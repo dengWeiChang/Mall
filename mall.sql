@@ -16,3 +16,9 @@ CREATE TABLE `tb_category` (
   PRIMARY KEY (`id`),
   KEY `key_parent_id` (`parent_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品类目表';
+
+INSERT INTO `tb_category` VALUES (1, '家用电器', 0, 1, 1, '2019-9-16 12:46:22', '2019-9-16 12:46:22', 1, 0);
+INSERT INTO `tb_category` VALUES (2, '个护化妆', 0, 1, 4, '2019-9-16 17:46:33', '2019-9-16 17:46:33', 1, 1);
+INSERT INTO `tb_category` VALUES (3, '大家电', 1, 1, 3, '2019-9-17 10:02:43', '2019-9-17 10:02:43', 1, 0);
+INSERT INTO `tb_category` VALUES (4, '生活电器', 1, 1, 1, '2019-9-17 10:02:56', '2019-9-17 10:02:56', 1, 1);
+INSERT INTO `tb_category` VALUES (5, '钟表', 0, 1, 1, '2019-9-17 14:20:12', '2019-9-17 14:20:12', 1, 0);
