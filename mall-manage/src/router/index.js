@@ -25,6 +25,11 @@ export default new Router({
           meta: { title: '类目' },
         },
         {
+          path: '/brand',
+          component: resolve => require(['@/views/brand/Brand'], resolve),
+          meta: { title: '类目' },
+        },
+        {
           path: '/tabs',
           component: resolve => require(['@/views/Tabs.vue'], resolve),
           meta: { title: 'tab选项卡' },

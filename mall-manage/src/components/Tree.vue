@@ -12,7 +12,6 @@
 </template>
 
 <script>
-  import {getAllCategoryTree as getCategoryTree} from '@/api/category';
 
   export default {
       name: "mTree",

@@ -30,27 +30,29 @@ public class CatetorySerImpl extends ServiceImpl<CategoryMapper, CategoryPo> imp
             if (null != catVo.getIsParent() && catVo.getIsParent()) {
                 // 第二层类目
                 List<CategoryPo> secondCategoryList = getAllCategoryByParentId(catVo.getId());
-                List<CategoryVo> secondCatVoList = new ArrayList<>();
-                for (CategoryPo secondCatPo:
-                secondCategoryList) {
-                    CategoryVo secondCatVo = new CategoryVo();
-                    BeanUtils.copyProperties(secondCatPo, secondCatVo);
-                    if (null != secondCatVo.getIsParent() && secondCatVo.getIsParent()) {
-                        // 第三层类目
-                        List<CategoryPo> thirdCategoryList = getAllCategoryByParentId(secondCatVo.getId());
-                        List<CategoryVo> thirdCatVoList = new ArrayList<>();
-                        for (CategoryPo thirdPo:
-                                thirdCategoryList) {
-                            CategoryVo thirdCatVo = new CategoryVo();
-                            BeanUtils.copyProperties(thirdPo, thirdCatVo);
-                            thirdCatVoList.add(thirdCatVo);
+                if (!CollectionUtils.isEmpty(secondCategoryList)) {
+                    List<CategoryVo> secondCatVoList = new ArrayList<>();
+                    for (CategoryPo secondCatPo:
+                            secondCategoryList) {
+                        CategoryVo secondCatVo = new CategoryVo();
+                        BeanUtils.copyProperties(secondCatPo, secondCatVo);
+                        if (null != secondCatVo.getIsParent() && secondCatVo.getIsParent()) {
+                            // 第三层类目
+                            List<CategoryPo> thirdCategoryList = getAllCategoryByParentId(secondCatVo.getId());
+                            if (!CollectionUtils.isEmpty(thirdCategoryList)) {
+                                List<CategoryVo> thirdCatVoList = new ArrayList<>();
+                                for (CategoryPo thirdPo:
+                                        thirdCategoryList) {
+                                    CategoryVo thirdCatVo = new CategoryVo();
+                                    BeanUtils.copyProperties(thirdPo, thirdCatVo);
+                                    thirdCatVoList.add(thirdCatVo);
+                                }
+                            }
                         }
-                        secondCatVo.setChildren(thirdCatVoList);
+                        secondCatVoList.add(secondCatVo);
                     }
-
-                    secondCatVoList.add(secondCatVo);
+                    catVo.setChildren(secondCatVoList);
                 }
-                catVo.setChildren(secondCatVoList);
             }
             catVoList.add(catVo);
         }
