@@ -20,6 +20,7 @@
               <el-menu-item-group>
                 <el-menu-item index="category">类目管理</el-menu-item>
                 <el-menu-item index="brand">品牌管理</el-menu-item>
+                <el-menu-item index="specification">规格管理</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
 

@@ -30,6 +30,13 @@ export default new Router({
           meta: { title: '类目' },
         },
         {
+          path: '/specification',
+          component: resolve => require(['@/views/specification/Specification'], resolve),
+          meta: { title: '类目' },
+        }
+
+        ,
+        {
           path: '/tabs',
           component: resolve => require(['@/views/Tabs.vue'], resolve),
           meta: { title: 'tab选项卡' },
