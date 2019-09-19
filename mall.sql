@@ -1503,6 +1503,13 @@ CREATE TABLE `tb_specification_group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='规格分组表，每个商品类目对应多个规格参数组';
 
 -- ----------------------------
+-- Records of tb_specification_group
+-- ----------------------------
+INSERT INTO `tb_specification_group` VALUES ('1', '主体', '74', '2019-09-19 17:40:30', '2019-09-19 17:40:30', '1', '0');
+INSERT INTO `tb_specification_group` VALUES ('2', '基本信息', '74', '2019-09-19 18:10:06', '2019-09-19 18:10:06', '1', '0');
+
+
+-- ----------------------------
 -- Table structure for tb_specification
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_specification`;
@@ -1520,6 +1527,15 @@ CREATE TABLE `tb_specification` (
   `is_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除，0为否，1为是',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='规格属性值表';
+
+-- ----------------------------
+-- Records of tb_specification
+-- ----------------------------
+INSERT INTO `tb_specification` VALUES ('1', '入网型号', 'A2217', '0', '无', '1', '主体', '2019-09-19 17:44:22', '2019-09-19 17:44:22', '1', '0');
+INSERT INTO `tb_specification` VALUES ('2', '产品名称', 'iPhone 11 Pro', '0', '台', '1', '主体', '2019-09-19 17:44:43', '2019-09-19 17:44:43', '1', '0');
+INSERT INTO `tb_specification` VALUES ('3', '机身颜色', '深空灰色', '0', '无', '2', '基本信息', '2019-09-19 18:10:54', '2019-09-19 18:10:54', '1', '0');
+INSERT INTO `tb_specification` VALUES ('4', '机身长度', '144', '0', 'mm', '2', '基本信息', '2019-09-19 18:11:29', '2019-09-19 18:11:29', '1', '0');
+
 
 -- ----------------------------
 -- Table structure for tb_spu
