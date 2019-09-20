@@ -1,0 +1,176 @@
+<template>
+  <div>
+  <mBreadcrumb />
+
+  <el-row>
+    <el-card class="box-card">
+      <el-form style="display: flex; " ref="searchdata" :model="searchdata" label-width="100px">
+        <el-form-item label="商品货号：">
+          <el-input v-model="searchdata.name" style="width: 100%"></el-input>
+        </el-form-item>
+        <el-form-item label="商品状态：">
+          <el-select v-model="searchdata.region" placeholder="请选择商品状态">
+            <el-option label="已上架" value="shanghai"></el-option>
+            <el-option label="已下架" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="商品分类：">
+          <el-select v-model="searchdata.region" placeholder="请选择商品分类">
+            <el-option label="手机" value="shanghai"></el-option>
+            <el-option label="服饰" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="商品品牌：">
+          <el-select v-model="searchdata.region" placeholder="请选择商品品牌">
+            <el-option label="小米" value="shanghai"></el-option>
+            <el-option label="华为" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" @click="">立即查询</el-button>
+          <el-button icon="el-icon-magic-stick">重置</el-button>
+          <el-button type="success" icon="el-icon-plus" @click="">添加新商品</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </el-row>
+  <el-row>
+    <el-card class="box-card-main">
+      <el-table
+        :data="tableData"
+        border
+        style="width: 100%">
+        <el-table-column
+          prop="id"
+          label="编号"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="商品名称"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          label="商品图片">
+          <template slot-scope="scope">
+            <img :src="scope.row.image" alt="" style="width: 100px;height:150px">
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="price"
+          label="价格">
+        </el-table-column>
+        <el-table-column
+          prop="status"
+          label="商品状态">
+          <template slot-scope="scope">
+            <div v-if="1 === scope.row.status"> <el-button type="success">已上架</el-button></div>
+            <div v-else-if="0 === scope.row.status"> <el-button type="info">已下架</el-button></div>
+            <div v-else-if="2 === scope.row.status"> <el-button type="warning">在审核</el-button></div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="letter"
+          label="库存管理">
+          <template slot-scope="scope">
+            <el-button type="primary" icon="el-icon-edit" circle></el-button>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="createtime"
+          label="添加时间">
+        </el-table-column>
+        <el-table-column
+          prop="updatetime"
+          label="修改时间">
+        </el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button size="mini" icon="el-icon-edit-outline" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(scope.row.id)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div class="block">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :page-sizes="[10, 20, 50]"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total">
+        </el-pagination>
+      </div>
+    </el-card>
+  </el-row>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "goods",
+  data() {
+    return {
+      searchdata:{
+
+      },
+      tableData:[{
+        id:1,
+        name:"iphone 11",
+        image:"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180615/5acc5248N6a5f81cd.jpg",
+        price:"价格：￥2699 货号：7437788",
+        status:1,
+        createtime:'2019-09-20 07:00:00',
+        updatetime:'2019-09-20 11:40:00'
+      },{
+        id:1,
+        name:"iphone 11",
+        image:"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180615/5acc5248N6a5f81cd.jpg",
+        price:"价格：￥2699 货号：7437788",
+        status:1,
+        createtime:'2019-09-20 07:00:00',
+        updatetime:'2019-09-20 11:40:00'
+      },{
+        id:1,
+        name:"iphone 11",
+        image:"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180615/5acc5248N6a5f81cd.jpg",
+        price:"价格：￥2699 货号：7437788",
+        status:1,
+        createtime:'2019-09-20 07:00:00',
+        updatetime:'2019-09-20 11:40:00'
+      },{
+        id:1,
+        name:"iphone 11",
+        image:"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180615/5acc5248N6a5f81cd.jpg",
+        price:"价格：￥2699 货号：7437788",
+        status:1,
+        createtime:'2019-09-20 07:00:00',
+        updatetime:'2019-09-20 11:40:00'
+      },{
+        id:1,
+        name:"iphone 11",
+        image:"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180615/5acc5248N6a5f81cd.jpg",
+        price:"价格：￥2699 货号：7437788",
+        status:1,
+        createtime:'2019-09-20 07:00:00',
+        updatetime:'2019-09-20 11:40:00'
+      },]
+    };
+  },
+  methods: {
+
+  }
+}
+</script>
+
+<style scoped>
+  body > .el-container {
+    margin-bottom: 40px;
+  }
+  .box-card {
+    height: 100px;
+  }
+
+  .box-card-main {
+  }
+</style>

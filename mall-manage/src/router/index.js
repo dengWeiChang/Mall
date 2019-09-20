@@ -27,12 +27,22 @@ export default new Router({
         {
           path: '/brand',
           component: resolve => require(['@/views/brand/Brand'], resolve),
-          meta: { title: '类目' },
+          meta: { title: '品牌' },
         },
         {
           path: '/specification',
           component: resolve => require(['@/views/specification/Specification'], resolve),
-          meta: { title: '类目' },
+          meta: { title: '规格' },
+        },
+        {
+          path: '/goods',
+          component: resolve => require(['@/views/goods/Goods'], resolve),
+          meta: { title: '商品' },
+        },
+        {
+          path: '/goodsedit',
+          component: resolve => require(['@/views/goods/GoodsEdit'], resolve),
+          meta: { title: '商品编辑' },
         }
 
         ,

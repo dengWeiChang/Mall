@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://111.231.193.138:3306/db_mall?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
-    password: ZhongFei-ca-2018
+    password: ******
 #
 #spring:
 #  datasource:

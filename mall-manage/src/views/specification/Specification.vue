@@ -35,7 +35,9 @@
                         <!--<div v-for="itdlv in itdl.value" :key="itdlv">-->
                           <!--<el-tag type="success">{{itdlv}}</el-tag>-->
                         <!--</div>-->
-                        <el-tag type="success">{{itdl.value}}</el-tag>
+                        <div v-if="'' != itdl.value">
+                          <el-tag type="success">{{itdl.value}}</el-tag>
+                        </div>
                       </div>
                     </el-collapse-item>
                   </el-collapse>

@@ -15,12 +15,14 @@
             <el-submenu index="3">
               <template slot="title">
                 <i class="el-icon-date"></i>
-                <span slot="title">商品管理</span>
+                <span slot="title">商品</span>
               </template>
               <el-menu-item-group>
                 <el-menu-item index="category">类目管理</el-menu-item>
                 <el-menu-item index="brand">品牌管理</el-menu-item>
                 <el-menu-item index="specification">规格管理</el-menu-item>
+                <el-menu-item index="goods">商品管理</el-menu-item>
+                <el-menu-item index="goodsedit">商品编辑</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
 
@@ -93,7 +95,7 @@ export default {
 		background-color: rgb(50, 65, 87);
 }
 .sidebar-el-menu{
-    width: 200px;
+    width: 250px;
 }
 .sidebar>ul{
     height: 100%;
