@@ -4,7 +4,7 @@ use db_mall;
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_category`;
 CREATE TABLE `tb_category` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `id` bigint(20) tb_brandNOT NULL AUTO_INCREMENT COMMENT '主键id',
   `name` varchar(32) NOT NULL COMMENT '类目名称',
   `parent_id` bigint(20) NOT NULL COMMENT '父类目id,顶级类目为0',
   `is_parent` tinyint(1) NOT NULL COMMENT '是否为父节点，0为否，1为是',
@@ -1458,15 +1458,15 @@ CREATE TABLE `tb_brand` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='品牌表';
 
-INSERT INTO `tb_brand` VALUES (null, '华为（HUAWEI）', 'http://img10.360buyimg.com/popshop/jfs/t5662/36/8888655583/7806/1c629c01/598033b4Nd6055897.jpg', 'H', null, null, 1, 0);
-INSERT INTO `tb_brand` VALUES (null, 'Apple', 'http://img12.360buyimg.com/popshop/jfs/t2989/240/151377693/3895/30ad9044/574d36dbN262ef26d.jpg', 'A', null, null, 1, 0);
-INSERT INTO `tb_brand` VALUES (null, '小米（MI）', 'http://img10.360buyimg.com/popshop/jfs/t7084/169/439244907/4647/724c7958/598042c9N6e4e79e5.jpg', 'X', null, null, 1, 0);
-INSERT INTO `tb_brand` VALUES (null, '一加', 'http://img14.360buyimg.com/popshop/jfs/t2398/233/975959106/6263/a786f5b8/563b33ffN9c288c6c.jpg', 'Y', null, null, 1, 0);
-INSERT INTO `tb_brand` VALUES (null, '锤子（smartisan）', 'http://img13.360buyimg.com/popshop/jfs/t1954/102/907711365/5487/9f26868f/5631ccdeNe8df5efb.jpg', 'C', null, null, 1, 0);
-INSERT INTO `tb_brand` VALUES (null, '海尔（Haier）', 'http://image.leyou.com/group1/M00/00/00/wKhSZFufmLeAektLAAAZT9-WCLY396.jpg', 'H', null, null, 1, 0);
-INSERT INTO `tb_brand` VALUES (null, '海信（Hisense）', '', 'H', null, null, 1, 0);
-INSERT INTO `tb_brand` VALUES (null, '黑莓（BlackBerry）', '', 'H', null, null, 1, 0);
-INSERT INTO `tb_brand` VALUES (null, '华硕（ASUS）', '', 'H', null, null, 1, 0);
+INSERT INTO `tb_brand`(id,name,image,letter,is_enable,is_delete) VALUES (null, '华为（HUAWEI）', 'http://img10.360buyimg.com/popshop/jfs/t5662/36/8888655583/7806/1c629c01/598033b4Nd6055897.jpg', 'H', 1, 0);
+INSERT INTO `tb_brand`(id,name,image,letter,is_enable,is_delete) VALUES (null, 'Apple', 'http://img12.360buyimg.com/popshop/jfs/t2989/240/151377693/3895/30ad9044/574d36dbN262ef26d.jpg', 'A', 1, 0);
+INSERT INTO `tb_brand`(id,name,image,letter,is_enable,is_delete) VALUES (null, '小米（MI）', 'http://img10.360buyimg.com/popshop/jfs/t7084/169/439244907/4647/724c7958/598042c9N6e4e79e5.jpg', 'X', 1, 0);
+INSERT INTO `tb_brand`(id,name,image,letter,is_enable,is_delete) VALUES (null, '一加', 'http://img14.360buyimg.com/popshop/jfs/t2398/233/975959106/6263/a786f5b8/563b33ffN9c288c6c.jpg', 'Y', 1, 0);
+INSERT INTO `tb_brand`(id,name,image,letter,is_enable,is_delete) VALUES (null, '锤子（smartisan）', 'http://img13.360buyimg.com/popshop/jfs/t1954/102/907711365/5487/9f26868f/5631ccdeNe8df5efb.jpg', 'C', 1, 0);
+INSERT INTO `tb_brand`(id,name,image,letter,is_enable,is_delete) VALUES (null, '海尔（Haier）', 'http://image.leyou.com/group1/M00/00/00/wKhSZFufmLeAektLAAAZT9-WCLY396.jpg', 'H', 1, 0);
+INSERT INTO `tb_brand`(id,name,image,letter,is_enable,is_delete) VALUES (null, '海信（Hisense）', '', 'H', 1, 0);
+INSERT INTO `tb_brand`(id,name,image,letter,is_enable,is_delete) VALUES (null, '黑莓（BlackBerry）', '', 'H', 1, 0);
+INSERT INTO `tb_brand`(id,name,image,letter,is_enable,is_delete) VALUES (null, '华硕（ASUS）', '', 'H', 1, 0);
 
 
 -- ----------------------------
@@ -1562,7 +1562,7 @@ CREATE TABLE `tb_spu` (
 DROP TABLE IF EXISTS `tb_spu_detail`;
 CREATE TABLE `tb_spu_detail` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `spu_id` bigint(20) NOT NULL DEFAULT '' COMMENT 'spu主键id',
+  `spu_id` bigint(20) NOT NULL COMMENT 'spu主键id',
   `description` text COMMENT '商品描述信息',
   `packing_list` varchar(1024) DEFAULT '' COMMENT '包装清单',
   `after_service` varchar(1024) DEFAULT '' COMMENT '售后服务',
@@ -1607,6 +1607,6 @@ CREATE TABLE `tb_stock` (
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_enable` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效，0为否，1为是',
   `is_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除，0为否，1为是',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
   KEY `idx_sku_id` (`sku_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='库存表';
