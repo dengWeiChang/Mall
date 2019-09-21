@@ -1,4 +1,4 @@
-user db_mall;
+use db_mall;
 -- ----------------------------
 -- Table structure for tb_category
 -- ----------------------------
