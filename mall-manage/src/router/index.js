@@ -4,6 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -12,16 +13,16 @@ export default new Router({
     {
       path: '/',
       component: resolve => require(['../components/Home.vue'], resolve),
-      meta: { title: '自述文件' },
+      meta: { title: '引导页' },
       children:[
         {
           path: '/dashboard',
-          component: resolve => require(['@/views/Dashboard.vue'], resolve),
+          component: resolve => require(['@/views/home/Dashboard.vue'], resolve),
           meta: { title: '首页' },
         },
         {
           path: '/category',
-          component: resolve => require(['@/views/Category'], resolve),
+          component: resolve => require(['@/views/category/Category'], resolve),
           meta: { title: '类目' },
         },
         {

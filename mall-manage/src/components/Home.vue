@@ -18,7 +18,7 @@ import Header from './Header'
 import Sidebar from './Sidebar'
 export default {
 
-  name: 'HelloWorld',
+  name: 'Home',
   data () {
     return {
       collapse:false
@@ -41,12 +41,9 @@ export default {
     width: 100%;
     overflow: hidden;
 }
-.content-collapse {
-    left: 56px;
-}
 .content-box{
     position: absolute;
-    /*left: 250px;*/
+    left: 12%;
     right: 0;
     top:70px;
     bottom: 0;

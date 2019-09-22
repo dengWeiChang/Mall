@@ -50,10 +50,10 @@
 							<el-col :span="8">
 									<el-card shadow="hover" :body-style="{padding: '0px'}">
 											<div class="grid-content grid-con-2">
-													<i class="el-icon-message grid-con-icon"></i>
+													<i class="el-icon-goods grid-con-icon"></i>
 													<div class="grid-cont-right">
 															<div class="grid-num">321</div>
-															<div>系统消息</div>
+															<div>商品总数</div>
 													</div>
 											</div>
 									</el-card>
@@ -61,10 +61,10 @@
 							<el-col :span="8">
 									<el-card shadow="hover" :body-style="{padding: '0px'}">
 											<div class="grid-content grid-con-3">
-													<i class="el-icon-goods grid-con-icon"></i>
+													<i class="el-icon-sold-out grid-con-icon"></i>
 													<div class="grid-cont-right">
 															<div class="grid-num">5000</div>
-															<div>数量</div>
+															<div>订单数量</div>
 													</div>
 											</div>
 									</el-card>
@@ -98,10 +98,10 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Dashboard',
   data () {
     return {
-			 activeNames: ['1'],
+      activeNames: ['1'],
       username: localStorage.getItem('ms_username')
     }
   },

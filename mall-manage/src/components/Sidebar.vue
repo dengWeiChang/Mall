@@ -12,7 +12,7 @@
                 <span slot="title">首页</span>
             </el-menu-item>
 
-            <el-submenu index="3">
+            <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-date"></i>
                 <span slot="title">商品管理</span>
@@ -26,7 +26,7 @@
               </el-menu-item-group>
             </el-submenu>
 
-						<el-submenu index="4">
+						<el-submenu index="2">
 								<template slot="title">
 										<i class="el-icon-document"></i>
 										<span slot="title">订单管理</span>
@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Sidebar',
   data () {
     return {
       collapse:false
@@ -54,15 +54,14 @@ export default {
 <style scoped>
 .sidebar{
     display: block;
-    position: absolute;
+    /*position: absolute;*/
     top: 70px;
     left: 0;
     bottom: 0;
-    height: 100%;
 		background-color: rgb(50, 65, 87);
 }
 .sidebar-el-menu{
-    /*width: 25%;*/
+    width: 25%;
 }
 .sidebar>ul{
     height: 100%;

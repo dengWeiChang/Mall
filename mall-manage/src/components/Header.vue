@@ -1,25 +1,22 @@
 <template>
     <div class="header">
-        <!-- 折叠按钮 -->
-        <div class="collapse-btn" @click="collapseChange">
+        <div class="collapse-btn" @click="handleHome">
             <i class="el-icon-menu"></i>
         </div>
-        <div class="logo">商户后台管理系统</div>
-        <!-- 右边内容 -->
+        <div class="logo">运营后台管理系统</div>
         <div class="header-right">
             <div class="header-user-icon">
-                <!-- 头像 -->
                 <div class="user-avator">
                     <img src="@/assets/img.png" alt="">
                 </div>
-                <!-- 用户名下拉菜单 -->
                 <el-dropdown trigger="click" @command="handleCommand">
                     <span class="el-dropdown-link">
-                        {{username}}<i class="el-icon-arrow-down el-icon--right"></i>
+                        {{username}}
+                      <i class="el-icon-arrow-down el-icon--right"/>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item>
-                            <a href="http://www.cnblogs.com/zhoulifeng/" target="_blank">个人博客</a>
+                            <a>个人信息</a>
                             </el-dropdown-item>
                         <el-dropdown-item>
                             <a href="https://github.com/MrZHLF" target="_blank">github</a>
@@ -36,8 +33,7 @@
 export default {
   data () {
     return {
-      collpase:false,
-      name: "3221"
+      name: "默认用户"
     }
   },
   computed:{
@@ -47,11 +43,9 @@ export default {
     }
   },
   methods:{
-    //   侧边栏折叠
-      collapseChange() {
-          this.collpase = !this.collpase
-      },
-    //   下拉菜单
+    handleHome() {
+      this.$router.push({ path: '/dashboard' })
+    },
     handleCommand(command) {
         if(command == 'loginout') {
             this.$router.push('/login')
