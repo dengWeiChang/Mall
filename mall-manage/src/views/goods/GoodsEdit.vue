@@ -288,8 +288,8 @@ export default {
   }
 
   .box-card {
-    margin-left: 500px;
-    width: 50%;
+    /*margin-left: 500px;*/
+    /*width: 50%;*/
     /*height: 900px;*/
   }
   .box-card-main {

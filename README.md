@@ -8,8 +8,9 @@
 ## 2. mall-manage 运营后台管理
 #### 2.1 类目页面 √
 
-## 3. mall-app 安卓/IOS应用
+## 3. mall-h5 安卓/IOS应用
 
-## 4. mall-h5 前端门户网站
+## 4. mall-pc 前端门户网站
+https://github.com/PowerDos/Mall-Vue/blob/master/README-ZH.md
 
 ## 5. mall-mini 微信小程序

@@ -43,18 +43,16 @@ export default new Router({
           path: '/goodsedit',
           component: resolve => require(['@/views/goods/GoodsEdit'], resolve),
           meta: { title: '商品编辑' },
-        }
-
-        ,
-        {
-          path: '/tabs',
-          component: resolve => require(['@/views/Tabs.vue'], resolve),
-          meta: { title: 'tab选项卡' },
         },
         {
-          path: '/foodlist',
-          component: resolve => require(['@/views/FoodList.vue'], resolve),
-          meta: { title: '食品列表' },
+          path: '/order',
+          component: resolve => require(['@/views/order/Order'], resolve),
+          meta: { title: '订单列表' },
+        },
+        {
+          path: '/orderDetail',
+          component: resolve => require(['@/views/order/OrderDetail'], resolve),
+          meta: { title: '订单详情' },
         }
       ]
     },

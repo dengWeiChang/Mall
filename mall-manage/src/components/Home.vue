@@ -25,7 +25,7 @@ export default {
     }
   },
   created() {
-      
+
   },
   components: {
       "app-header":Header,
@@ -46,7 +46,7 @@ export default {
 }
 .content-box{
     position: absolute;
-    left: 250px;
+    /*left: 250px;*/
     right: 0;
     top:70px;
     bottom: 0;
