@@ -12,15 +12,15 @@ import User from '../views/user/User'
 export default {
   data () {
     return {
-      name: "默认用户"
+      username: "默认用户"
     }
   },
-  computed:{
-      username() {
-        let username = localStorage.getItem('ms_username');
-        return username ? username : this.name;
-    }
-  },
+  // computed:{
+  //     username() {
+  //       let username = localStorage.getItem('ms_username');
+  //       return username ? username : this.name;
+  //   }
+  // },
   methods:{
     handleCommand(command) {
         if(command == 'loginout') {

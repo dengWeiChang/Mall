@@ -16,7 +16,7 @@ export default new Router({
     },
     {
       path: '/home',
-      component: resolve => require(['../components/Home.vue'], resolve),
+      component: resolve => require(['../components/Layout.vue'], resolve),
       name: 'home',
       meta: {title: '首页'},
       children: [{
@@ -28,7 +28,7 @@ export default new Router({
     },
     {
       path: '/category',
-      component: resolve => require(['../components/Home.vue'], resolve),
+      component: resolve => require(['../components/Layout.vue'], resolve),
       name: 'goodsmanage',
       meta: {title: '商品管理'},
       children: [{
@@ -64,7 +64,7 @@ export default new Router({
     },
     {
       path: '/order',
-      component: resolve => require(['../components/Home.vue'], resolve),
+      component: resolve => require(['../components/Layout.vue'], resolve),
       name: 'ordermanage',
       meta: { title: '订单管理' },
       children:[{

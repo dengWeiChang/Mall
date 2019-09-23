@@ -79,7 +79,7 @@ export default {
       return {
         searchdata: {},
         step:0,
-        status:3
+        saleable:3
       };
     },
   methods: {

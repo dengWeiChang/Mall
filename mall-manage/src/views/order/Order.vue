@@ -49,10 +49,10 @@
         <el-table-column
           label="商品状态">
           <template slot-scope="scope">
-            <div v-if="0 === scope.row.status"><el-button type="success">新订单，待确认</el-button></div>
-            <div v-else-if="1 === scope.row.status"> <el-button type="info">已确认，待支付</el-button></div>
-            <div v-else-if="2 === scope.row.status"> <el-button type="warning">已支付，待发货</el-button></div>
-            <div v-else-if="3 === scope.row.status"> <el-button type="warning">已支付，待发货</el-button></div>
+            <div v-if="0 === scope.row.saleable"><el-button type="success">新订单，待确认</el-button></div>
+            <div v-else-if="1 === scope.row.saleable"> <el-button type="info">已确认，待支付</el-button></div>
+            <div v-else-if="2 === scope.row.saleable"> <el-button type="warning">已支付，待发货</el-button></div>
+            <div v-else-if="3 === scope.row.saleable"> <el-button type="warning">已支付，待发货</el-button></div>
           </template>
         </el-table-column>
         <el-table-column
@@ -66,10 +66,10 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button size="mini" icon="el-icon-edit-outline" @click="handleOrderDetail(scope.$index, scope.row)">查看详情</el-button>
-            <div v-if="0 === scope.row.status"><el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(scope.row.id)">立即确认</el-button></div>
-            <div v-if="1 === scope.row.status"><el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(scope.row.id)">立即支付</el-button></div>
-            <div v-if="2 === scope.row.status"><el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(scope.row.id)">立即发货</el-button></div>
-            <div v-if="3 === scope.row.status"><el-button size="mini" type="danger" icon="el-icon-delete" @click="handleLogisticsTracking(scope.row.id)">物流跟踪</el-button></div>
+            <div v-if="0 === scope.row.saleable"><el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(scope.row.id)">立即确认</el-button></div>
+            <div v-if="1 === scope.row.saleable"><el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(scope.row.id)">立即支付</el-button></div>
+            <div v-if="2 === scope.row.saleable"><el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(scope.row.id)">立即发货</el-button></div>
+            <div v-if="3 === scope.row.saleable"><el-button size="mini" type="danger" icon="el-icon-delete" @click="handleLogisticsTracking(scope.row.id)">物流跟踪</el-button></div>
           </template>
         </el-table-column>
       </el-table>
@@ -111,7 +111,7 @@ export default {
           createTime:"2019-09-20 11:40:00",
           username:"陈达棍",
           price:"￥2699",
-          status:3,
+          saleable:3,
           payType:1,
           updateTime:'2019-09-20 11:40:00'
         }],

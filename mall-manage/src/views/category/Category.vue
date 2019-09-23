@@ -1,7 +1,7 @@
 <template>
   <div>
     <mBreadcrumb />
-    <el-container style="height: 500px; border: 1px solid #eee">
+    <el-container style="position: fixed; margin-top: 15px; height: 100%; border: 1px">
       <el-aside style="background-color: rgb(240,240,240)">
         <el-tree style="background-color: rgb(240,240,240)"
           class="tree"
@@ -58,7 +58,8 @@
       return {
         props: {
           label: 'name',
-          children: 'children'
+          children: 'children',
+          isLeaf: 'leaf'
         },
         count: 1,
         loading: true,
@@ -85,7 +86,6 @@
         console.log(111);
       },
       handleNodeClick(data) {
-        console.log(data)
         this.category.id = data.id
         this.category.name = data.name
         this.category.isParent = data.isParent
@@ -105,6 +105,13 @@
           getCategoryTree({
             parentId:node.data.id
           }).then(response=>{
+            if (Array.isArray(response)) {
+              for(var j = 0; j < response.length; j++) {
+                if (!response[j]["isParent"]) {
+                  response[j]["leaf"] = true
+                }
+              }
+            }
             return resolve(response)
           });
         }
@@ -155,25 +162,10 @@
 </script>
 
 <style scoped>
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-
   .tree {
     margin: 0px;
     padding: 5px;
     width: 200px;
     height: 400px;
-  }
-
-  .el-header {
-    background-color: #f0f0f0;
-    color: #333;
-    line-height: 60px;
-  }
-
-  .el-aside {
-    color: #333;
   }
 </style>

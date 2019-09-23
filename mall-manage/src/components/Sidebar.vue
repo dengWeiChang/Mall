@@ -100,5 +100,6 @@ export default {
 }
 .sidebar>ul{
     height: 100%;
+    /*background-color: #545c64;*/
 }
 </style>

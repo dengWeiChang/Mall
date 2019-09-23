@@ -41,13 +41,13 @@
         border
         style="width: 100%">
         <el-table-column
-          prop="id"
+          prop="spuId"
           label="编号"
           width="180">
         </el-table-column>
         <el-table-column
-          prop="name"
-          label="商品名称"
+          prop="spuTitle"
+          label="商品标题"
           width="180">
         </el-table-column>
         <el-table-column
@@ -64,9 +64,9 @@
           prop="status"
           label="商品状态">
           <template slot-scope="scope">
-            <div v-if="1 === scope.row.status"> <el-button type="success">已上架</el-button></div>
-            <div v-else-if="0 === scope.row.status"> <el-button type="info">已下架</el-button></div>
-            <div v-else-if="2 === scope.row.status"> <el-button type="warning">在审核</el-button></div>
+            <div v-if="1 === scope.row.saleable"> <el-button type="success">已上架</el-button></div>
+            <div v-else-if="0 === scope.row.saleable"> <el-button type="info">已下架</el-button></div>
+            <div v-else-if="2 === scope.row.saleable"> <el-button type="warning">在审核</el-button></div>
           </template>
         </el-table-column>
         <el-table-column
@@ -77,11 +77,11 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="createtime"
+          prop="createTime"
           label="添加时间">
         </el-table-column>
         <el-table-column
-          prop="updatetime"
+          prop="updateTime"
           label="修改时间">
         </el-table-column>
         <el-table-column label="操作">
@@ -107,58 +107,44 @@
 </template>
 
 <script>
+  import {getAllGoods as getAllSpus} from '@/api/spu';
 export default {
   name: "goods",
   data() {
     return {
+      total: 0,
+      currentPage: 1,
+      pageNum: 1,
+      pageSize: 10,
+      tableData: [],
       searchdata:{
 
       },
-      tableData:[{
-        id:1,
-        name:"iphone 11",
-        image:"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180615/5acc5248N6a5f81cd.jpg",
-        price:"价格：￥2699 货号：7437788",
-        status:1,
-        createtime:'2019-09-20 07:00:00',
-        updatetime:'2019-09-20 11:40:00'
-      },{
-        id:1,
-        name:"iphone 11",
-        image:"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180615/5acc5248N6a5f81cd.jpg",
-        price:"价格：￥2699 货号：7437788",
-        status:1,
-        createtime:'2019-09-20 07:00:00',
-        updatetime:'2019-09-20 11:40:00'
-      },{
-        id:1,
-        name:"iphone 11",
-        image:"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180615/5acc5248N6a5f81cd.jpg",
-        price:"价格：￥2699 货号：7437788",
-        status:1,
-        createtime:'2019-09-20 07:00:00',
-        updatetime:'2019-09-20 11:40:00'
-      },{
-        id:1,
-        name:"iphone 11",
-        image:"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180615/5acc5248N6a5f81cd.jpg",
-        price:"价格：￥2699 货号：7437788",
-        status:1,
-        createtime:'2019-09-20 07:00:00',
-        updatetime:'2019-09-20 11:40:00'
-      },{
-        id:1,
-        name:"iphone 11",
-        image:"http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180615/5acc5248N6a5f81cd.jpg",
-        price:"价格：￥2699 货号：7437788",
-        status:1,
-        createtime:'2019-09-20 07:00:00',
-        updatetime:'2019-09-20 11:40:00'
-      },]
     };
   },
   methods: {
-
+    handleSizeChange(size) {
+      this.pageSize = size
+      this.handlePageChange()
+    },
+    handleCurrentChange(currentPage) {
+      this.pageNum = currentPage
+      this.handlePageChange()
+    },
+    handlePageChange: function () {
+      // 分页查询SPU
+      getAllSpus({
+        pageSize: this.pageSize,
+        pageNum: this.pageNum
+      }).then(response => {
+        console.log(response.records)
+        this.total = response.total
+        this.tableData = response.records
+      });
+    }
+  },
+  mounted () {
+    this.handlePageChange()
   }
 }
 </script>

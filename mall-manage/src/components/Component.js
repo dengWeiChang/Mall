@@ -5,8 +5,8 @@
 const component = {};
 
 component.install = function (Vue) {
-  Vue.component("mTree", () => import('./Tree'));
   Vue.component("mBreadcrumb", () => import('./Breadcrumb'));
+  Vue.component("mCategoryTree", () => import('./CategoryTree.vue'));
 }
 
 export default component;
