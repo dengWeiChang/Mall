@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
+/**
+ * 品牌控制器
+ */
 @RestController()
 @RequestMapping("/api/brand")
 @CrossOrigin

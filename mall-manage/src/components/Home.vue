@@ -2,13 +2,8 @@
     <div class="wrapper">
         <app-header></app-header>
         <sider-list></sider-list>
-        <!-- 内容显示区域 -->
-        <div class="content-box" :class="{'content-collapse':collapse}">
-            <div class="content">
-                <transition name="move" mode="out-in">
-                    <router-view></router-view>
-                </transition>
-            </div>
+        <div class="content">
+            <router-view></router-view>
         </div>
     </div>
 </template>
@@ -17,7 +12,6 @@
 import Header from './Header'
 import Sidebar from './Sidebar'
 export default {
-
   name: 'Home',
   data () {
     return {
@@ -34,26 +28,16 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .wrapper{
     height: 100%;
     width: 100%;
     overflow: hidden;
 }
-.content-box{
-    position: absolute;
-    left: 12%;
-    right: 0;
-    top:70px;
-    bottom: 0;
-    /* overflow: hidden; */
-    overflow-y: scroll;
-    transition: left .3s ease-in-out;
-    background: #f0f0f0;
-}
 .content {
     width: auto;
-    padding: 40px;
+    margin-top: 1%;
+    margin-left: 11%;
+    margin-right: 1%;
 }
 </style>

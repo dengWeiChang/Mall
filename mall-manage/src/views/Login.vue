@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Login',
   data () {
     return {
       ruleForm:{
@@ -48,13 +48,13 @@ export default {
           localStorage.setItem('ms_username',this.ruleForm.username,this.ruleForm.password)
           console.log(this.ruleForm.username,"+++",this.ruleForm.password)
 
-          this.$router.push('/dashboard')
           this.$notify({
             title:"成功",
             message:"登录成功",
             type:'success',
             duration:1000
           })
+          this.$router.push('/home')
         } else {
           this.$notify.error({
             title:"失败",
@@ -76,12 +76,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .login-wrap {
-    position: relative;
+    position: fixed;
     width: 100%;
-    height: 1000px;
-}
-.login-wrap  {
-  background: #324157;
+    height: 100%;
+    background: #324157;
 }
 .ms-title{
   position: absolute;
