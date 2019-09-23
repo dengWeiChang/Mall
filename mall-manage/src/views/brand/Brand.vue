@@ -1,7 +1,6 @@
 <template>
   <div>
     <mBreadcrumb />
-
     <el-row>
       <el-card class="box-card">
         <el-row :gutter="20">
@@ -26,8 +25,7 @@
       <el-card class="box-card-main">
         <el-table
           :data="tableData"
-          border
-          style="width: 100%">
+          border>
           <el-table-column
             prop="id"
             label="编号"
@@ -55,7 +53,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div class="block">
+        <div>
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
@@ -222,6 +220,9 @@
 </script>
 
 <style scoped>
+  .main-container{
+    margin-top: 10%;
+  }
   .el-header{
     background-color: #B3C0D1;
     color: #333;
@@ -261,6 +262,7 @@
   }
 
   .box-card {
+    margin-top: 5px;
   }
 
   .box-card-main {

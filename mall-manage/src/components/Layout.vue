@@ -35,9 +35,9 @@ export default {
     overflow: hidden;
 }
 .content {
-    width: auto;
-    margin-top: 1%;
-    margin-left: 11%;
-    margin-right: 1%;
+  margin-top: 6%;
+  margin-left: 13%;
+  margin-right: 1%;
+  overflow:scroll
 }
 </style>

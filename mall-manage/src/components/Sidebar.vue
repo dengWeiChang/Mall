@@ -88,11 +88,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .sidebar{
-    top: 70px;
+    top: 10%;
     left: 0;
     bottom: 0;
     position: fixed;
-    width: 10%;
+    width: 12%;
     height: 100%;
 }
 .sidebar-el-menu{
@@ -101,5 +101,12 @@ export default {
 .sidebar>ul{
     height: 100%;
     /*background-color: #545c64;*/
+}
+.el-submenu .el-menu-item {
+  height: 40px;
+  line-height: 20px;
+  padding: 0 45px;
+  text-align: center;
+  min-width: 100px !important;
 }
 </style>

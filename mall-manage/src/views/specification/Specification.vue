@@ -93,7 +93,8 @@
         ],
         props: {
           label: 'name',
-          children: 'children'
+          children: 'children',
+          isLeaf: 'leaf'
         },
         categoryList:[
         ],
@@ -115,7 +116,6 @@
           this.selectedcategory.id
         ).then(response => {
           this.items = response
-          console.log(this.items)
         })
       },
       loadNode(node, resolve) {
@@ -130,6 +130,13 @@
           getCategoryTree({
             parentId:node.data.id
           }).then(response=>{
+            if (Array.isArray(response)) {
+              for(var j = 0; j < response.length; j++) {
+                if (!response[j]["isParent"]) {
+                  response[j]["leaf"] = true
+                }
+              }
+            }
             return resolve(response)
           });
         }
