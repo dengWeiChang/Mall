@@ -1,17 +1,8 @@
 <template>
   <div>
     <mBreadcrumb />
-    <di class="container">
-      <div>
-        <el-steps :active="step" finish-status="success" align-center>
-          <el-step title="提交订单" ></el-step>
-          <el-step title="支付订单"></el-step>
-          <el-step title="平台发货" ></el-step>
-          <el-step title="确认收货" ></el-step>
-          <el-step title="完成评价" ></el-step>
-        </el-steps>
-      </div>
-      <el-card shadow="never" style="margin-top: 15px">
+    <di>
+      <el-card shadow="never" style="margin-top: 1%">
         <div class="operate-container">
           <i class="el-icon-warning color-danger" style="margin-left: 20px"></i>
           <span class="color-danger">当前订单状态：
@@ -30,8 +21,7 @@
             <el-button size="mini" >备注订单</el-button>
           </div>
         </div>
-        <div style="margin-top: 20px">
-          <svg-icon icon-class="marker" style="color: #606266"></svg-icon>
+        <div style="margin-top: 1%">
           <span class="font-small">基本信息</span>
         </div>
         <div class="table-layout">
@@ -77,9 +67,8 @@ export default {
     name: "Order",
     data() {
       return {
-        searchdata: {},
-        step:0,
-        saleable:3
+        saleable:3,
+        status:1
       };
     },
   methods: {
@@ -88,10 +77,6 @@ export default {
 </script>
 
 <style scoped>
-  .container {
-    padding: 20px 20px 20px 20px;
-    margin: 20px auto;
-  }
   .operate-button-container {
     float: right;
     margin-right: 20px

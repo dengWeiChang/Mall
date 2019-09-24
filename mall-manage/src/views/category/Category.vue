@@ -1,7 +1,7 @@
 <template>
   <div>
     <mBreadcrumb />
-    <el-container style="position: fixed; margin-top: 15px; height: 100%; border: 1px">
+    <el-container style=" margin-top: 1%; height: 100%; border: 1px">
       <el-aside style="background-color: rgb(240,240,240)">
         <el-tree style="background-color: rgb(240,240,240)"
           class="tree"
@@ -163,9 +163,6 @@
 
 <style scoped>
   .tree {
-    margin: 0px;
     padding: 5px;
-    width: 200px;
-    height: 400px;
   }
 </style>

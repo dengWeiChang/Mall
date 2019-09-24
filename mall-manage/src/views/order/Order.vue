@@ -1,7 +1,7 @@
 <template>
   <div>
     <mBreadcrumb />
-    <el-card class="box-card">
+    <el-card style="margin-top: 1%">
       <el-form style="display: flex; " ref="searchdata" :model="searchdata" label-width="100px">
         <el-form-item label="订单编号：">
           <el-input v-model="searchdata.name" style="width: 100%"></el-input>
@@ -18,8 +18,7 @@
         </el-form-item>
       </el-form>
     </el-card>
-
-    <el-card class="box-card">
+    <el-card style="margin-top: 1%">
       <el-table
         :data="tableData"
         border

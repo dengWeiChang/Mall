@@ -88,11 +88,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .sidebar{
-    top: 10%;
+    top: 7%;
     left: 0;
     bottom: 0;
     position: fixed;
-    width: 12%;
+    width: 10%;
     height: 100%;
 }
 .sidebar-el-menu{

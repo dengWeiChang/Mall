@@ -1,6 +1,7 @@
 <template>
   <div>
     <mBreadcrumb />
+    <div style=" margin-top: 1%; height: 100%; border: 1px">
     <el-row>
       <el-card class="box-card">
         <el-row :gutter="20">
@@ -65,6 +66,7 @@
         </div>
       </el-card>
     </el-row>
+    </div>
     <el-dialog
       title="提示"
       :visible.sync="brandDetailDialog"

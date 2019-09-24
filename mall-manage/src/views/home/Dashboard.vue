@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div >
+    <!-- 左列 -->
     <el-row :gutter="20">
       <el-col :span="8">
         <el-row>
@@ -15,6 +16,7 @@
             </el-card>
           </el-col>
         </el-row>
+        <br/>
         <el-row>
           <el-col>
             <el-card shadow="hover">
@@ -33,6 +35,8 @@
           </el-col>
         </el-row>
       </el-col>
+
+      <!-- 右列 -->
       <el-col :span="16">
         <el-row :gutter="20" class="mgb20">
             <el-col :span="8">
@@ -126,10 +130,12 @@ export default {
 	flex: 1;
 	padding-left: 20px;
 }
+/*开心工作每一天*/
 .user-info-text .user-info-name {
 	font-weight: bold;
 	font-size: 25px;
 }
+/* 头像*/
 .user-avator {
 	width: 120px;
 	height: 120px;
@@ -178,6 +184,7 @@ export default {
 	line-height: 100px;
 	color: #fff;
 }
+/*用户访问量*/
 .grid-con-1 .grid-con-icon {
 	background: #2d8cf0;
 }
@@ -187,6 +194,7 @@ export default {
 .grid-con-3 .grid-con-icon{
 	background: #f25e43;
 }
+
 .el-collapse-item >>> .el-collapse-item__header {
 	padding-left: 20px;
 }

@@ -4,9 +4,12 @@
     <!-- 查询面板 -->
     <el-row>
       <el-card class="box-card"  v-show="!showdetail">
-        <el-form style="display: flex; " ref="searchdata" :model="searchdata" label-width="100px">
+        <el-form style="display: flex; " size="mini" ref="searchdata" :model="searchdata" label-width="90px">
           <el-form-item label="商品货号：">
-            <el-input v-model="searchdata.name" style="width: 100%"></el-input>
+            <el-input v-model="searchdata.name"></el-input>
+          </el-form-item>
+          <el-form-item label="商品货号：">
+            <el-input v-model="searchdata.name"></el-input>
           </el-form-item>
           <el-form-item label="商品状态：">
             <el-select v-model="searchdata.region" placeholder="请选择商品状态">
@@ -26,6 +29,7 @@
               <el-option label="华为" value="beijing"></el-option>
             </el-select>
           </el-form-item>
+
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" @click="">立即查询</el-button>
             <el-button icon="el-icon-magic-stick">重置</el-button>
@@ -34,7 +38,7 @@
         </el-form>
       </el-card>
     </el-row>
-
+    <br/>
     <el-row>
       <!-- 商品列表面板 -->
       <el-card class="box-card-main" v-show="!showdetail">
@@ -414,12 +418,12 @@
 </script>
 
 <style scoped>
-  body > .el-container {
-    margin-bottom: 40px;
+  body > {
+    margin-bottom: 1%;
   }
 
   .box-card {
-    margin-top: 5px;
+    margin-top: 1%;
   }
 
   .box-card-main {

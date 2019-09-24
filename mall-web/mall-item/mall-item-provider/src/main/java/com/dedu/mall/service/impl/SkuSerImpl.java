@@ -30,7 +30,7 @@ public class SkuSerImpl extends ServiceImpl<SkuMapper, SkuPo> implements SkuServ
         Integer count = spuMapper.selectSpuCount();
         if (!CollectionUtils.isEmpty(data)) {
             data.stream().forEach(t->{
-                //,分隔
+                //,分隔   获取首长图片
                 String images = t.getImages();
                 if (!StringUtils.isEmpty(images)) {
                     String[] splitimages = images.split("\\,");

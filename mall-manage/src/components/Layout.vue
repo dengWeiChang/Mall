@@ -30,14 +30,14 @@ export default {
 
 <style>
 .wrapper{
-    height: 100%;
+    height: 1000px;
     width: 100%;
-    overflow: hidden;
+    overflow-x:hidden;
+    /*background-color: red;*/
 }
 .content {
   margin-top: 6%;
   margin-left: 13%;
   margin-right: 1%;
-  overflow:scroll
 }
 </style>

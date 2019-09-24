@@ -285,6 +285,7 @@ export default {
   }
   .box-card {
     /*height: 100px;*/
+    margin-top: 1%;
   }
 
   .box-card {

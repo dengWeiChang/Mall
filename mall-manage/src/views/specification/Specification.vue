@@ -14,6 +14,7 @@
             </el-tree>
           </el-card>
         </div>
+
         <div class="right">
           <el-card class="right-box-card">
             <h3 v-if="this.selectedcategory.name != ''">规格设置-{{this.selectedcategory.name}}</h3>
@@ -152,18 +153,19 @@
 
 <style scoped>
   .container{
-    height: 100%;
+    /*height: 100%;*/
   }
   .left{
+    margin-top: 1%;
     width: 20%;
-    height: 900px;
     float: left;
     font-size: 40px;
     color: #fff;
   }
   .right{
+    margin-top: 1%;
+    margin-bottom: 1%;
     width: 80%;
-    height: 900px;
     font-size: 40px;
     float: left;
     color: #fff;
@@ -171,10 +173,10 @@
 
   .left-box-card {
     width: 90%;
-    height: 900px;
+    /*height: 900px;*/
   }
   .right-box-card {
     width: 100%;
-    height: 900px;
+    /*height: 900px;*/
   }
 </style>

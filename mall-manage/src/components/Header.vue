@@ -38,9 +38,9 @@ export default {
 <style scoped>
 .header {
     position: fixed;
-    box-sizing: border-box;
+    /*box-sizing: border-box;*/
     width: 100%;
-    height: 10%;
+    height: 7%;
     font-size: 22px;
     color: #fff;
     background-color: #242f42;

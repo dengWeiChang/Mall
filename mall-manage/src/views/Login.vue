@@ -1,6 +1,5 @@
 <template>
   <div class="login-wrap">
-      <div class="ms-title">后台管理项目</div>
       <div class="ms-login">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
             <el-form-item prop="username">
@@ -76,19 +75,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .login-wrap {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: #324157;
-}
-.ms-title{
-  position: absolute;
-  top: 40%;
+  position: fixed;
   width: 100%;
-  margin-top: -230px;
-  text-align: center;
-  font-size: 30px;
-  color: white;
+  height: 100%;
+  background: #324157;
+  margin: 0px;
 }
 .ms-login{
   position: absolute;
@@ -108,25 +99,5 @@ export default {
   display: inline-block;
   width:100px;
   height: 36px;
-}
-
-.el-input__inner {
-  -webkit-appearance: none;
-  background-color: #FFF;
-  background-image: none;
-  border-radius: 4px;
-  border: 1px solid #DCDFE6;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  color: #606266;
-  display: inline-block;
-  font-size: inherit;
-  height: 40px;
-  line-height: 40px;
-  outline: 0;
-  padding: 0 15px;
-  -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
-  transition: border-color .2s cubic-bezier(.645,.045,.355,1);
-  width: 100%;
 }
 </style>
