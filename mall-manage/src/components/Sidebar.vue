@@ -91,9 +91,8 @@ export default {
     top: 7%;
     left: 0;
     bottom: 0;
-    position: fixed;
-    width: 10%;
-    height: 100%;
+    /*position: fixed;*/
+
 }
 .sidebar-el-menu{
     width: 100%;

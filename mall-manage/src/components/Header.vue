@@ -37,7 +37,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .header {
-    position: fixed;
+    /*position: fixed;*/
     /*box-sizing: border-box;*/
     width: 100%;
     height: 7%;

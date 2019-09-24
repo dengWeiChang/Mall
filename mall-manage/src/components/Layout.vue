@@ -1,9 +1,13 @@
 <template>
     <div class="wrapper">
         <app-header></app-header>
-        <sider-list></sider-list>
-        <div class="content">
-            <router-view></router-view>
+        <div style="display: flex;">
+          <div class="left-container">
+            <sider-list></sider-list>
+          </div>
+          <div class="main-container">
+              <router-view></router-view>
+          </div>
         </div>
     </div>
 </template>
@@ -32,12 +36,21 @@ export default {
 .wrapper{
     height: 1000px;
     width: 100%;
-    overflow-x:hidden;
+    /*overflow-x:hidden;*/
     /*background-color: red;*/
 }
-.content {
-  margin-top: 6%;
-  margin-left: 13%;
+.left-container{
+  width: 10%;
+  /*height: 100%;*/
+  background-color: #545c64;
+  bottom: 0px;
+  min-height: 1000px;
+}
+.main-container {
+  width: 90%;
+  height: 100%;
+  margin-top: 1%;
+  margin-left: 1%;
   margin-right: 1%;
 }
 </style>
