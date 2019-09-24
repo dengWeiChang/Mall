@@ -97,6 +97,7 @@
           children: 'children',
           isLeaf: 'leaf'
         },
+        loading: true,
         categoryList:[
         ],
         selectedcategory: {

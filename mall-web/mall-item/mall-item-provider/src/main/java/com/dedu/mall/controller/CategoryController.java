@@ -61,7 +61,16 @@ public class CategoryController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", dataType = "long", name = "id", value = "类目主键id", required = true)
     })
-    public Result deleteCategoryById(@PathVariable Long id) throws Exception {
-        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), categoryService.deleteCategoryById(id));
+    public Result removeCategoryById(@PathVariable Long id) throws Exception {
+        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), categoryService.removeCategoryById(id));
+    }
+
+    @PostMapping("/")
+    @ApiOperation(value = "添加类目-dedu", notes = "类目")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "body", dataType = "CategoryVo", name = "request", value = "类目实体", required = true)
+    })
+    public Result addCategory(@RequestBody CategoryVo request) {
+        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), categoryService.addCategory(request));
     }
 }

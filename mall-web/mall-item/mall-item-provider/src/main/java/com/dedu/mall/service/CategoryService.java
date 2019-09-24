@@ -12,5 +12,7 @@ public interface CategoryService {
 
     boolean modifyInfoById(CategoryVo categoryVo) throws Exception;
 
-    boolean deleteCategoryById(Long id);
+    boolean removeCategoryById(Long id);
+
+    boolean addCategory(CategoryVo request);
 }

@@ -29,3 +29,11 @@ export function deleteCategoryById(id) {
     method:'delete'
   })
 }
+
+export function addCategory(datas) {
+  return http({
+    url:'/api/category/',
+    method:'post',
+    data:datas
+  })
+}

@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,9 +81,19 @@ public class CatetorySerImpl extends ServiceImpl<CategoryMapper, CategoryPo> imp
     }
 
     @Override
-    public boolean deleteCategoryById(Long id) {
+    public boolean removeCategoryById(Long id) {
 //        return this.update(CategoryPo.builder().isDelete(true).build(), new QueryWrapper<CategoryPo>().eq("id", id).eq("isDelete", false));
         return this.updateById(CategoryPo.builder().id(id).isDelete(true).build());
+    }
+
+    @Override
+    public boolean addCategory(CategoryVo request) {
+        CategoryPo categoryPo = new CategoryPo();
+        BeanUtils.copyProperties(request, categoryPo);
+        categoryPo.setId(null);
+        categoryPo.setCreateTime(LocalDateTime.now());
+        categoryPo.setUpdateTime(LocalDateTime.now());
+        return this.save(categoryPo);
     }
 
     private List<CategoryPo> getAllCategoryByParentId(Long parentId) {
@@ -101,6 +112,5 @@ public class CatetorySerImpl extends ServiceImpl<CategoryMapper, CategoryPo> imp
                 collectCategorySelector(result, catVo.getChildren(), catVo.getName() + "-");
             }
         }
-
     }
 }
