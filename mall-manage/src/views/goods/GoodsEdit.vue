@@ -124,7 +124,6 @@
             <el-upload
               action="https://jsonplaceholder.typicode.com/posts/"
               list-type="picture-card"
-              :on-preview="handlePictureCardPreview"
               :on-remove="handleRemove">
               <i class="el-icon-plus"></i>
             </el-upload>
@@ -159,7 +158,9 @@ export default {
   name: "goodsedit",
   data() {
     return {
-      step: 3,
+      ptype: null,
+      spuId: '',
+      step: 0,
       form:{
         checkList:{
           name:["16G", "128G"],
@@ -249,8 +250,6 @@ export default {
       },
       isClear: false,
 
-
-
       tableData: [{
         color: '玫瑰金',
         memory: '16G',
@@ -263,6 +262,9 @@ export default {
     EditorBar
   },
   methods: {
+    handleChange() {
+
+    },
     pre() {
       if (this.step-- < 1) this.step = 0;
     },
@@ -274,6 +276,18 @@ export default {
     },
     deleteRow(index, rows) {
       rows.splice(index, 1);
+    },
+    handleRemove() {
+
+    }
+  },
+  created () {
+    this.ptype = this.$route.query.ptype
+    this.spuId = this.$route.query.spuId
+    // 0 为修改、1为新增
+    if (1 === this.ptype) {
+      //
+      // this.form = {}
     }
   }
 }
@@ -284,14 +298,10 @@ export default {
     margin-bottom: 40px;
   }
   .box-card {
-    /*height: 100px;*/
     margin-top: 1%;
+    min-height: 800px;
   }
-
   .box-card {
-    /*margin-left: 500px;*/
-    /*width: 50%;*/
-    /*height: 900px;*/
   }
   .box-card-main {
   }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <mBreadcrumb />
-    <di>
+    <div>
       <el-card shadow="never" style="margin-top: 1%">
         <div class="operate-container">
           <i class="el-icon-warning color-danger" style="margin-left: 20px"></i>
@@ -58,20 +58,24 @@
           </el-row>
         </div>
       </el-card>
-    </di>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-    name: "Order",
+    name: "OrderDetail",
     data() {
       return {
+        orderId: null,
         saleable:3,
         status:1
       };
     },
   methods: {
+  },
+  created () {
+      this.orderId = this.$route.query.id
   }
 }
 </script>

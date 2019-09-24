@@ -64,7 +64,7 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" icon="el-icon-edit-outline" @click="handleOrderDetail(scope.$index, scope.row)">查看详情</el-button>
+            <el-button size="mini" icon="el-icon-edit-outline" @click="handleOrderDetail(scope.$index, scope.row.id)">查看详情</el-button>
             <div v-if="0 === scope.row.saleable"><el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(scope.row.id)">立即确认</el-button></div>
             <div v-if="1 === scope.row.saleable"><el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(scope.row.id)">立即支付</el-button></div>
             <div v-if="2 === scope.row.saleable"><el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(scope.row.id)">立即发货</el-button></div>
@@ -105,6 +105,10 @@ export default {
     data() {
       return {
         searchdata: {},
+        total: 0,
+        currentPage: 1,
+        pageNum: 1,
+        pageSize: 10,
         tableData:[{
           id:1,
           createTime:"2019-09-20 11:40:00",
@@ -121,8 +125,21 @@ export default {
       };
     },
   methods: {
-    handleOrderDetail(id ,row) {
-      this.$router.push({ path: '/orderDetail' })
+    handleOrderDetail(idx ,id) {
+      this.$router.push({
+        path: '/orderDetail',
+        query: {
+          id: id
+        }
+      });
+    },
+    handleSizeChange(size) {
+      this.pageSize = size
+      this.handlePageChange()
+    },
+    handleCurrentChange(currentPage) {
+      this.pageNum = currentPage
+      this.handlePageChange()
     },
     handleLogisticsTracking(id) {
       this.logisticsVisible = true;

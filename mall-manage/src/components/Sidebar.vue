@@ -14,7 +14,7 @@
         <el-submenu index="1">
           <template slot="title">
             <i class="el-icon-shopping-bag-1"></i>
-            <span slot="title">商品管理</span>
+            <span slot="title">商品</span>
           </template>
           <el-menu-item-group>
             <el-menu-item index="/category">
@@ -41,19 +41,19 @@
                 <span slot="title">商品管理</span>
               </template>
             </el-menu-item>
-            <el-menu-item index="/goodsedit">
-              <template slot="title">
-                <i class="el-icon-edit-outline"></i>
-                <span slot="title">商品编辑</span>
-              </template>
-            </el-menu-item>
+            <!--<el-menu-item index="/goodsedit">-->
+              <!--<template slot="title">-->
+                <!--<i class="el-icon-edit-outline"></i>-->
+                <!--<span slot="title">商品编辑</span>-->
+              <!--</template>-->
+            <!--</el-menu-item>-->
           </el-menu-item-group>
         </el-submenu>
 
         <el-submenu index="2">
           <template slot="title">
             <i class="el-icon-document"></i>
-            <span slot="title">订单管理</span>
+            <span slot="title">订单</span>
           </template>
           <el-menu-item-group>
             <el-menu-item index="/order">
@@ -62,12 +62,12 @@
                 <span slot="title">订单列表</span>
               </template>
             </el-menu-item>
-            <el-menu-item index="/orderdetail">
-              <template slot="title">
-                <i class="el-icon-s-grid"></i>
-                <span slot="title">订单详情</span>
-              </template>
-            </el-menu-item>
+            <!--<el-menu-item index="/orderdetail">-->
+              <!--<template slot="title">-->
+                <!--<i class="el-icon-s-grid"></i>-->
+                <!--<span slot="title">订单详情</span>-->
+              <!--</template>-->
+            <!--</el-menu-item>-->
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
