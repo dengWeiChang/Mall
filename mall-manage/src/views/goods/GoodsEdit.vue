@@ -11,10 +11,13 @@
 
       <el-form  ref="form" :model="form" >
         <el-form-item v-show="0 === step" label="商品分类：" :rules="{ required: true, message: '请选择活动资源', trigger: 'change' }">
-          <el-cascader
-            v-model="value"
-            :options="options"
-            @change="handleChange"></el-cascader>
+          <!--<el-cascader-->
+            <!--v-model="value"-->
+            <!--:options="options"-->
+            <!--@change="handleChange"></el-cascader>-->
+          <el-select style="width: 300px;" v-model="form.categoryId" placeholder="所属类目" :change="handleSelectorChange">
+            <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
         </el-form-item>
 
         <el-form-item v-show="0 === step" label="商品名称：" :rules="{ required: true, message: '请输入商品名称', trigger: 'blur'}">
@@ -26,12 +29,12 @@
         </el-form-item>
 
         <el-form-item v-show="0 === step" label="商品品牌：" :rules="{ required: true, message: '请选择商品品牌', trigger: 'blur'}">
-          <el-select v-model="value" placeholder="请选择">
+          <el-select v-model="form.brand" placeholder="请选择">
             <el-option
-              v-for="item in form.options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in brands"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
@@ -41,11 +44,11 @@
         </el-form-item>
 
         <el-form-item v-show="0 === step" label="包装清单：">
-          <el-input style="width: 50%" v-model="form.name"></el-input>
+          <el-input style="width: 50%" v-model="form.packlist"></el-input>
         </el-form-item>
 
         <el-form-item v-show="0 === step" label="售后服务：">
-          <el-input style="width: 50%" v-model="form.name"></el-input>
+          <el-input style="width: 50%" v-model="form.service"></el-input>
         </el-form-item>
 
 
@@ -154,6 +157,7 @@
 
 <script>
   import EditorBar from '@/components/WangEditor/index'
+  import {getAllCategoryList as getCategoryList} from '@/api/category';
 export default {
   name: "goodsedit",
   data() {
@@ -162,27 +166,19 @@ export default {
       spuId: '',
       step: 0,
       form:{
+        categoryId:'',
+        brand:'',
+        packlist:'',
+        service:'',
         checkList:{
           name:["16G", "128G"],
           value:[]
-        },
-        options: [{
-          value: '选项1',
-          label: '小米'
-        }, {
-          value: '选项2',
-          label: '华为'
-        }, {
-          value: '选项3',
-          label: '苹果'
-        }, {
-          value: '选项4',
-          label: '一加'
-        }, {
-          value: '选项5',
-          label: '360'
-        }]
+        }
       },
+      brands: [{
+        id: '1',
+        name: '小米'
+      }],
       rules: {
         name: [
           { required: true, message: '请输入活动名称', trigger: 'blur' },
@@ -255,7 +251,9 @@ export default {
         memory: '16G',
         price: 10000,
         stock: 100
-      }]
+      }],
+      categoryList:[
+      ],
     };
   },
   components: {
@@ -265,6 +263,9 @@ export default {
     handleChange() {
 
     },
+    handleSelectorChange(event) {
+      console.log(event)
+    },
     pre() {
       if (this.step-- < 1) this.step = 0;
     },
@@ -272,7 +273,7 @@ export default {
       if (this.step++ > 2) this.step = 3;
     },
     submit() {
-
+      console.log(this.form)
     },
     deleteRow(index, rows) {
       rows.splice(index, 1);
@@ -289,6 +290,11 @@ export default {
       //
       // this.form = {}
     }
+  },
+  mounted() {
+    getCategoryList(null).then(response=>{
+      this.categoryList = response
+    });
   }
 }
 </script>
