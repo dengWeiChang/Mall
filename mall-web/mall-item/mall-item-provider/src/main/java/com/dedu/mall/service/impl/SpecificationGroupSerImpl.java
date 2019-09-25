@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -28,27 +29,25 @@ public class SpecificationGroupSerImpl extends ServiceImpl<SpecificationGroupMap
     @Autowired
     private SpecificationService specService;
 
-    private Map<Long, List<SpecificationPo>> SPECCACHEMAP = new ConcurrentHashMap<>();
+    private static Map<Long, List<SpecificationPo>> SPECCACHEMAP = new ConcurrentHashMap<>();
 
     @Override
     public List<SpecificationGroupVo> queryByCategoryId(Long id) throws Exception {
         // 根据类目Id获取分组信息
-        List<SpecificationGroupPo> specGroupList = this.list(new QueryWrapper<SpecificationGroupPo>().eq("category_id", id));
+        List<SpecificationGroupPo> specGroupList = this.list(new QueryWrapper<SpecificationGroupPo>().eq("category_id", id).eq("is_enable", Boolean.TRUE).eq("is_delete", Boolean.FALSE));
         // 根据分组Id获取规格属性
-        if (!CollectionUtils.isEmpty(specGroupList) && SPECCACHEMAP.isEmpty()) {
+        if (!CollectionUtils.isEmpty(specGroupList)) {
             // 获取所有的分组Id
-            List<Long> groupIdList = specGroupList.stream().map(SpecificationGroupPo::getId).distinct().collect(Collectors.toList());
-            List<SpecificationPo> specList = specService.queryByGroupIds(groupIdList);
-            // 考虑到数据不对，可进行规格数据缓存
-            specList.stream().forEach(t-> {
-                if (SPECCACHEMAP.containsKey(t.getGroupId())) {
-                    SPECCACHEMAP.get(t.getGroupId()).add(t);
-                } else {
+            List<Long> groupIdList = specGroupList.stream().filter(t->!SPECCACHEMAP.containsKey(t.getId())).map(SpecificationGroupPo::getId).distinct().collect(Collectors.toList());
+            if (!CollectionUtils.isEmpty(groupIdList)) {
+                List<SpecificationPo> specList = specService.queryByGroupIds(groupIdList);
+                // 考虑到数据不多，可进行规格数据缓存
+                specList.stream().forEach(t-> {
                     List<SpecificationPo> specCacheList = new ArrayList<>();
                     specCacheList.add(t);
                     SPECCACHEMAP.put(t.getGroupId(), specCacheList);
-                }
-            });
+                });
+            }
         }
         // 进行结果组装
         List<SpecificationGroupVo> result = new ArrayList<>();
@@ -63,10 +62,63 @@ public class SpecificationGroupSerImpl extends ServiceImpl<SpecificationGroupMap
                     BeanUtils.copyProperties(t, specVo);
                     specVoList.add(specVo);
                 });
+            } else {
+
             }
             specGroupVo.setSpecs(specVoList);
             result.add(specGroupVo);
         });
         return result;
+    }
+
+    @Override
+    @Transactional
+    public Boolean addSepcificationGroup(SpecificationGroupVo specGroupVo) {
+        SpecificationGroupPo sepcGroupPo = new SpecificationGroupPo();
+        BeanUtils.copyProperties(specGroupVo, sepcGroupPo);
+        this.saveOrUpdate(sepcGroupPo);
+        if (!CollectionUtils.isEmpty(specGroupVo.getSpecs())) {
+            specGroupVo.getSpecs().stream().forEach(t->{
+                t.setGroupId(sepcGroupPo.getId());
+                t.setGroupName(sepcGroupPo.getName());
+            });
+            specService.addSpecification(specGroupVo.getSpecs());
+        }
+        resetCache();
+        return Boolean.TRUE;
+    }
+
+    @Override
+    @Transactional
+    public Boolean modifySepcificationGroup(SpecificationGroupVo specGroupVo) throws Exception {
+        if (null == specGroupVo.getId()) {
+            throw new Exception("主键不能为空！");
+        }
+        SpecificationGroupPo sepcGroupPo = new SpecificationGroupPo();
+        BeanUtils.copyProperties(specGroupVo, sepcGroupPo);
+        this.updateById(sepcGroupPo);
+        if (!CollectionUtils.isEmpty(specGroupVo.getSpecs())) {
+            specGroupVo.getSpecs().stream().forEach(t->{
+                t.setGroupId(sepcGroupPo.getId());
+                t.setGroupName(sepcGroupPo.getName());
+            });
+            specService.updateSpecificationOfGroup(specGroupVo.getSpecs());
+        } else {
+            specService.removeAllSpecificationByGroupId(sepcGroupPo.getId());
+        }
+        resetCache();
+        return Boolean.TRUE;
+    }
+
+    @Override
+    @Transactional
+    public Boolean removeSpecGroupById(Long id) {
+        this.updateById(SpecificationGroupPo.builder().id(id).isDelete(true).build());
+        specService.removeAllSpecificationByGroupId(id);
+        return Boolean.TRUE;
+    }
+
+    private void resetCache() {
+        this.SPECCACHEMAP.clear();
     }
 }

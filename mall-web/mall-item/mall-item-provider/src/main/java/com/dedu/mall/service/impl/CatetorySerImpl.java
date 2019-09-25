@@ -91,6 +91,9 @@ public class CatetorySerImpl extends ServiceImpl<CategoryMapper, CategoryPo> imp
         CategoryPo categoryPo = new CategoryPo();
         BeanUtils.copyProperties(request, categoryPo);
         categoryPo.setId(null);
+        if (null == request.getParentId()) {
+            categoryPo.setParentId(0L);
+        }
         categoryPo.setCreateTime(LocalDateTime.now());
         categoryPo.setUpdateTime(LocalDateTime.now());
         return this.save(categoryPo);
