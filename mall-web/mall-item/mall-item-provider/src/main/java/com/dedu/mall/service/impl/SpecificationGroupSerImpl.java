@@ -29,23 +29,26 @@ public class SpecificationGroupSerImpl extends ServiceImpl<SpecificationGroupMap
     @Autowired
     private SpecificationService specService;
 
-    private static Map<Long, List<SpecificationPo>> SPECCACHEMAP = new ConcurrentHashMap<>();
-
     @Override
     public List<SpecificationGroupVo> queryByCategoryId(Long id) throws Exception {
         // 根据类目Id获取分组信息
         List<SpecificationGroupPo> specGroupList = this.list(new QueryWrapper<SpecificationGroupPo>().eq("category_id", id).eq("is_enable", Boolean.TRUE).eq("is_delete", Boolean.FALSE));
         // 根据分组Id获取规格属性
+        Map<Long, List<SpecificationPo>> specCacheMap = new ConcurrentHashMap<>();
         if (!CollectionUtils.isEmpty(specGroupList)) {
             // 获取所有的分组Id
-            List<Long> groupIdList = specGroupList.stream().filter(t->!SPECCACHEMAP.containsKey(t.getId())).map(SpecificationGroupPo::getId).distinct().collect(Collectors.toList());
+            List<Long> groupIdList = specGroupList.stream().map(SpecificationGroupPo::getId).distinct().collect(Collectors.toList());
             if (!CollectionUtils.isEmpty(groupIdList)) {
                 List<SpecificationPo> specList = specService.queryByGroupIds(groupIdList);
                 // 考虑到数据不多，可进行规格数据缓存
                 specList.stream().forEach(t-> {
-                    List<SpecificationPo> specCacheList = new ArrayList<>();
-                    specCacheList.add(t);
-                    SPECCACHEMAP.put(t.getGroupId(), specCacheList);
+                    if (specCacheMap.containsKey(t.getGroupId())) {
+                        specCacheMap.get(t.getGroupId()).add(t);
+                    } else {
+                        List<SpecificationPo> specCacheList = new ArrayList<>();
+                        specCacheList.add(t);
+                        specCacheMap.put(t.getGroupId(), specCacheList);
+                    }
                 });
             }
         }
@@ -55,8 +58,8 @@ public class SpecificationGroupSerImpl extends ServiceImpl<SpecificationGroupMap
             SpecificationGroupVo specGroupVo = new SpecificationGroupVo();
             BeanUtils.copyProperties(s, specGroupVo);
             List<SpecificationVo> specVoList = new ArrayList<>();
-            if (SPECCACHEMAP.containsKey(specGroupVo.getId())) {
-                List<SpecificationPo> specPoList = SPECCACHEMAP.get(specGroupVo.getId());
+            if (specCacheMap.containsKey(specGroupVo.getId())) {
+                List<SpecificationPo> specPoList = specCacheMap.get(specGroupVo.getId());
                 specPoList.stream().forEach(t->{
                     SpecificationVo specVo = new SpecificationVo();
                     BeanUtils.copyProperties(t, specVo);
@@ -84,7 +87,6 @@ public class SpecificationGroupSerImpl extends ServiceImpl<SpecificationGroupMap
             });
             specService.addSpecification(specGroupVo.getSpecs());
         }
-        resetCache();
         return Boolean.TRUE;
     }
 
@@ -106,7 +108,6 @@ public class SpecificationGroupSerImpl extends ServiceImpl<SpecificationGroupMap
         } else {
             specService.removeAllSpecificationByGroupId(sepcGroupPo.getId());
         }
-        resetCache();
         return Boolean.TRUE;
     }
 
@@ -118,7 +119,4 @@ public class SpecificationGroupSerImpl extends ServiceImpl<SpecificationGroupMap
         return Boolean.TRUE;
     }
 
-    private void resetCache() {
-        this.SPECCACHEMAP.clear();
-    }
 }

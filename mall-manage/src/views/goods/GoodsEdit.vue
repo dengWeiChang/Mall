@@ -10,20 +10,18 @@
       </el-steps>
 
       <el-form  ref="form" :model="form" >
+        <!-- 基本信息 -->
         <el-form-item v-show="0 === step" label="商品分类：" :rules="{ required: true, message: '请选择活动资源', trigger: 'change' }">
           <el-select style="width: 300px;" v-model="form.categoryId" placeholder="所属类目" @change="handleSelectorChange(form.categoryId)">
-            <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            <el-option v-for="(item,index) in categoryList" :label="item.name" :value="item.id" :key="index"></el-option>
           </el-select>
         </el-form-item>
-
         <el-form-item v-show="0 === step" label="商品名称：" :rules="{ required: true, message: '请输入商品名称', trigger: 'blur'}">
           <el-input style="width: 50%" v-model="form.name"></el-input>
         </el-form-item>
-
         <el-form-item v-show="0 === step" label="副标题：" :rules="{ required: true, message: '请输入商品副标题', trigger: 'blur'}">
           <el-input style="width: 50%" v-model="form.subtitle"></el-input>
         </el-form-item>
-
         <el-form-item v-show="0 === step" label="商品品牌：" :rules="{ required: true, message: '请选择商品品牌', trigger: 'blur'}">
           <el-select v-model="form.brand" placeholder="请选择">
             <el-option
@@ -34,97 +32,91 @@
             </el-option>
           </el-select>
         </el-form-item>
-
         <el-form-item v-show="0 === step"  label="商品介绍：">
           <el-input style="width: 50%" type="textarea" v-model="form.desc"></el-input>
         </el-form-item>
-
         <el-form-item v-show="0 === step" label="包装清单：">
           <el-input style="width: 50%" v-model="form.packlist"></el-input>
         </el-form-item>
-
         <el-form-item v-show="0 === step" label="售后服务：">
           <el-input style="width: 50%" v-model="form.service"></el-input>
         </el-form-item>
 
-
-        <el-form-item v-show="1 === step" label="商品参数：">
-          <div v-for="item in items" :key="item.id">
+        <!-- SPU信息 -->
+        <el-form-item v-show="1 === step">
+          <div v-for="item in specGroup" >
             <el-card class="box-card">
               <div slot="header" class="clearfix">
-                <span>{{item.name}}</span>
+                <h3>{{item.name}}</h3>
               </div>
-              <div v-for="itdl in item.specs" :key="itdl" style="font-size: 5px">
-                <!--<el-row><el-col :span="12">{{ itdl.name  }}</el-col><el-col :span="12">{{itdl.value}}</el-col></el-row>-->
-                      {{ itdl.name  }}
+              <div v-for="itdl in item.specs" style="font-size: 5px">
+                <!-- 这里只展示SPU属性 -->
+                <div v-if="itdl.global">
+                  <el-form-item :label="itdl.name">
+                    <el-input style="max-width: 100px" v-model="itdl.value"></el-input>
+                  </el-form-item>
+                </div>
               </div>
             </el-card>
           </div>
         </el-form-item>
 
-
-
-        <el-form-item v-show="2 === step" label="商品规格：" :rules="{ required: true, message: '请输入商品名称', trigger: 'blur'}">
+        <!-- SKU信息-->
+        <el-form-item v-show="2 === step" :rules="{ required: true, message: '请输入商品名称', trigger: 'blur'}">
           <el-card style="margin-left: auto">
             <div slot="header">
-              颜色：
-              <br/>
-              容量：
-              <el-checkbox-group v-model="form.checkList.value">
-                <div v-for="item in form.checkList.name">
-                  <el-checkbox >{{item}}</el-checkbox>
+              <div v-for="group in specGroup" >
+                <div v-for="spec in group.specs"  style="font-size: 5px">
+                  <!-- 这里只展示SKU属性 -->
+                  <div v-if="!spec.global">
+                    <!-- 属性名 -->
+                    <el-form-item :label="spec.name">
+                      <el-input style="max-width: 100px" v-model="spec.value" />
+                      <el-button type="primary" icon="el-icon-circle-plus-outline" size="mini" @click="addSpec(spec.id, spec.name, spec.value)">增加</el-button>
+                      <el-tag
+                        style="margin-left: 2px"
+                        v-for="(value, key) in form.specs.get(spec.id)"
+                        :key="key"
+                        closable
+                        type="success"
+                        @close="onRemoveSpec(spec.id, value)">
+                        {{value}}
+                      </el-tag>
+                    </el-form-item>
+                  </div>
                 </div>
-              </el-checkbox-group>
+              </div>
+              <br/>
             </div>
+            <!-- 属性值预览 -->
+            <!-- SKU表格 -->
             <div>
               <el-table
                 :data="tableData"
                 style="width: 100%"
                 max-height="250">
-                <el-table-column
-                  fixed
-                  prop="color"
-                  label="颜色"
-                  width="100">
+                <el-table-column v-for="(item,index) in tableHeader" :key="index"  :prop="item.prop" :label="item.name">
                 </el-table-column>
-                <el-table-column
-                  prop="memory"
-                  label="容量"
-                  width="120">
-                </el-table-column>
-                <el-table-column
-                  label="售价/元"
-                  width="130">
-                  <template slot-scope="scope">
-                    <el-input v-model="scope.row.price"  type='number' maxLength="9"></el-input>
-                    <!--<span style="margin-left: 10px">{{  }}</span>-->
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  label="库存"
-                  width="120">
-                  <template slot-scope="scope">
-                      <el-input v-model="scope.row.stock"  type='number' maxLength="9"></el-input>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  fixed="right"
-                  label="操作"
-                  width="120">
-                  <template slot-scope="scope">
-                    <el-button
-                      @click.native.prevent="deleteRow(scope.$index, tableData)"
-                      type="text"
-                      size="small">
-                      移除
-                    </el-button>
-                  </template>
-                </el-table-column>
+
+                <!--<el-table-column-->
+                  <!--fixed="right"-->
+                  <!--label="操作"-->
+                  <!--width="120">-->
+                  <!--<template slot-scope="scope">-->
+                    <!--<el-button-->
+                      <!--@click.native.prevent="deleteRow(scope.$index, form.specsTab)"-->
+                      <!--type="text"-->
+                      <!--size="small">-->
+                      <!--移除-->
+                    <!--</el-button>-->
+                  <!--</template>-->
+                <!--</el-table-column>-->
               </el-table>
             </div>
           </el-card>
         </el-form-item>
 
+        <!-- 图片信息-->
         <el-form-item v-show="3 === step" label="规格图片：">
           <el-card style="height: 500px;">
             <el-upload
@@ -168,51 +160,28 @@ export default {
   data() {
     return {
       ptype: null,
+      // 首页类目
+      categoryList:[],
+      //品牌
+      brands: [],
       spuId: '',
       step: 0,
+      // 提交的表单
       form:{
         categoryId:'',
         brand:'',
         packlist:'',
         service:'',
-        checkList:{
-          name:["16G", "128G"],
-          value:[]
-        }
+        specs: new Map(),
+        specsTab:[{
+          '颜色': ['红色', '金色'],
+          '内存大小': ['16G','32G'],
+          price: 10000,
+          stock: 100
+        }]
       },
-      brands: [{
-        id: '1',
-        name: '小米'
-      }],
-      rules: {
-        name: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-        ],
-        region: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
-        ],
-        date1: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-        ],
-        date2: [
-          { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-        ],
-        type: [
-          { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-        ],
-        resource: [
-          { required: true, message: '请选择活动资源', trigger: 'change' }
-        ],
-        desc: [
-          { required: true, message: '请填写活动形式', trigger: 'blur' }
-        ]
-      },
-
-      value: [],
-
-      items:[
-      ],
+      // 类目下的规则参数
+      specGroup:[],
 
       dialogImageUrl: '',
       dialogVisible: false,
@@ -222,20 +191,44 @@ export default {
       },
       isClear: false,
 
+      // SKU表格
       tableData: [{
         color: '玫瑰金',
         memory: '16G',
         price: 10000,
         stock: 100
       }],
-      categoryList:[
-      ],
+      tableHeader: [{
+        name:'颜色',
+        prop:'color'
+      },{
+        name:'内存',
+        prop:'memory'
+      },{
+        name:'价格',
+        prop:'price'
+      }],
     };
   },
   components: {
     EditorBar
   },
   methods: {
+    onRemoveSpec(specId, value){
+      this.form.specs.get(specId).splice(this.form.specs.get(specId).indexOf(value), 1);
+    },
+    addSpec(specId, specName, specValue){
+      console.log(specId)
+      console.log(specValue)
+      console.log(this.form.specs)
+      if (null == this.form.specs.get(specId)) {
+        console.log(1)
+        this.form.specs.set(specId, [specValue])
+      } else {
+        console.log(2)
+        this.form.specs.get(specId).push(specValue)
+      }
+    },
     handleChange() {
 
     },
@@ -245,7 +238,8 @@ export default {
       });
       //
       getSpecGroupByCatId(categoryId).then(response => {
-        this.items = response
+        this.specGroup = response
+        console.log(this.specGroup)
       });
     },
     pre() {
@@ -287,7 +281,7 @@ export default {
   }
   .box-card {
     margin-top: 1%;
-    min-height: 800px;
+    min-height: 300px;
   }
   .box-card {
   }

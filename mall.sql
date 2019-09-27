@@ -1516,9 +1516,8 @@ DROP TABLE IF EXISTS `tb_specification`;
 CREATE TABLE `tb_specification` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `name` varchar(32) NOT NULL COMMENT '规格属性名称',
-  `value` varchar(32) NULL COMMENT '规格属性值',
   `searchable` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否可搜索，0为否，1为是',
-  `unit` varchar(32) NOT NULL COMMENT '规格属性单位',
+  `global` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否类目全局属性，0为否，1为是',
   `group_id` bigint(20) NOT NULL COMMENT '规格分组主键id',
   `group_name` varchar(32) NOT NULL COMMENT '规格组名称',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -1526,16 +1525,32 @@ CREATE TABLE `tb_specification` (
   `is_enable` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效，0为否，1为是',
   `is_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除，0为否，1为是',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='规格属性值表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='规格属性名表';
 
 -- ----------------------------
 -- Records of tb_specification
 -- ----------------------------
-INSERT INTO `tb_specification` VALUES ('1', '入网型号', 'A2217', '0', '无', '1', '主体', '2019-09-19 17:44:22', '2019-09-19 17:44:22', '1', '0');
-INSERT INTO `tb_specification` VALUES ('2', '产品名称', 'iPhone 11 Pro', '0', '台', '1', '主体', '2019-09-19 17:44:43', '2019-09-19 17:44:43', '1', '0');
-INSERT INTO `tb_specification` VALUES ('3', '机身颜色', '深空灰色', '0', '无', '2', '基本信息', '2019-09-19 18:10:54', '2019-09-19 18:10:54', '1', '0');
-INSERT INTO `tb_specification` VALUES ('4', '机身长度', '144', '0', 'mm', '2', '基本信息', '2019-09-19 18:11:29', '2019-09-19 18:11:29', '1', '0');
+INSERT INTO `tb_specification` VALUES ('1', '入网型号', '0', '1', '1', '主体', '2019-09-19 17:44:22', '2019-09-19 17:44:22', '1', '0');
+INSERT INTO `tb_specification` VALUES ('2', '产品名称', '0', '1', '1', '主体', '2019-09-19 17:44:43', '2019-09-19 17:44:43', '1', '0');
+INSERT INTO `tb_specification` VALUES ('3', '机身颜色', '0', '1', '2', '基本信息', '2019-09-19 18:10:54', '2019-09-19 18:10:54', '1', '0');
+INSERT INTO `tb_specification` VALUES ('4', '机身长度', '0', '1', '2', '基本信息', '2019-09-19 18:11:29', '2019-09-19 18:11:29', '1', '0');
 
+
+-- ----------------------------
+-- Table structure for tb_specification_value
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_specification_value`;
+CREATE TABLE `tb_specification_value` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `specification_id` bigint(20) NOT NULL COMMENT '规格属性名主键id',
+  `specification_name` varchar(32) NOT NULL COMMENT '规格属性名称',
+  `value` varchar(32) NULL COMMENT '规格属性值',
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_enable` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效，0为否，1为是',
+  `is_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除，0为否，1为是',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='规格属性值表';
 
 -- ----------------------------
 -- Table structure for tb_spu

@@ -16,6 +16,7 @@ public class SpecificationVo {
     private String name;
     private String value;
     private Boolean searchable;
+    private Boolean global;
     private String unit;
     private Long groupId;
     private String groupName;

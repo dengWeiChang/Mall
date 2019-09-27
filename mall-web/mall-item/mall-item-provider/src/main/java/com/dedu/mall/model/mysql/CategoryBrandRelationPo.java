@@ -15,20 +15,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@TableName(value = "tb_specification")
-public class SpecificationPo {
+@TableName(value = "CategoryBrandRelationPo")
+public class CategoryBrandRelationPo {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
-    @TableField(value = "name")
-    private String name;
-    @TableField(value = "searchable")
-    private Boolean searchable;
-    @TableField(value = "global")
-    private Boolean global;
-    @TableField(value = "group_id")
-    private Long groupId;
-    @TableField(value = "group_name")
-    private String groupName;
+    @TableField(value = "category_id")
+    private Long categoryId;
+    @TableField(value = "brand_id")
+    private Long brandId;
     @TableField(value = "create_time")
     private LocalDateTime createTime;
     @TableField(value = "update_time")

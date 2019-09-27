@@ -17,35 +17,37 @@
 
         <div class="right">
           <el-card class="right-box-card">
+            <!--<div v-if="this.selectedcategory.id != '' || !this.selectedcategory.isParent">-->
             <div v-if="this.selectedcategory.id != ''">
                 <h3>规格设置-{{this.selectedcategory.name}}</h3>
                 <el-button type="primary" icon="el-icon-circle-plus-outline" @click="onAddSpecGroup">添加规则参数</el-button>
+                <div v-for="item in items" :key="item.id">
+                  <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                      <span>{{item.name}}</span>
+                      <el-button style="float: right; padding: 3px 0;color: red" type="text" @click="onRemoveSpecGroup(item.id)">删除操作</el-button>
+                      <el-button style="float: right; padding: 3px 0" type="text" @click="onEditSpecGroup(item)">编辑操作</el-button>
+                    </div>
+                    <div v-for="itdl in item.specs" :key="itdl" style="font-size: 5px">
+                      <!--<el-row><el-col :span="12">{{ itdl.name  }}</el-col><el-col :span="12">{{itdl.value}}</el-col></el-row>-->
+                      <el-collapse accordion>
+                        <el-collapse-item>
+                          <template slot="title">
+                            {{ itdl.name  }}<i class="header-icon el-icon-info"></i>
+                          </template>
+                          <div>
+                            <div v-if="'' != itdl.value">
+                              <el-tag type="success">{{itdl.value}}</el-tag>
+                            </div>
+                          </div>
+                        </el-collapse-item>
+                      </el-collapse>
+                    </div>
+                  </el-card>
+                </div>
             </div>
             <h3 v-else>请选择一个具体分类</h3>
-            <div v-for="item in items" :key="item.id">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span>{{item.name}}</span>
-                  <el-button style="float: right; padding: 3px 0;color: red" type="text" @click="onRemoveSpecGroup(item.id)">删除操作</el-button>
-                  <el-button style="float: right; padding: 3px 0" type="text" @click="onEditSpecGroup(item)">编辑操作</el-button>
-                </div>
-                <div v-for="itdl in item.specs" :key="itdl" style="font-size: 5px">
-                  <!--<el-row><el-col :span="12">{{ itdl.name  }}</el-col><el-col :span="12">{{itdl.value}}</el-col></el-row>-->
-                  <el-collapse accordion>
-                    <el-collapse-item>
-                      <template slot="title">
-                        {{ itdl.name  }}<i class="header-icon el-icon-info"></i>
-                      </template>
-                      <div>
-                        <div v-if="'' != itdl.value">
-                          <el-tag type="success">{{itdl.value}}</el-tag>
-                        </div>
-                      </div>
-                    </el-collapse-item>
-                  </el-collapse>
-                </div>
-              </el-card>
-            </div>
+
           </el-card>
         </div>
         <!-- 规则参数窗口 -->
@@ -64,6 +66,18 @@
             <el-form-item label="参数单位" prop="name">
               <el-input v-model="spec.unit"></el-input>
             </el-form-item>
+            <el-form-item prop="name">
+              <el-tooltip effect="dark" content="销售属性即SKU属性" placement="right">
+                <el-switch
+                  style="display: block; width: 200px"
+                  v-model="spec.global"
+                  active-color="#ff4949"
+                  inactive-color="#13ce66"
+                  active-text="非销售属性"
+                  inactive-text="是销售属性">
+                </el-switch>
+              </el-tooltip>
+            </el-form-item>
             <el-button type="primary" @click="onAddSpec" size="mini">添加</el-button>
             <el-divider/>
             添加预览：
@@ -73,7 +87,7 @@
               closable
               type="success"
               @close="onRemoveSpec(tag)">
-              {{tag.name}}
+              {{tag.name}}-{{tag.global ? "非销售属性":"销售属性"}}
             </el-tag>
           </el-form>
           <span slot="footer" class="dialog-footer">
@@ -103,9 +117,10 @@
         },
         spec:{
           name:'',
-          unit:''
+          unit:'',
+          global: true
         },
-        items:[
+        specGroup:[
         ],
         props: {
           label: 'name',
@@ -118,6 +133,7 @@
         selectedcategory: {
           id:'',
           name:'',
+          isParent: false
         },
       };
     },
@@ -125,7 +141,8 @@
       onAddSpec(){
         this.specDetail.specs.push({
           name:this.spec.name,
-          unit:this.spec.unit
+          unit:this.spec.unit,
+          global:this.spec.global
         })
       },
       onRemoveSpec(tag){
@@ -191,11 +208,14 @@
       handleNodeClick(data) {
         this.selectedcategory.name = data.name
         this.selectedcategory.id = data.id
-        getSpecGroup(
-          this.selectedcategory.id
-        ).then(response => {
-          this.items = response
-        })
+        this.selectedcategory.isParent = data.isParent
+        // if (!this.selectedcategory.isParent) {
+          getSpecGroup(
+            this.selectedcategory.id
+          ).then(response => {
+            this.items = response
+          })
+        // }
       },
       loadNode(node, resolve) {
         // // 每次点击都是一个node
