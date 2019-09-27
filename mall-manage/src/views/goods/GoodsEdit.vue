@@ -11,11 +11,7 @@
 
       <el-form  ref="form" :model="form" >
         <el-form-item v-show="0 === step" label="商品分类：" :rules="{ required: true, message: '请选择活动资源', trigger: 'change' }">
-          <!--<el-cascader-->
-            <!--v-model="value"-->
-            <!--:options="options"-->
-            <!--@change="handleChange"></el-cascader>-->
-          <el-select style="width: 300px;" v-model="form.categoryId" placeholder="所属类目" :change="handleSelectorChange">
+          <el-select style="width: 300px;" v-model="form.categoryId" placeholder="所属类目" @change="handleSelectorChange(form.categoryId)">
             <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
@@ -53,13 +49,20 @@
 
 
         <el-form-item v-show="1 === step" label="商品参数：">
-          <el-card style="margin-left: auto">
-            屏幕尺寸:<br/>
-            网络:<br/>
-            系统:<br/>
-            电池容量:<br/>
-          </el-card>
+          <div v-for="item in items" :key="item.id">
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <span>{{item.name}}</span>
+              </div>
+              <div v-for="itdl in item.specs" :key="itdl" style="font-size: 5px">
+                <!--<el-row><el-col :span="12">{{ itdl.name  }}</el-col><el-col :span="12">{{itdl.value}}</el-col></el-row>-->
+                      {{ itdl.name  }}
+              </div>
+            </el-card>
+          </div>
         </el-form-item>
+
+
 
         <el-form-item v-show="2 === step" label="商品规格：" :rules="{ required: true, message: '请输入商品名称', trigger: 'blur'}">
           <el-card style="margin-left: auto">
@@ -158,6 +161,8 @@
 <script>
   import EditorBar from '@/components/WangEditor/index'
   import {getAllCategoryList as getCategoryList} from '@/api/category';
+  import {getSpecGroupByCatId} from '@/api/specification';
+  import {getBrandByCategoryId} from '@/api/brand';
 export default {
   name: "goodsedit",
   data() {
@@ -205,38 +210,9 @@ export default {
       },
 
       value: [],
-      options: [{
-        value: 'zhinan',
-        label: '指南',
-        children: [{
-          value: 'shejiyuanze',
-          label: '设计原则',
-          children: [{
-            value: 'yizhi',
-            label: '一致'
-          }, {
-            value: 'fankui',
-            label: '反馈'
-          }, {
-            value: 'xiaolv',
-            label: '效率'
-          }, {
-            value: 'kekong',
-            label: '可控'
-          }]
-        }, {
-          value: 'daohang',
-          label: '导航',
-          children: [{
-            value: 'cexiangdaohang',
-            label: '侧向导航'
-          }, {
-            value: 'dingbudaohang',
-            label: '顶部导航'
-          }]
-        }]
-      }],
 
+      items:[
+      ],
 
       dialogImageUrl: '',
       dialogVisible: false,
@@ -263,8 +239,14 @@ export default {
     handleChange() {
 
     },
-    handleSelectorChange(event) {
-      console.log(event)
+    handleSelectorChange(categoryId) {
+      getBrandByCategoryId(categoryId).then(response => {
+        this.brands = response
+      });
+      //
+      getSpecGroupByCatId(categoryId).then(response => {
+        this.items = response
+      });
     },
     pre() {
       if (this.step-- < 1) this.step = 0;

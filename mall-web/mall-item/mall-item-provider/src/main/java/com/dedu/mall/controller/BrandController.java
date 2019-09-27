@@ -4,6 +4,7 @@ import com.dedu.mall.model.Result;
 import com.dedu.mall.model.ResultCode;
 import com.dedu.mall.model.mysql.BrandVo;
 import com.dedu.mall.service.BrandService;
+import com.dedu.mall.service.CategoryBrandRelationService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -23,6 +24,9 @@ public class BrandController {
 
     @Autowired
     private BrandService brandService;
+
+    @Autowired
+    private CategoryBrandRelationService categoryBrandRelationService;
 
     @GetMapping("list")
     @ApiOperation(value = "分页查询品牌-dedu", notes = "品牌")
@@ -60,5 +64,14 @@ public class BrandController {
     })
     public Result deleteCategoryById(@PathVariable Long id) throws Exception {
         return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), brandService.deleteBrandById(id));
+    }
+
+    @GetMapping("/category/{id}")
+    @ApiOperation(value = "根据类目Id获取品牌信息-dedu", notes = "品牌")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", dataType = "long", name = "id", value = "类目主键id", required = true)
+    })
+    public Result getBrandByCategoryId(@PathVariable Long id) throws Exception {
+        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), categoryBrandRelationService.queryBrandsByCategoryId(id));
     }
 }

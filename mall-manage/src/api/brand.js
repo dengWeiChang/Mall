@@ -30,3 +30,10 @@ export function deleteBrand(id) {
     method:'delete'
   })
 }
+
+export function getBrandByCategoryId(id) {
+  return http({
+    url:'/api/brand/category/' + id,
+    method:'get'
+  })
+}
