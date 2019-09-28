@@ -75,18 +75,18 @@
                       <el-button type="primary" icon="el-icon-circle-plus-outline" size="mini" @click="addSpec(spec.id, spec.name, spec.value)">增加</el-button>
                       <el-tag
                         style="margin-left: 2px"
-                        v-for="(value, key) in form.specs.get(spec.id)"
+                        v-for="(value, key) in form.specs[spec.id]"
                         :key="key"
                         closable
                         type="success"
                         @close="onRemoveSpec(spec.id, value)">
-                        {{value}}
+                        {{value.value}}
                       </el-tag>
                     </el-form-item>
                   </div>
                 </div>
               </div>
-              <br/>
+              <el-button type="primary" icon="el-icon-circle-plus-outline" size="mini" @click="createSpecTable">生成价格表格</el-button>
             </div>
             <!-- 属性值预览 -->
             <!-- SKU表格 -->
@@ -98,19 +98,19 @@
                 <el-table-column v-for="(item,index) in tableHeader" :key="index"  :prop="item.prop" :label="item.name">
                 </el-table-column>
 
-                <!--<el-table-column-->
-                  <!--fixed="right"-->
-                  <!--label="操作"-->
-                  <!--width="120">-->
-                  <!--<template slot-scope="scope">-->
-                    <!--<el-button-->
-                      <!--@click.native.prevent="deleteRow(scope.$index, form.specsTab)"-->
-                      <!--type="text"-->
-                      <!--size="small">-->
-                      <!--移除-->
-                    <!--</el-button>-->
-                  <!--</template>-->
-                <!--</el-table-column>-->
+                <el-table-column
+                  fixed="right"
+                  label="操作"
+                  width="120">
+                  <template slot-scope="scope">
+                    <el-button
+                      @click.native.prevent="deleteRow(scope.$index, tableData)"
+                      type="text"
+                      size="small">
+                      移除
+                    </el-button>
+                  </template>
+                </el-table-column>
               </el-table>
             </div>
           </el-card>
@@ -134,7 +134,6 @@
         </el-form-item>
       </el-form>
 
-
       <div style="display: flex; justify-content: center;">
         <div v-if="0 !== step">
           <el-button @click="pre" style="margin-top: 12px;">上步</el-button>
@@ -151,10 +150,10 @@
 </template>
 
 <script>
-  import EditorBar from '@/components/WangEditor/index'
-  import {getAllCategoryList as getCategoryList} from '@/api/category';
-  import {getSpecGroupByCatId} from '@/api/specification';
-  import {getBrandByCategoryId} from '@/api/brand';
+import EditorBar from '@/components/WangEditor/index'
+import {getAllCategoryList as getCategoryList} from '@/api/category';
+import {getSpecGroupByCatId} from '@/api/specification';
+import {getBrandByCategoryId} from '@/api/brand';
 export default {
   name: "goodsedit",
   data() {
@@ -172,7 +171,7 @@ export default {
         brand:'',
         packlist:'',
         service:'',
-        specs: new Map(),
+        specs: [],
         specsTab:[{
           '颜色': ['红色', '金色'],
           '内存大小': ['16G','32G'],
@@ -192,13 +191,16 @@ export default {
       isClear: false,
 
       // SKU表格
-      tableData: [{
-        color: '玫瑰金',
-        memory: '16G',
-        price: 10000,
-        stock: 100
-      }],
-      tableHeader: [{
+      tableData: [],
+      tableHeader: [],
+    };
+  },
+  components: {
+    EditorBar
+  },
+  methods: {
+    createSpecTable() {
+      this.tableHeader.push({
         name:'颜色',
         prop:'color'
       },{
@@ -207,27 +209,23 @@ export default {
       },{
         name:'价格',
         prop:'price'
-      }],
-    };
-  },
-  components: {
-    EditorBar
-  },
-  methods: {
+      })
+      this.tableData.push({
+        color: '玫瑰金',
+        memory: '16G',
+        price: 10000,
+        stock: 100
+      })
+    },
     onRemoveSpec(specId, value){
-      this.form.specs.get(specId).splice(this.form.specs.get(specId).indexOf(value), 1);
+      this.form.specs[specId].splice(this.form.specs[specId].indexOf(value), 1);
     },
     addSpec(specId, specName, specValue){
-      console.log(specId)
-      console.log(specValue)
       console.log(this.form.specs)
-      if (null == this.form.specs.get(specId)) {
-        console.log(1)
-        this.form.specs.set(specId, [specValue])
-      } else {
-        console.log(2)
-        this.form.specs.get(specId).push(specValue)
+      if (null == this.form.specs[specId]) {
+        this.form.specs[specId] = []
       }
+      this.form.specs[specId].push({id:specId,name:specName, value:specValue})
     },
     handleChange() {
 
@@ -239,7 +237,6 @@ export default {
       //
       getSpecGroupByCatId(categoryId).then(response => {
         this.specGroup = response
-        console.log(this.specGroup)
       });
     },
     pre() {
@@ -249,7 +246,7 @@ export default {
       if (this.step++ > 2) this.step = 3;
     },
     submit() {
-      console.log(this.form)
+      // console.log(this.form)
     },
     deleteRow(index, rows) {
       rows.splice(index, 1);
