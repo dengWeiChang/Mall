@@ -109,7 +109,7 @@ export default {
         currentPage: 1,
         pageNum: 1,
         pageSize: 10,
-        tableData:[{
+        formprices:[{
           id:1,
           createTime:"2019-09-20 11:40:00",
           username:"陈达棍",

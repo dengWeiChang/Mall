@@ -73,15 +73,15 @@
                     <el-form-item :label="spec.name">
                       <el-input style="max-width: 100px" v-model="spec.value" />
                       <el-button type="primary" icon="el-icon-circle-plus-outline" size="mini" @click="addSpec(spec.id, spec.name, spec.value)">增加</el-button>
-                      <el-tag
-                        style="margin-left: 2px"
-                        v-for="(value, key) in form.specs[spec.id]"
-                        :key="key"
-                        closable
-                        type="success"
-                        @close="onRemoveSpec(spec.id, value)">
-                        {{value.value}}
-                      </el-tag>
+                      <!--<el-tag-->
+                        <!--style="margin-left: 2px"-->
+                        <!--v-for="(spec, key) in form.specs"-->
+                        <!--:key="key"-->
+                        <!--closable-->
+                        <!--type="success"-->
+                        <!--@close="onRemoveSpec(spec.id, value)">-->
+                        <!--{{spec.specValue}}-->
+                      <!--</el-tag>-->
                     </el-form-item>
                   </div>
                 </div>
@@ -92,10 +92,32 @@
             <!-- SKU表格 -->
             <div>
               <el-table
-                :data="tableData"
+                :data="form.prices"
                 style="width: 100%"
                 max-height="250">
-                <el-table-column v-for="(item,index) in tableHeader" :key="index"  :prop="item.prop" :label="item.name">
+                <el-table-column
+                  prop="specNames"
+                  label="规则参数组合名称"
+                  width="180">
+                </el-table-column>
+
+                <el-table-column
+                  v-show="false"
+                  prop="specs"
+                  label="规则参数"
+                  width="180">
+                </el-table-column>
+
+                <el-table-column align="center" label="价格" width="100">
+                  <template scope="scope">
+                    <el-input size="small" v-model="scope.row.price"></el-input>
+                  </template>
+                </el-table-column>
+
+                <el-table-column align="center" label="库存" width="100">
+                  <template scope="scope">
+                    <el-input size="small" v-model="scope.row.stock"></el-input>
+                  </template>
                 </el-table-column>
 
                 <el-table-column
@@ -104,7 +126,7 @@
                   width="120">
                   <template slot-scope="scope">
                     <el-button
-                      @click.native.prevent="deleteRow(scope.$index, tableData)"
+                      @click.native.prevent="deleteRow(scope.$index, form.prices)"
                       type="text"
                       size="small">
                       移除
@@ -113,6 +135,7 @@
                 </el-table-column>
               </el-table>
             </div>
+            <el-button type="primary" icon="el-icon-circle-plus-outline" size="mini" @click="testTable">显示</el-button>
           </el-card>
         </el-form-item>
 
@@ -120,16 +143,28 @@
         <el-form-item v-show="3 === step" label="规格图片：">
           <el-card style="height: 500px;">
             <el-upload
-              action="https://jsonplaceholder.typicode.com/posts/"
+              action="http://localhost:8080/api/upload/image"
               list-type="picture-card"
-              :on-remove="handleRemove">
+              :on-remove="handlePictureRemove"
+              :onSuccess="handlePictureSuccess"
+              :file-list="form.pictures">
               <i class="el-icon-plus"></i>
             </el-upload>
           </el-card>
+
+          <!--<el-upload-->
+            <!--class="upload-demo"-->
+            <!--action="http://localhost:8080/api/upload/image"-->
+            <!--:on-remove="handlePictureRemove"-->
+            <!--:onSuccess="handlePictureSuccess"-->
+            <!--:file-list="form.pictures"-->
+            <!--list-type="picture">-->
+            <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过10MB</div>-->
+          <!--</el-upload>-->
         </el-form-item>
         <el-form-item v-show="3 === step" label="详情大图：">
           <div>
-            <editor-bar v-model="editor.info" :isClear="isClear"></editor-bar>
+            <editor-bar v-model="form.detailPicture" :isClear="isClear"></editor-bar>
           </div>
         </el-form-item>
       </el-form>
@@ -172,60 +207,98 @@ export default {
         packlist:'',
         service:'',
         specs: [],
-        specsTab:[{
-          '颜色': ['红色', '金色'],
-          '内存大小': ['16G','32G'],
-          price: 10000,
-          stock: 100
-        }]
+        // SKU表格
+        prices: [],
+        pictures: [],
+        detailPicture:''
       },
       // 类目下的规则参数
       specGroup:[],
-
-      dialogImageUrl: '',
-      dialogVisible: false,
 
       editor: {
         info: ''
       },
       isClear: false,
-
-      // SKU表格
-      tableData: [],
-      tableHeader: [],
     };
   },
   components: {
     EditorBar
   },
   methods: {
+    testTable() {
+      console.log(JSON.stringify(this.form))
+      console.log(JSON.stringify(this.form.prices))
+    },
     createSpecTable() {
-      this.tableHeader.push({
-        name:'颜色',
-        prop:'color'
-      },{
-        name:'内存',
-        prop:'memory'
-      },{
-        name:'价格',
-        prop:'price'
-      })
-      this.tableData.push({
-        color: '玫瑰金',
-        memory: '16G',
-        price: 10000,
-        stock: 100
+      // console.log(JSON.stringify(this.form.specs))
+      var tableDataList = this.calcDescartes(this.form.specs)
+      this.form.prices = []
+      tableDataList.forEach((val) => {
+        var specIds = val.map(a => a.specId).join(",")
+        var specValues = val.map(a => a.specValue).join(",")
+        this.form.prices.push({
+          specNames:specValues,
+          specs:specIds,
+          price:0,
+          stock:0
+        })
       })
     },
-    onRemoveSpec(specId, value){
-      this.form.specs[specId].splice(this.form.specs[specId].indexOf(value), 1);
+    calcDescartes (arr){
+      //编辑原数组格式
+      if(arr[0].checkList){
+        arr=arr.map((item)=>{
+          return item=item.checkList
+        })
+      }
+      if(arr.length == 1){
+        //最终合并成一个
+        return arr[0];
+      }else{	//有两个子数组就合并
+        let arrySon = [];
+        //将组合放到新数组中
+        arr[0].forEach((item,index)=>{
+          arr[1].forEach((item1,index1)=>{
+            arrySon.push([].concat(arr[0][index],arr[1][index1]));
+          })
+        })
+        // 新数组并入原数组,去除合并的前两个数组
+        arr[0] = arrySon;
+        arr.splice(1,1);
+        // 递归
+        return this.calcDescartes(arr);
+      }
     },
     addSpec(specId, specName, specValue){
-      console.log(this.form.specs)
-      if (null == this.form.specs[specId]) {
-        this.form.specs[specId] = []
+      if (null == specValue || specValue.trim().length ==  0) {
+        return ;
       }
-      this.form.specs[specId].push({id:specId,name:specName, value:specValue})
+      var targetSpec = this.form.specs.filter(function (t) {
+        return specId == t.specId
+      })[0]
+      if (null == targetSpec) {
+        this.form.specs.push({
+          specId: specId,
+          specName: specName,
+          checkList: [{
+            specId: specId,
+            specValue: specValue
+          }]
+        })
+      } else {
+        targetSpec["checkList"].push({
+          specId: specId,
+          specValue: specValue
+        })
+      }
+    },
+    onRemoveSpec(specId, value){
+      var targetSpec = this.form.specs.filter(function (t) {
+        return specId == t.specId
+      })[0]
+      if (null != targetSpec) {
+        targetSpec["checkList"].splice(targetSpec["checkList"].indexOf(value), 1);
+      }
     },
     handleChange() {
 
@@ -251,17 +324,20 @@ export default {
     deleteRow(index, rows) {
       rows.splice(index, 1);
     },
-    handleRemove() {
-
-    }
+    handlePictureRemove(file, fileList) {
+      this.form.pictures.splice(this.form.pictures.indexOf(file), 1);
+    },
+    handlePictureSuccess(res, file) {
+      console.log(res)
+      console.log(file)
+      this.form.pictures.push({url:res.data})
+    },
   },
   created () {
     this.ptype = this.$route.query.ptype
     this.spuId = this.$route.query.spuId
     // 0 为修改、1为新增
     if (1 === this.ptype) {
-      //
-      // this.form = {}
     }
   },
   mounted() {

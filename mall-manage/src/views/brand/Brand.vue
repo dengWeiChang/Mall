@@ -125,7 +125,7 @@
         currentPage: 1,
         pageNum: 1,
         pageSize: 10,
-        tableData: [],
+        formprices: [],
         brandDetailDialog: false,
         brandDetailAdd: false,
         brand: {
@@ -135,7 +135,7 @@
           letter:'',
           category:[]
         },
-        fileList: []
+        pictures: []
       };
     },
     methods: {
