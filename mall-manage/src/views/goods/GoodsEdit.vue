@@ -36,10 +36,10 @@
           <el-input style="width: 50%" type="textarea" v-model="form.desc"></el-input>
         </el-form-item>
         <el-form-item v-show="0 === step" label="包装清单：">
-          <el-input style="width: 50%" v-model="form.packlist"></el-input>
+          <el-input style="width: 50%" type="textarea" v-model="form.packlist"></el-input>
         </el-form-item>
         <el-form-item v-show="0 === step" label="售后服务：">
-          <el-input style="width: 50%" v-model="form.service"></el-input>
+          <el-input style="width: 50%" type="textarea" v-model="form.service"></el-input>
         </el-form-item>
 
         <!-- SPU信息 -->
@@ -74,13 +74,11 @@
                       <el-input style="max-width: 100px" v-model="spec.value" />
                       <el-button type="primary" icon="el-icon-circle-plus-outline" size="mini" @click="addSpec(spec.id, spec.name, spec.value)">增加</el-button>
                       <!--<el-tag-->
-                        <!--style="margin-left: 2px"-->
-                        <!--v-for="(spec, key) in form.specs"-->
-                        <!--:key="key"-->
+                        <!--v-for="tag in specTags[spec.id]"-->
+                        <!--:key="tag.name"-->
                         <!--closable-->
-                        <!--type="success"-->
-                        <!--@close="onRemoveSpec(spec.id, value)">-->
-                        <!--{{spec.specValue}}-->
+                        <!--type="success">-->
+                        <!--{{tag.name}}-->
                       <!--</el-tag>-->
                     </el-form-item>
                   </div>
@@ -109,13 +107,13 @@
                 </el-table-column>
 
                 <el-table-column align="center" label="价格" width="100">
-                  <template scope="scope">
+                  <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.price"></el-input>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" label="库存" width="100">
-                  <template scope="scope">
+                  <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.stock"></el-input>
                   </template>
                 </el-table-column>
@@ -151,16 +149,6 @@
               <i class="el-icon-plus"></i>
             </el-upload>
           </el-card>
-
-          <!--<el-upload-->
-            <!--class="upload-demo"-->
-            <!--action="http://localhost:8080/api/upload/image"-->
-            <!--:on-remove="handlePictureRemove"-->
-            <!--:onSuccess="handlePictureSuccess"-->
-            <!--:file-list="form.pictures"-->
-            <!--list-type="picture">-->
-            <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过10MB</div>-->
-          <!--</el-upload>-->
         </el-form-item>
         <el-form-item v-show="3 === step" label="详情大图：">
           <div>
@@ -189,10 +177,15 @@ import EditorBar from '@/components/WangEditor/index'
 import {getAllCategoryList as getCategoryList} from '@/api/category';
 import {getSpecGroupByCatId} from '@/api/specification';
 import {getBrandByCategoryId} from '@/api/brand';
+import {addGoods} from '@/api/goods';
 export default {
   name: "goodsedit",
   data() {
     return {
+      specTags: {
+        // 0:[{ name: '标签一', type: '' }],
+        // 1:[{name: '标签er', type: '' }]
+      },
       ptype: null,
       // 首页类目
       categoryList:[],
@@ -214,10 +207,8 @@ export default {
       },
       // 类目下的规则参数
       specGroup:[],
+      // 规格标签
 
-      editor: {
-        info: ''
-      },
       isClear: false,
     };
   },
@@ -226,11 +217,10 @@ export default {
   },
   methods: {
     testTable() {
-      console.log(JSON.stringify(this.form))
-      console.log(JSON.stringify(this.form.prices))
+      console.log(this.specTags)
+      // console.log(JSON.stringify(this.form))
     },
     createSpecTable() {
-      // console.log(JSON.stringify(this.form.specs))
       var tableDataList = this.calcDescartes(this.form.specs)
       this.form.prices = []
       tableDataList.forEach((val) => {
@@ -252,9 +242,8 @@ export default {
         })
       }
       if(arr.length == 1){
-        //最终合并成一个
         return arr[0];
-      }else{	//有两个子数组就合并
+      }else{
         let arrySon = [];
         //将组合放到新数组中
         arr[0].forEach((item,index)=>{
@@ -293,12 +282,7 @@ export default {
       }
     },
     onRemoveSpec(specId, value){
-      var targetSpec = this.form.specs.filter(function (t) {
-        return specId == t.specId
-      })[0]
-      if (null != targetSpec) {
-        targetSpec["checkList"].splice(targetSpec["checkList"].indexOf(value), 1);
-      }
+      // this.specTags[specId].splice(this.specTags[specId].indexOf({ name: specValue, id: specId }), 1);
     },
     handleChange() {
 
@@ -319,7 +303,13 @@ export default {
       if (this.step++ > 2) this.step = 3;
     },
     submit() {
-      // console.log(this.form)
+      console.log(JSON.stringify(this.form))
+      addGoods(this.form).then(response => {
+        this.$message({
+          message: '添加成功！',
+          type: 'success'
+        });
+      });
     },
     deleteRow(index, rows) {
       rows.splice(index, 1);
@@ -328,8 +318,6 @@ export default {
       this.form.pictures.splice(this.form.pictures.indexOf(file), 1);
     },
     handlePictureSuccess(res, file) {
-      console.log(res)
-      console.log(file)
       this.form.pictures.push({url:res.data})
     },
   },

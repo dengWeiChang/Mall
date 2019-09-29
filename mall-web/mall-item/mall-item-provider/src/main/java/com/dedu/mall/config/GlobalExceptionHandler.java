@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public Result exceptionHandler() {
+    public Result exceptionHandler(Exception ex) {
         return Result.build(ResultCode.SYS_ERROR.getCode(), ResultCode.SYS_ERROR.getDesc());
     }
 }
