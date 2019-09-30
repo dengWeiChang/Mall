@@ -32,10 +32,10 @@ public class GoodsSerImpl implements GoodsService {
     @Override
     public Boolean addGoods(GoodsVo goodsVo) {
         System.out.println(goodsVo);
-        // 1æ’å…¥SPU å’Œ æ’å…¥SPUDetail
+        // 1²åÈëSPU ºÍ ²åÈëSPUDetail
         SpuAndDetailVo spuAndDetailVo = convertGoodsToSpuAndDetail(goodsVo);
         SpuPo savedSpuPo = spuService.addSpuAndSpuDetail(spuAndDetailVo);
-        // 2æ’å…¥SpecificationValue
+        // 2²åÈëSpecificationValue
         Map<String, Long> tempCache = new HashMap<>();
         if (!CollectionUtils.isEmpty(goodsVo.getSpecs())) {
             for (SpecReqVo specReqVo:goodsVo.getSpecs()
@@ -54,7 +54,7 @@ public class GoodsSerImpl implements GoodsService {
                 tempCache.putAll(collect);
             }
         }
-        // 3æ’å…¥SKU
+        // 3²åÈëSKU
         if (!CollectionUtils.isEmpty(goodsVo.getPrices())) {
             for (PriceReqVo priceReqVo:
             goodsVo.getPrices()) {
@@ -68,12 +68,12 @@ public class GoodsSerImpl implements GoodsService {
                         .build());
             }
         }
-        // 4 æ’å…¥Stock
+        // 4 ²åÈëStock
         return true;
     }
 
     /**
-     * è·å–è§„æ ¼å‚æ•°å€¼ä¸»é”®ï¼Œå¹¶ä½¿ç”¨,åˆ†éš”
+     * »ñÈ¡¹æ¸ñ²ÎÊıÖµÖ÷¼ü£¬²¢Ê¹ÓÃ,·Ö¸ô
      * @param tempCache
      * @param specNames
      * @return
@@ -92,7 +92,7 @@ public class GoodsSerImpl implements GoodsService {
     }
 
     /**
-     * å°†å‰ç«¯GoodsVoè½¬æ¢æˆæ•°æ®åº“å¯¹è±¡
+     * ½«Ç°¶ËGoodsVo×ª»»³ÉÊı¾İ¿â¶ÔÏó
      * @param goodsVo
      * @return
      */
