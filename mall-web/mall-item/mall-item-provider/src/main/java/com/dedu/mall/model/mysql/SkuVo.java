@@ -16,28 +16,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@TableName(value = "tb_sku")
-public class SkuPo {
-    @TableId(value = "id", type = IdType.AUTO)
+public class SkuVo {
     private Long id;
-    @TableField(value = "spu_id")
     private Long spuId;
-    @TableField(value = "title")
     private String title;
-    @TableField(value = "images")
     private String images;
-    @TableField(value = "price")
     private BigDecimal price;
-    @TableField(value = "specs")
     private String specs;
-    @TableField(value = "spec_values")
     private String specValues;
-    @TableField(value = "create_time")
     private LocalDateTime createTime;
-    @TableField(value = "update_time")
     private LocalDateTime updateTime;
-    @TableField(value = "is_enable")
     private Boolean isEnable;
-    @TableField(value = "is_delete")
     private Boolean isDelete;
 }

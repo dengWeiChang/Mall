@@ -1,8 +1,7 @@
 package com.dedu.mall.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.dedu.mall.model.mysql.SpuVo;
+import com.dedu.mall.model.mysql.SkuVo;
 
 public interface SkuService {
-    IPage<SpuVo> getSpuPage(Integer pageNum, Integer pageSize);
+    void addSku(SkuVo skuVo);
 }

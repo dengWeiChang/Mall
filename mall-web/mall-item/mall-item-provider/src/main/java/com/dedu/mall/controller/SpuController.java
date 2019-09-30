@@ -3,6 +3,7 @@ package com.dedu.mall.controller;
 import com.dedu.mall.model.Result;
 import com.dedu.mall.model.ResultCode;
 import com.dedu.mall.service.SkuService;
+import com.dedu.mall.service.SpuService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +21,7 @@ import javax.validation.constraints.Max;
 public class SpuController {
 
     @Autowired
-    private SkuService skuService;
+    private SpuService spuService;
 
     /**
      * 分页查询Spu
@@ -33,6 +34,6 @@ public class SpuController {
     })
     public Result getSpuPage(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum,
                                @Max(100)@RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize) {
-        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), skuService.getSpuPage(pageNum, pageSize));
+        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), spuService.getSpuPage(pageNum, pageSize));
     }
 }

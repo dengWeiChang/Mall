@@ -9,29 +9,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@TableName(value = "tb_sku")
-public class SkuPo {
+@TableName(value = "tb_specification_value")
+public class SpecificationValuePo {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
-    @TableField(value = "spu_id")
-    private Long spuId;
-    @TableField(value = "title")
-    private String title;
-    @TableField(value = "images")
-    private String images;
-    @TableField(value = "price")
-    private BigDecimal price;
-    @TableField(value = "specs")
-    private String specs;
-    @TableField(value = "spec_values")
-    private String specValues;
+    @TableId(value = "specification_id", type = IdType.AUTO)
+    private Long specificationId;
+    @TableField(value = "specification_name")
+    private String specificationName;
+    @TableField(value = "value")
+    private String value;
     @TableField(value = "create_time")
     private LocalDateTime createTime;
     @TableField(value = "update_time")
