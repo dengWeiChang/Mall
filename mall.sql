@@ -1600,6 +1600,7 @@ CREATE TABLE `tb_sku` (
   `images` varchar(1024) DEFAULT '' COMMENT ',分隔的商品图片链接',
   `price` decimal(13,2) DEFAULT NULL COMMENT '销售价格，单位为分',
   `specs` varchar(32) DEFAULT '' COMMENT ',分隔的销售属性',
+  `spec_values` varchar(255) DEFAULT NULL COMMENT ',分隔的销售属性值',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_enable` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效，0为否，1为是',
