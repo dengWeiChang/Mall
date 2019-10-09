@@ -222,8 +222,10 @@ export default {
     },
     createSpecTable() {
       var tableDataList = this.calcDescartes(this.form.specs)
+      console.log(tableDataList)
       this.form.prices = []
       tableDataList.forEach((val) => {
+        console.log(val)
         var specIds = val.map(a => a.specId).join(",")
         var specValues = val.map(a => a.specValue).join(",")
         this.form.prices.push({

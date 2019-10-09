@@ -1,7 +1,8 @@
 package com.dedu.mall.service;
 
+import com.dedu.mall.model.mysql.SkuPo;
 import com.dedu.mall.model.mysql.SkuVo;
 
 public interface SkuService {
-    void addSku(SkuVo skuVo);
+    SkuPo addSku(SkuVo skuVo);
 }

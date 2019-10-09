@@ -16,14 +16,16 @@ import java.time.LocalDateTime;
 public class SkuSerImpl extends ServiceImpl<SkuMapper, SkuPo> implements SkuService {
 
     @Override
-    public void addSku(SkuVo skuVo) {
+    public SkuPo addSku(SkuVo skuVo) {
         SkuPo skuPo = new SkuPo();
         BeanUtils.copyProperties(skuVo, skuPo);
         skuPo.setCreateTime(LocalDateTime.now());
         skuPo.setUpdateTime(LocalDateTime.now());
         skuPo.setIsEnable(Boolean.TRUE);
         skuPo.setIsDelete(Boolean.FALSE);
-        this.save(skuPo);
-
+        if (this.save(skuPo)) {
+            return skuPo;
+        }
+        return null;
     }
 }

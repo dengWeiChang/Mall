@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@TableName(value = "tb_spu")
+@TableName(value = "tb_spu_detail")
 public class SpuDetailPo {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

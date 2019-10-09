@@ -1626,3 +1626,73 @@ CREATE TABLE `tb_stock` (
   PRIMARY KEY (`id`),
   KEY `idx_sku_id` (`sku_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='库存表';
+
+
+
+-- ----------------------------
+-- Table structure for tb_order
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_order`;
+CREATE TABLE `tb_order` (
+  `id` bigint(20) NOT NULL COMMENT '订单id',
+  `total_price` decimal(13,2) NOT NULL COMMENT '商品总金额 单位：分',
+  `buyer_id` varchar(32) NOT NULL COMMENT '用户id',
+  `sku_id` bigint(20) NOT NULL COMMENT '商品skuId',
+  `num` int(11) NOT NULL COMMENT '购买数量',
+  `title` varchar(256) NOT NULL COMMENT '商品标题',
+   `source_type` int(1) DEFAULT '2' COMMENT '订单来源：1:app端，2：pc端，3：微信端',
+  `logistics_name` varchar(20) DEFAULT NULL COMMENT '物流名称',
+  `logistics_code` varchar(20) DEFAULT NULL COMMENT '物流单号',
+  `receiver_state` varchar(128) DEFAULT NULL COMMENT '收获地址（省）',
+  `receiver_city` varchar(256) DEFAULT NULL COMMENT '收获地址（市）',
+  `receiver_district` varchar(256) DEFAULT NULL COMMENT '收获地址（区/县）',
+  `receiver_address` varchar(256) DEFAULT NULL COMMENT '收获地址（街道、住址等详细地址）',
+  `receiver_mobile` varchar(11) DEFAULT NULL COMMENT '收货人手机',
+  `receiver_postcode` varchar(16) DEFAULT NULL COMMENT '收货人邮编',
+  `receiver_name` varchar(32) DEFAULT NULL COMMENT '收货人',
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '订单创建时间',
+  `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '订单更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单基本信息表';
+
+
+-- ----------------------------
+-- Table structure for tb_order_status
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_order_status`;
+CREATE TABLE `tb_order_status` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id ',
+  `order_id` bigint(20) NOT NULL COMMENT '订单id',
+  `status` int(1) DEFAULT NULL COMMENT '状态：1、未付款 2、已付款,未发货 3、已发货,未确认 4、交易成功 5、交易关闭 6、已评价',
+  `consign_time` TIMESTAMP NULL COMMENT '发货时间',
+  `end_time` TIMESTAMP NULL COMMENT '交易完成时间',
+  `close_time` TIMESTAMP NULL COMMENT '交易关闭时间',
+  `comment_time` TIMESTAMP NULL COMMENT '评价时间',
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '状态更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_orderId_status` (`order_id`, `status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单状态表';
+
+
+-- ----------------------------
+-- Table structure for tb_pay
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_pay`;
+CREATE TABLE `tb_pay` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id ',
+  `order_id` bigint(20) NOT NULL COMMENT '订单号',
+  `total_pay` decimal(13,2) NOT NULL COMMENT '支付金额（分）',
+  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `wechat_paycode` varchar(32) DEFAULT NULL COMMENT '微信交易号码',
+  `status` tinyint(1) NOT NULL COMMENT '交易状态，1 未支付, 2已支付, 3 已退款, 4 支付错误, 5 已关闭',
+  `pay_type` tinyint(1) DEFAULT 0 COMMENT '支付方式：0 未知, 1 微信支付, 2 支付宝支付',
+  `pay_time` TIMESTAMP NULL COMMENT '支付时间',
+  `closed_time` TIMESTAMP NULL COMMENT '关闭时间',
+  `refund_time` TIMESTAMP NULL COMMENT '退款时间',
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '支付订单创建时间',
+  `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '支付订单更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_orderId_status` (`order_id`, `status`),
+  KEY `idx_userId` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单支付表';

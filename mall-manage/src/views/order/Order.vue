@@ -29,13 +29,13 @@
           width="180">
         </el-table-column>
         <el-table-column
-          prop="username"
+          prop="buyerId"
           label="用户账号"
           width="180">
         </el-table-column>
         <el-table-column
-          prop="price"
-          label="价格">
+          prop="totalPrice"
+          label="价格/元">
         </el-table-column>
         <el-table-column
           label="支付类型">
@@ -48,10 +48,11 @@
         <el-table-column
           label="商品状态">
           <template slot-scope="scope">
-            <div v-if="0 === scope.row.saleable"><el-button type="success">新订单，待确认</el-button></div>
-            <div v-else-if="1 === scope.row.saleable"> <el-button type="info">已确认，待支付</el-button></div>
-            <div v-else-if="2 === scope.row.saleable"> <el-button type="warning">已支付，待发货</el-button></div>
-            <div v-else-if="3 === scope.row.saleable"> <el-button type="warning">已支付，待发货</el-button></div>
+            <div v-if="1 === scope.row.status"><el-button type="success">新订单，待支付</el-button></div>
+            <div v-else-if="2 === scope.row.status"> <el-button type="info">已付款，待发货</el-button></div>
+            <div v-else-if="3 === scope.row.status"> <el-button type="warning">已发货，待确认</el-button></div>
+            <div v-else-if="4 === scope.row.status"> <el-button type="warning">已确认，交易成功</el-button></div>
+            <div v-else-if="5 === scope.row.status"> <el-button type="warning">交易关闭</el-button></div>
           </template>
         </el-table-column>
         <el-table-column
@@ -100,21 +101,23 @@
 </template>
 
 <script>
-export default {
+  import {getAllOrderByPage} from '@/api/order';
+
+  export default {
     name: "Order",
     data() {
       return {
         searchdata: {},
         total: 0,
         currentPage: 1,
-        pageNum: 1,
+        pageNum: 0,
         pageSize: 10,
-        formprices:[{
+        tableData:[{
           id:1,
           createTime:"2019-09-20 11:40:00",
-          username:"陈达棍",
-          price:"￥2699",
-          saleable:3,
+          buyerId:"陈达棍",
+          totalPrice:"￥2699",
+          status:3,
           payType:1,
           updateTime:'2019-09-20 11:40:00'
         }],
@@ -141,6 +144,16 @@ export default {
       this.pageNum = currentPage
       this.handlePageChange()
     },
+    handlePageChange: function () {
+      // 分页查询品牌
+      getAllOrderByPage({
+        pageSize: this.pageSize,
+        pageNum: this.pageNum
+      }).then(response => {
+        this.total = response.total
+        this.tableData = response.records
+      });
+    },
     handleLogisticsTracking(id) {
       this.logisticsVisible = true;
       this.logisticsList = [{name: '订单已提交，等待付款',time:'2017-04-01 12:00:00 '},
@@ -151,6 +164,9 @@ export default {
         {name: '到达目的地网点广东深圳公司，快件将很快进行派送',time:'2017-04-01 12:00:00 '},
         {name: '订单已签收，期待再次为您服务',time:'2017-04-01 12:00:00 '}];
     }
+  },
+  mounted () {
+    this.handlePageChange()
   }
 }
 </script>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,51 +30,63 @@ public class GoodsSerImpl implements GoodsService {
     @Autowired
     private SkuService skuService;
 
+    @Autowired
+    private StockService stockService;
+
     @Override
     public Boolean addGoods(GoodsVo goodsVo) {
-        System.out.println(goodsVo);
-        // 1²åÈëSPU ºÍ ²åÈëSPUDetail
+        // 1æ’å…¥SPU å’Œ æ’å…¥SPUDetail
         SpuAndDetailVo spuAndDetailVo = convertGoodsToSpuAndDetail(goodsVo);
         SpuPo savedSpuPo = spuService.addSpuAndSpuDetail(spuAndDetailVo);
-        // 2²åÈëSpecificationValue
+        // 2æ’å…¥SpecificationValue
         Map<String, Long> tempCache = new HashMap<>();
+        String pictures = "";
         if (!CollectionUtils.isEmpty(goodsVo.getSpecs())) {
+            if (!CollectionUtils.isEmpty(goodsVo.getPictures())) {
+                pictures = goodsVo.getPictures().stream().map(PictureReqVo::getUrl).collect(Collectors.joining(","));
+            }
             for (SpecReqVo specReqVo:goodsVo.getSpecs()
                  ) {
                 List<SpecReqVo> checkList = specReqVo.getCheckList();
                 List<SpecificationValueVo> specValueVoList = new ArrayList<>();
-                checkList.stream().forEach(s->
+                checkList.stream().forEach(s ->
                     specValueVoList.add(SpecificationValueVo.builder()
                             .specificationId(s.getSpecId())
                             .specificationName(specReqVo.getSpecName())
                             .value(s.getSpecValue())
-                            .build())
-                );
+                            .build()));
                 List<SpecificationValuePo> specificationValuePos = specValueService.addSpecificationValueBatch(specValueVoList);
                 Map<String, Long> collect = specificationValuePos.stream().collect(Collectors.toMap(SpecificationValuePo::getValue, SpecificationValuePo::getId));
                 tempCache.putAll(collect);
             }
         }
-        // 3²åÈëSKU
+        // 3æ’å…¥SKU
         if (!CollectionUtils.isEmpty(goodsVo.getPrices())) {
+            Map<Long, BigDecimal> stockMap = new HashMap<>();
             for (PriceReqVo priceReqVo:
             goodsVo.getPrices()) {
                 String specs = priceReqVo.getSpecs();
                 String specValues = getSpecValues(tempCache, priceReqVo.getSpecNames());
-                skuService.addSku(SkuVo.builder()
+                SkuPo skuPo = skuService.addSku(SkuVo.builder()
                         .spuId(savedSpuPo.getId())
+                        .title(goodsVo.getName())
+                        .images(pictures)
                         .price(priceReqVo.getPrice())
                         .specs(specs)
                         .specValues(specValues)
                         .build());
+                if (null != skuPo) {
+                    stockMap.put(skuPo.getId(), priceReqVo.getStock());
+                }
             }
+            // 4 æ’å…¥Stock
+            stockService.addStockByMapBatch(stockMap);
         }
-        // 4 ²åÈëStock
         return true;
     }
 
     /**
-     * »ñÈ¡¹æ¸ñ²ÎÊıÖµÖ÷¼ü£¬²¢Ê¹ÓÃ,·Ö¸ô
+     * è·å–è§„æ ¼å‚æ•°å€¼ä¸»é”®ï¼Œå¹¶ä½¿ç”¨,åˆ†éš”
      * @param tempCache
      * @param specNames
      * @return
@@ -92,7 +105,7 @@ public class GoodsSerImpl implements GoodsService {
     }
 
     /**
-     * ½«Ç°¶ËGoodsVo×ª»»³ÉÊı¾İ¿â¶ÔÏó
+     * å°†å‰ç«¯GoodsVoè½¬æ¢æˆæ•°æ®åº“å¯¹è±¡
      * @param goodsVo
      * @return
      */

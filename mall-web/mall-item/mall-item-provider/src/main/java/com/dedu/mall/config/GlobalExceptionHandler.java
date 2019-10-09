@@ -12,6 +12,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public Result exceptionHandler(Exception ex) {
+        ex.printStackTrace();
         return Result.build(ResultCode.SYS_ERROR.getCode(), ResultCode.SYS_ERROR.getDesc());
     }
 }
