@@ -28,4 +28,18 @@ public class SkuVo {
     private LocalDateTime updateTime;
     private Boolean isEnable;
     private Boolean isDelete;
+
+    public SkuVo(SkuPo skuPo) {
+        this.id = skuPo.getId();
+        this.spuId = skuPo.getSpuId();
+        this.title = skuPo.getTitle();
+        this.images = skuPo.getImages();
+        this.price = skuPo.getPrice();
+        this.specs = skuPo.getSpecs();
+        this.specValues = skuPo.getSpecValues();
+        this.createTime = skuPo.getCreateTime();
+        this.updateTime = skuPo.getUpdateTime();
+        this.isEnable = skuPo.getIsEnable();
+        this.isDelete = skuPo.getIsDelete();
+    }
 }

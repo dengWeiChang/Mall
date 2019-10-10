@@ -4,10 +4,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dedu.mall.dao.OrderMapper;
+import com.dedu.mall.feign.SkuFeignClient;
+import com.dedu.mall.model.Result;
+import com.dedu.mall.model.SkuVo;
 import com.dedu.mall.model.mysql.OrderAllInfoPo;
 import com.dedu.mall.model.mysql.OrderDetailPo;
 import com.dedu.mall.model.mysql.OrderPo;
 import com.dedu.mall.service.OrderService;
+import com.dedu.mall.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,9 @@ public class OrderSerImpl extends ServiceImpl<OrderMapper, OrderPo> implements O
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private SkuFeignClient skuFeignClient;
 
     @Override
     public IPage<OrderAllInfoPo> getOrderPage(Integer pageNum, Integer pageSize) {
@@ -40,6 +47,12 @@ public class OrderSerImpl extends ServiceImpl<OrderMapper, OrderPo> implements O
 
     @Override
     public OrderDetailPo queryOrderDetailById(Long id) {
-        return orderMapper.getOrderDetailInfoById(id);
+        OrderDetailPo result = orderMapper.getOrderDetailInfoById(id);
+        if (null != result.getSkuId()) {
+            Result<SkuVo> remoteRstData = skuFeignClient.getSkuById(result.getSkuId());
+            SkuVo skuVo = ResultUtil.getResultData(remoteRstData);
+            result.setSku(skuVo);
+        }
+        return result;
     }
 }

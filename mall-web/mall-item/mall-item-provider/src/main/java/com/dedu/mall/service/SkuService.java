@@ -5,4 +5,6 @@ import com.dedu.mall.model.mysql.SkuVo;
 
 public interface SkuService {
     SkuPo addSku(SkuVo skuVo);
+
+    SkuVo querySkuById(Long id);
 }

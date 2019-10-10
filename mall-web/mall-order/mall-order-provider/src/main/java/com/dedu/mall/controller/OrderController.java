@@ -38,4 +38,7 @@ public class OrderController {
     public Result getOrderDetailById(@PathVariable Long id) throws Exception {
         return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), orderService.queryOrderDetailById(id));
     }
+
+
+
 }

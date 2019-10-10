@@ -1,8 +1,23 @@
 package com.dedu.mall.model.mysql;
 
-public class OrderDetailPo {
+import com.dedu.mall.model.SkuVo;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class OrderDetailPo implements Serializable {
     private Long id;
     private Long buyerId;
+    private Long skuId;
     private Integer num;
     private BigDecimal totalPrice;
     private String title;
@@ -33,4 +48,6 @@ public class OrderDetailPo {
     private LocalDateTime payTime;
     private LocalDateTime payClosedTime;
     private LocalDateTime refundTime;
+
+    private SkuVo sku;
 }
