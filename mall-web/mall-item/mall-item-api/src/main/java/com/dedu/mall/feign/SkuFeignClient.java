@@ -14,5 +14,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface SkuFeignClient {
 
     @GetMapping("/api/sku/{id}")
-    Result<SkuVo> getSkuById(@PathVariable Long id);
+    Result<SkuVo> getSkuById(@PathVariable("id") Long id);
 }

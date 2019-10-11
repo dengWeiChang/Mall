@@ -32,6 +32,6 @@ public class SkuSerImpl extends ServiceImpl<SkuMapper, SkuPo> implements SkuServ
     @Override
     public SkuVo querySkuById(Long id) {
         SkuPo skuPo = this.getById(id);
-        return new SkuVo(skuPo);
+        return null == skuPo ? null : new SkuVo(skuPo);
     }
 }
