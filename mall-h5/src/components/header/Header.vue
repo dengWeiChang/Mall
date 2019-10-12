@@ -141,7 +141,7 @@ export default {
 .box {
   width: 100%;
   height: 35px;
-  background-color: #e3e4e5;
+  background-color: #e4e53f;
 }
 .nav {
   margin: 0% auto;

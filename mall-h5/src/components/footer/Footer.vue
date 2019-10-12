@@ -73,7 +73,7 @@ export default {
   width: 100%;
   height: 390px;
   margin-top: 30px;
-  background-color: #eaeaea;
+  background-color: #ea2b33;
 }
 .icon-row {
   margin: 15px auto;

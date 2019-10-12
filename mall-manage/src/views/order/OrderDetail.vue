@@ -54,7 +54,11 @@
           </el-row>
           <el-row>
             <el-col :span="4" class="table-cell">{{order.sku.title}}</el-col>
-            <el-col :span="4" class="table-cell">{{order.sku.images}}</el-col>
+            <el-col :span="4" class="table-cell">
+              <el-image
+              style="width: 25%; height: 25%"
+              :src="order.sku.images" lazy/>
+            </el-col>
             <el-col :span="4" class="table-cell">{{order.sku.price}}</el-col>
           </el-row>
         </div>
