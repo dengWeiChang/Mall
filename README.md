@@ -3,10 +3,9 @@
 ## 1. mall-web 应用后台服务支撑
 #### 1.1 Nacos Server  √
 #### 1.2 Nacos Client
-#### 1.3 类目后台 √
+
 
 ## 2. mall-manage 运营后台管理
-#### 2.1 类目页面 √
 
 ## 3. mall-h5 安卓/IOS应用
 
