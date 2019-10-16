@@ -42,7 +42,7 @@
       </li>
       <!-- 注册 -->
       <li>
-        <span class="text-color-red"><router-link to="/SignUp">免费注册 <Icon type="person-add"></Icon></router-link></span>
+        <span class="text-color-red"><router-link to="/Register">免费注册 <Icon type="person-add"></Icon></router-link></span>
       </li>
       <!-- 购物车 -->
       <li>

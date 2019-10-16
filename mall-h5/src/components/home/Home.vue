@@ -7,7 +7,7 @@
             <div class="user-img">
               <img src="static/img/head.png">
             </div>
-            <p>Gavin</p>
+            <p>Dedu</p>
           </div>
           <Submenu name="1">
             <template slot="title">

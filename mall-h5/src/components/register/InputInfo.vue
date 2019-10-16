@@ -74,7 +74,7 @@ export default {
           };
           this.addSignUpUser(userinfo);
           father.SET_SIGN_UP_SETP(2);
-          this.$router.push({ path: '/SignUp/signUpDone' });
+          this.$router.push({ path: '/Register/RegisterDone' });
         } else {
           this.$Message.error('注册失败');
         }

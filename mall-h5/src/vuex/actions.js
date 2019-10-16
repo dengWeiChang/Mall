@@ -711,7 +711,7 @@ export const addSignUpUser = ({ commit }, data) => {
 // 用户登录
 export const login = ({ commit }, data) => {
   return new Promise((resolve, reject) => {
-    if (data.username === 'Gavin' && data.password === '123456') {
+    if (data.username === 'Dedu' && data.password === '123456') {
       localStorage.setItem('loginInfo', JSON.stringify(data));
       commit('SET_USER_LOGIN_INFO', data);
       resolve(true);

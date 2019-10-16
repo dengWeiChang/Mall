@@ -33,7 +33,7 @@ import ShopHeader from '@/components/shop/ShopHeader';
 import store from '@/vuex/store';
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  name: 'Merchant',
+  name: 'Shop',
   created () {
     this.loadGoodsList();
   },

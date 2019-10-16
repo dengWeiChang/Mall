@@ -57,7 +57,7 @@ export default {
     handleSubmit (name) { // 提交验证
       this.$refs[name].validate((valid) => {
         if (valid) {
-          this.$router.push({ path: '/SignUp/inputInfo', query: { phone: this.formValidate.phone } });
+          this.$router.push({ path: '/Register/inputInfo', query: { phone: this.formValidate.phone } });
           this.SET_SIGN_UP_SETP(1);
         } else {
           this.$Message.error({

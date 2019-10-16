@@ -60,7 +60,6 @@ export default {
     ...mapActions(['login']),
     handleSubmit (name) {
       const father = this;
-      console.log(this.formDate.username);
       this.$refs[name].validate((valid) => {
         if (valid) {
           this.login(father.formDate).then(result => {
