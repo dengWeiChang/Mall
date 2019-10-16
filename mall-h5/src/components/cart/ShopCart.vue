@@ -3,39 +3,40 @@
     <Search></Search>
     <GoodsListNav></GoodsListNav>
     <!-- 添加成功提示 -->
-    <div class="add-info-box-container">
-      <div class="add-info-box">
-        <div class="add-info-detail">
-          <div class="add-info-title">
-            <p>
-              <i class="fa fa-check-circle"></i> 商品已成功加入购物车！</p>
-          </div>
-          <div class="add-info-box-row">
-            <div class="add-info-img">
-              <img :src="newShoppingCart.package.img" alt="">
-            </div>
-            <div class="add-info-intro">
-              <p>{{newShoppingCart.title}} {{newShoppingCart.package.intro}}...</p>
-              <p class="add-info-intro-detail">颜色：{{newShoppingCart.package.intro}}/ 数量：{{newShoppingCart.count}}</p>
-            </div>
-          </div>
+    <div class="add-info-box">
+      <!-- 商品列表-->
+      <div class="add-info-detail">
+        <div class="add-info-title">
+          <p>
+            <i class="fa fa-check-circle"></i> 商品已成功加入购物车！</p>
         </div>
-        <div class="car-btn-group">
-          <div></div>
-          <div class="car-btn-row">
-            <router-link to="/goodsDetail">
-              <button class="btn-car btn-car-to-detail">查看商品详情</button>
-            </router-link>
-            <router-link to="/order">
-              <button class="btn-car btn-car-to-pay">去购物车结算 > </button>
-            </router-link>
+        <div class="add-info-box-row">
+          <div class="add-info-img">
+            <img :src="newShoppingCart.package.img" alt="">
+          </div>
+          <div class="add-info-intro">
+            <p>{{newShoppingCart.title}} {{newShoppingCart.package.intro}}...</p>
+            <p class="add-info-intro-detail">颜色：{{newShoppingCart.package.intro}}/ 数量：{{newShoppingCart.count}}</p>
           </div>
         </div>
       </div>
+      <!-- 结算按钮-->
+      <div class="car-btn-group">
+        <div></div>
+        <div class="car-btn-row">
+          <router-link to="/goodsDetail">
+            <button class="btn-car btn-car-to-detail">查看商品详情</button>
+          </router-link>
+          <router-link to="/order">
+            <button class="btn-car btn-car-to-pay">去购物车结算 > </button>
+          </router-link>
+        </div>
+      </div>
     </div>
+    <!-- 其他商品推荐-->
     <div class="other-user-buy-box">
       <div class="other-user-buy-title">
-        <p>可以顺便看下其他商品哦 ~</p>
+        <p>购买了该商品的用户还购买了</p>
       </div>
       <div class="other-user-buy-row" v-for="(items,index1) in recommend" :key="index1">
         <div class="other-user-buy-item-box" v-for="(item,index2) in items" :key="index2">
@@ -64,8 +65,8 @@
 </template>
 
 <script>
-import Search from '@/components/Search';
-import GoodsListNav from '@/components/nav/GoodsListNav';
+import Search from '@/components/search/Search';
+import GoodsListNav from '@/components/goods/GoodsListNav';
 import store from '@/vuex/store';
 import { mapState, mapActions } from 'vuex';
 export default {
@@ -93,21 +94,18 @@ export default {
 
 <style scoped>
 /****************************加入购物车页面开始*****************************/
-.add-info-box-container{
-  width: 100%;
-  background-color: #F5F5F5;
-}
 .add-info-box{
   width: 90%;
-  margin: 0px auto;
+  margin-left: 15%;
+  margin-right: 15%;
   padding: 15px 0px;
   display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .add-info-detail{
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
 }
 .add-info-title{
   font-size: 25px;
@@ -136,9 +134,10 @@ export default {
   color: #999999;
 }
 .car-btn-group{
+  margin-right: 15%;
   display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  flex-direction: column;
+  justify-content: space-between;
 }
 /*按钮*/
 .btn-car{
@@ -168,9 +167,10 @@ border:1px solid #e4393c;
 /*其他用户购买*/
 .other-user-buy-box{
   width: 90%;
-  margin: 0px auto;
+  margin-left: 15%;
+  margin-right: 15%;
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
 }
 .other-user-buy-title{
   margin-top: 25px;
@@ -179,14 +179,15 @@ border:1px solid #e4393c;
   font-weight: bold;
 }
 .other-user-buy-row{
-  margin-top: 25px;
+  margin-top: 2%;
+  margin-right: 15%;
   display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .other-user-buy-item-box{
   display: flex;
-    flex-direction: row;
+  flex-direction: row;
 }
 .other-user-buy-item-img{
   width: 96px;

@@ -3,8 +3,9 @@
     <div class="shop-container">
       <div class="shop-title">
         <div class="shop-title-icon">
-          <Icon type="fireball"></Icon>
-          <i class="fa fa-fire"></i>
+          <!--<Icon type="fireball"></Icon>-->
+          <!--<i class="fa fa-fire"></i>-->
+          <img :src="shopIntro.shopImg"/>
         </div>
         <div class="shop-title-content">
           <p><router-link to="/merchant">{{ shopIntro.shopName }}</router-link></p>
@@ -32,8 +33,9 @@ export default {
   data () {
     return {
       shopIntro: {
-        shopName: 'Gavin Shop',
-        slogen: 'The Best Thing For You',
+        shopName: 'Apple 产品京东自营旗舰店',
+        slogen: 'Authorized Reseller 授权经销商',
+        shopImg: 'static/img/shop/1.jpg',
         showGoods: [
           {
             img: 'static/img/goodsList/item-show-1.jpg',
@@ -63,9 +65,8 @@ export default {
 }
 
 .shop-container {
-  width: 80%;
+  /*width: 80%;*/
   height: 100%;
-  margin: 0px auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -75,6 +76,7 @@ export default {
 
 .shop-title {
   display: flex;
+  margin-left: 15%;
   flex-direction: row;
 }
 
@@ -98,6 +100,7 @@ export default {
 
 .shop-another-item {
   display: flex;
+  margin-right: 15%;
   flex-direction: row;
 }
 
@@ -105,7 +108,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 15px;
+  margin-left: 10px;
 }
 
 .shop-another-item-img {

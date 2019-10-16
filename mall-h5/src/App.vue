@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header></Header>
+    <IndexHeader></IndexHeader>
     <router-view/>
     <!-- 部分路由不应该包含这个Footer -->
     <Footer v-if="excludeRoutes.indexOf($route.name) == -1"></Footer>
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Header from '@/components/header/Header';
+import IndexHeader from '@/components/index/IndexHeader';
 import Footer from '@/components/footer/Footer';
 export default {
   name: 'App',
@@ -18,7 +18,7 @@ export default {
     };
   },
   components: {
-    Header,
+    IndexHeader,
     Footer
   }
 };

@@ -55,8 +55,8 @@
 </template>
 
 <script>
-import Search from '@/components/Search';
-import GoodsListNav from '@/components/nav/GoodsListNav';
+import Search from '@/components/search/Search';
+import GoodsListNav from '@/components/goods/GoodsListNav';
 import store from '@/vuex/store';
 import { mapState, mapActions } from 'vuex';
 export default {
@@ -164,8 +164,8 @@ export default {
 
 <style scoped>
 .goods-list-container {
-  margin: 15px auto;
-  width: 80%;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 .tips-box {
   margin-bottom: 15px;

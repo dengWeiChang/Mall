@@ -53,15 +53,15 @@ export const loadCarouselItems = ({ commit }) => {
   return new Promise((resolve, reject) => {
     const data = {
       carouselItems: [
-        'static/img/nav/1.jpg',
-        'static/img/nav/2.jpg',
-        'static/img/nav/3.jpg',
-        'static/img/nav/4.jpg',
-        'static/img/nav/5.jpg'
+        'static/img/navigation/1.jpg',
+        'static/img/navigation/2.jpg',
+        'static/img/navigation/3.jpg',
+        'static/img/navigation/4.jpg',
+        'static/img/navigation/5.jpg'
       ],
       activity: [
-        'static/img/nav/nav_showimg1.jpg',
-        'static/img/nav/nav_showimg2.jpg'
+        'static/img/navigation/nav_showimg1.jpg',
+        'static/img/navigation/nav_showimg2.jpg'
       ]
     };
     commit('SET_CAROUSELITEMS_INFO', data);
@@ -668,23 +668,13 @@ export const loadAddress = ({ commit }) => {
     const address = [
       {
         addressId: '123456',
-        name: 'Gavin',
-        province: '广东省',
-        city: '广州市',
-        area: '天河区',
-        address: '燕岭路633号',
-        phone: '152****0609',
-        postalcode: '510000'
-      },
-      {
-        addressId: '123458',
-        name: 'Kevin',
-        province: '上海市',
-        city: '上海市',
-        area: '浦东新区',
-        address: '沙新镇',
-        phone: '158****0888',
-        postalcode: '200120'
+        name: '麦特斯破',
+        province: '王者荣耀省',
+        city: '手Q55区市',
+        area: '手Q55区',
+        address: '净化共鸣',
+        phone: '112****1234',
+        postalcode: '123456'
       }
     ];
     commit('SET_USER_ADDRESS', address);

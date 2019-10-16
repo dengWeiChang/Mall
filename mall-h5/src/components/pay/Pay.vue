@@ -29,9 +29,9 @@ export default {
 
 <style scoped>
 .pay-container {
-  margin: 15px auto;
-  width: 80%;
-  min-width: 1000px;
+  margin-top: 5%;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 .pay-box {
   height: 500px;

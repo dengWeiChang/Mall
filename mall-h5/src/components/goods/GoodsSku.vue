@@ -98,7 +98,7 @@
 import store from '@/vuex/store';
 import { mapState, mapActions } from 'vuex';
 export default {
-  name: 'ShowGoods',
+  name: 'GoodsSku',
   data () {
     return {
       price: 0,
@@ -176,7 +176,7 @@ export default {
 /******************商品图片及购买详情开始******************/
 .item-detail-show {
   width: 80%;
-  margin: 15px auto;
+  margin-left: 15%;
   display: flex;
   flex-direction: row;
   background-color: #fff;

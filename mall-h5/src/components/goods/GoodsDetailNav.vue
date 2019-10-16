@@ -30,7 +30,7 @@ export default {
 .shop-nav-container {
   width: 80%;
   height: 100%;
-  margin: 0px auto;
+  margin-left: 15%;
 }
 
 .shop-nav-container ul {

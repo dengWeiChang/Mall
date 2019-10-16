@@ -1,8 +1,11 @@
 <template>
   <div>
     <Search></Search>
+    <!-- 店铺头-->
     <ShopHeader></ShopHeader>
+
     <GoodsDetailNav></GoodsDetailNav>
+    <!-- 商品面包屑-->
     <div class="shop-item-path">
       <div class="shop-nav-container">
         <Breadcrumb>
@@ -12,20 +15,20 @@
         </Breadcrumb>
       </div>
     </div>
-    <!-- 商品信息展示 -->
-    <ShowGoods></ShowGoods>
-    <!-- 商品详细展示 -->
-    <ShowGoodsDetail></ShowGoodsDetail>
+    <!-- 商品Sku信息展示 -->
+    <GoodsSku></GoodsSku>
+    <!-- 商品Intro详细展示 -->
+    <GoodsSpec></GoodsSpec>
     <Spin size="large" fix v-if="isLoading"></Spin>
   </div>
 </template>
 
 <script>
-import Search from '@/components/Search';
-import GoodsDetailNav from '@/components/nav/GoodsDetailNav';
-import ShopHeader from '@/components/header/ShopHeader';
-import ShowGoods from '@/components/goodsDetail/ShowGoods';
-import ShowGoodsDetail from '@/components/goodsDetail/ShowGoodsDetail';
+import Search from '@/components/search/Search';
+import GoodsDetailNav from '@/components/goods/GoodsDetailNav';
+import ShopHeader from '@/components/shop/ShopHeader';
+import GoodsSku from '@/components/goods/GoodsSku';
+import GoodsSpec from '@/components/goods/GoodsSpec';
 import store from '@/vuex/store';
 import { mapState, mapActions } from 'vuex';
 export default {
@@ -52,8 +55,8 @@ export default {
     Search,
     ShopHeader,
     GoodsDetailNav,
-    ShowGoods,
-    ShowGoodsDetail
+    GoodsSku,
+    GoodsSpec
   },
   store
 };
@@ -67,7 +70,7 @@ export default {
   color: #2c2c2c;
 }
 .shop-nav-container {
-  margin: 0px auto;
+  margin-left: 15%;
   width: 80%;
 }
 </style>

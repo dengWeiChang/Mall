@@ -1,8 +1,12 @@
 <template>
   <div>
+    <!-- 搜索 -->
     <Search></Search>
+    <!-- 商品列表导航头 -->
     <GoodsListNav></GoodsListNav>
+    <!-- 商品列表-->
     <div class="container">
+      <!-- 面包屑-->
       <div class="bread-crumb">
         <Breadcrumb>
           <BreadcrumbItem to="/">
@@ -14,9 +18,10 @@
         </Breadcrumb>
       </div>
       <!-- 商品标签导航 -->
-      <GoodsClassNav></GoodsClassNav>
+      <GoodsCategoryNav></GoodsCategoryNav>
       <!-- 商品展示容器 -->
       <div class="goods-box">
+        <!-- 侧边广告-->
         <div class="as-box">
           <div class="item-as-title">
             <span>商品精选</span>
@@ -40,29 +45,37 @@
             </div>
           </div>
         </div>
+        <!-- 右边商品列表区-->
         <div class="goods-list-box">
+          <!-- 排序按钮-->
           <div class="goods-list-tool">
             <ul>
               <li v-for="(item,index) in goodsTool" :key="index" @click="orderBy(item.en, index)"><span :class="{ 'goods-list-tool-active': isAction[index]}">{{item.title}} <Icon :type="icon[index]"></Icon></span></li>
             </ul>
           </div>
+          <!-- 商品列表-->
           <div class="goods-list">
             <div class="goods-show-info" v-for="(item, index) in orderGoodsList" :key="index">
+              <!-- 商品图片-->
               <div class="goods-show-img">
                 <router-link to="/goodsDetail"><img :src="item.img"/></router-link>
               </div>
+              <!-- 商品价格-->
               <div class="goods-show-price">
                 <span>
                   <Icon type="social-yen text-danger"></Icon>
                   <span class="seckill-price text-danger">{{item.price}}</span>
                 </span>
               </div>
+              <!-- 商品简介-->
               <div class="goods-show-detail">
                 <span>{{item.intro}}</span>
               </div>
+              <!-- 商品评价-->
               <div class="goods-show-num">
                 已有<span>{{item.remarks}}</span>人评价
               </div>
+              <!-- 商品店铺名称-->
               <div class="goods-show-seller">
                 <span>{{item.shopName}}</span>
               </div>
@@ -79,9 +92,9 @@
 </template>
 
 <script>
-import Search from '@/components/Search';
-import GoodsListNav from '@/components/nav/GoodsListNav';
-import GoodsClassNav from '@/components/nav/GoodsClassNav';
+import Search from '@/components/search/Search';
+import GoodsListNav from '@/components/goods/GoodsListNav';
+import GoodsCategoryNav from '@/components/goods/GoodsCategoryNav';
 import store from '@/vuex/store';
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex';
 export default {
@@ -96,9 +109,11 @@ export default {
       isAction: [ true, false, false ],
       icon: [ 'arrow-up-a', 'arrow-down-a', 'arrow-down-a' ],
       goodsTool: [
-        {title: '综合', en: 'sale'},
+        {title: '综合排序', en: 'common'},
+        {title: '销量', en: 'number'},
+        {title: '价格', en: 'price'},
         {title: '评论数', en: 'remarks'},
-        {title: '价格', en: 'price'}
+        {title: '上架时间', en: 'saletime'}
       ]
     };
   },
@@ -110,7 +125,6 @@ export default {
     ...mapActions(['loadGoodsList']),
     ...mapMutations(['SET_GOODS_ORDER_BY']),
     orderBy (data, index) {
-      console.log(data);
       this.icon = [ 'arrow-down-a', 'arrow-down-a', 'arrow-down-a' ];
       this.isAction = [ false, false, false ];
       this.isAction[index] = true;
@@ -127,7 +141,7 @@ export default {
   components: {
     Search,
     GoodsListNav,
-    GoodsClassNav
+    GoodsCategoryNav
   },
   store
 };
@@ -135,9 +149,11 @@ export default {
 
 <style scoped>
 .container {
-  margin: 15px auto;
-  width: 93%;
-  min-width: 1000px;
+  margin-top: 15px ;
+  margin-left: 15% ;
+  margin-right: 15% ;
+  /*width: 80%;*/
+  /*min-width: 1000px;*/
 }
 .text-danger {
   color: #A94442;
@@ -152,7 +168,7 @@ export default {
 }
 /* ---------------侧边广告栏开始------------------- */
 .as-box {
-  width: 200px;
+  width: 15%;
   border: 1px solid #ccc;
 }
 .item-as-title{
@@ -199,7 +215,7 @@ export default {
 /* ---------------商品栏开始------------------- */
 .goods-list-box {
   margin-left: 15px;
-  width: calc(100% - 215px);
+  width: 85%;
 }
 .goods-list-tool{
   width: 100%;

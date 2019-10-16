@@ -1,8 +1,10 @@
 <template>
   <div class="container">
+    <!-- 搜索 -->
     <Search></Search>
-    <HomeNav></HomeNav>
-    <!-- 商品显示区域 -->
+    <!-- 导航菜单和轮播图 -->
+    <IndexNav></IndexNav>
+    <!-- 商品活动显示区域 -->
     <div class="content">
       <!-- 秒杀 -->
       <div class="seckill">
@@ -29,13 +31,20 @@
         <div class="seckill-content">
           <div class="seckill-item" v-for="(item, index) in seckills.goodsList" :key="index">
             <div class="seckill-item-img">
-              <router-link to="/goodsList"><img :src="item.img"></router-link>
+              <router-link to="/goodsList">
+                <img :src="item.img">
+              </router-link>
             </div>
             <div class="seckill-item-info">
               <p>{{item.intro}}</p>
               <p>
-                <span class="seckill-price text-danger"><Icon type="social-yen"></Icon>{{item.price}}</span>
-                <span class="seckill-old-price"><s>{{item.realPrice}}</s></span>
+                <span class="seckill-price text-danger">
+                  <Icon type="social-yen"></Icon>
+                  {{item.price}}
+                </span>
+                <span class="seckill-old-price">
+                  <s>{{item.realPrice}}</s>
+                </span>
               </p>
             </div>
           </div>
@@ -43,6 +52,7 @@
       </div>
       <!-- 电脑专场 -->
       <div class="item-class">
+        <!-- 头部 -->
         <div class="item-class-head">
           <span class="item-class-title">{{computer.title}}</span>
           <ul>
@@ -51,7 +61,9 @@
             </li>
           </ul>
         </div>
+        <!-- 内容 -->
         <div class="item-class-content" v-for="(item, index) in computer.detail" :key="index">
+          <!-- 上2/3部分 -->
           <div class="item-content-top">
             <div class="item-big-img">
               <router-link to="/goodsList">
@@ -72,6 +84,7 @@
               </div>
             </div>
           </div>
+          <!-- 下1/3部分 -->
           <div class="item-content-bottom">
             <div class="item-content-bottom-img" v-for="(subImg, index) in item.itemContent" :key="index">
               <router-link to="/goodsList">
@@ -124,8 +137,8 @@
 </template>
 
 <script>
-import Search from '@/components/Search';
-import HomeNav from '@/components/nav/HomeNav';
+import Search from '@/components/search/Search';
+import IndexNav from '@/components/index/IndexNav';
 import store from '@/vuex/store';
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex';
 export default {
@@ -158,7 +171,7 @@ export default {
   },
   components: {
     Search,
-    HomeNav
+    IndexNav
   },
   destroyed () {
     clearInterval(this.setIntervalObj);
@@ -172,7 +185,7 @@ export default {
   background-color: #F6F6F6;
 }
 .content {
-  width: 1008px;
+  width: 1190px;
   margin: 0px auto;
 }
 /*****************************秒杀专栏开始*****************************/

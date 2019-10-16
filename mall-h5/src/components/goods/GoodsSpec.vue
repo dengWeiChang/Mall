@@ -41,7 +41,7 @@
               </div>
             </TabPane>
             <TabPane label="售后保障">
-              <ShowProductWarranty></ShowProductWarranty>
+              <GoodsProductWarranty></GoodsProductWarranty>
             </TabPane>
             <TabPane label="商品评价">
               <div class="remarks-container">
@@ -94,11 +94,11 @@
 </template>
 
 <script>
-import ShowProductWarranty from '@/components/goodsDetail/ShowProductWarranty';
+import GoodsProductWarranty from '@/components/goods/GoodsProductWarranty';
 import store from '@/vuex/store';
 import { mapState } from 'vuex';
 export default {
-  name: 'ShowGoodsDetail',
+  name: 'GoodsSpec',
   data () {
     return {
       tagsColor: [ 'blue', 'green', 'red', 'yellow' ]
@@ -130,7 +130,7 @@ export default {
     });
   },
   components: {
-    ShowProductWarranty
+    GoodsProductWarranty
   },
   store
 };
@@ -140,7 +140,8 @@ export default {
 /***************商品详情介绍和推荐侧边栏开始***************/
 .item-intro-show{
   width: 80%;
-  margin: 15px auto;
+  margin-left: 15%;
+  margin-right: 15%;
   display: flex;
   flex-direction: row;
   background-color: #fff;
