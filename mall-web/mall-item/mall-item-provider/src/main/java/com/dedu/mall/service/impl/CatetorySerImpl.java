@@ -3,9 +3,7 @@ package com.dedu.mall.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dedu.mall.dao.CategoryMapper;
-import com.dedu.mall.model.mysql.CategoryPo;
-import com.dedu.mall.model.mysql.CategorySelectorVo;
-import com.dedu.mall.model.mysql.CategoryVo;
+import com.dedu.mall.model.mysql.*;
 import com.dedu.mall.service.CategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -17,6 +15,34 @@ import java.util.List;
 
 @Service
 public class CatetorySerImpl extends ServiceImpl<CategoryMapper, CategoryPo> implements CategoryService {
+
+    @Override
+    public List<CategoryNavVo> getAllCategoryNavList() {
+        List<CategoryNavVo> result = new ArrayList<>(14);
+
+        String[] navTagArr = {"清洁用品", "美妆商城", "美妆馆", "妆比社", "全球购美妆", "宠物馆"};
+        List<String> navTags = CollectionUtils.arrayToList(navTagArr);
+
+        List<CategoryNavItem> navItems = new ArrayList<>();
+        navItems.add(createCategoryNavItem("面部护肤",
+                new String[]{"补水保湿", "卸妆", "洁面", "爽肤水", "乳液面霜", "精华", "眼霜", "防晒", "面膜", "剃须", "套装"}));
+        navItems.add(createCategoryNavItem("洗发护发",
+                new String[]{"洗发", "护发", "染发", "造型", "假发", "美发工具", "套装"}));
+        navItems.add(createCategoryNavItem("身体护理",
+                new String[]{"补水保湿", "沐浴", "润肤", "精油", "颈部", "手足", "纤体塑形", "美胸", "套装"}));
+        navItems.add(createCategoryNavItem("口腔护理",
+                new String[]{"牙膏/牙粉", "牙刷/牙线", "漱口水", "套装"}));
+        navItems.add(createCategoryNavItem("香水彩妆",
+                new String[]{"BB霜", "化妆棉", "女士香水", "男士香水", "底妆", "眉笔", "睫毛膏", "眼线", "眼影", "唇膏/彩"}));
+
+        result.add(CategoryNavVo.builder().navTags(navTags).navItems(navItems).build());
+        return result;
+    }
+
+    private CategoryNavItem createCategoryNavItem(String title, String[] navItemTagArr) {
+        List<String> navItemTags = CollectionUtils.arrayToList(navItemTagArr);
+        return CategoryNavItem.builder().title(title).tags(navItemTags).build();
+    }
 
     @Override
     public List<CategoryVo> getAllCategoryTreeByParentId(Integer parentId) {

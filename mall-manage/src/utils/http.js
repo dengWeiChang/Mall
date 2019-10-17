@@ -1,11 +1,9 @@
 import axios from 'axios'
 import {Message} from 'element-ui'
 
-const BASEURL = "http://localhost:8080"
 // 创建axios实例
 const http = axios.create({
-  baseURL: BASEURL,
-  timeout: 15000
+  timeout: 10000
 })
 
 // respone拦截器

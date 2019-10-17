@@ -1,7 +1,8 @@
 import http from '@/utils/http'
-
+const url = "http://localhost:8080"
 export function getSpecGroupByCatId(id) {
   return http({
+    baseURL: url,
     url:'/api/spec/group/category/' + id,
     method:'get'
   })
@@ -9,6 +10,7 @@ export function getSpecGroupByCatId(id) {
 
 export function addSpecGroup(data) {
   return http({
+    baseURL: url,
     url:'/api/spec/group/category/',
     method:'post',
     data:data
@@ -17,6 +19,7 @@ export function addSpecGroup(data) {
 
 export function modifySpecGroup(data) {
   return http({
+    baseURL: url,
     url:'/api/spec/group/category/',
     method:'put',
     data:data
@@ -25,6 +28,7 @@ export function modifySpecGroup(data) {
 
 export function deleteSpecGroupById(id) {
   return http({
+    baseURL: url,
     url:'/api/spec/group/' + id,
     method:'delete'
   })

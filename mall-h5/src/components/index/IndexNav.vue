@@ -4,7 +4,7 @@
     <!-- 独立小标题-->
     <div class="nav-item">
       <ul>
-        <li v-for="(item,index) in nav" :key="index">
+        <li v-for="(item,index) in navItems" :key="index">
           <a href="#">{{item}}</a>
         </li>
       </ul>
@@ -14,7 +14,7 @@
       <!-- 侧边导航 -->
       <div class="nav-side" ref="navSide">
         <ul>
-          <li @mouseenter="showDetail(1)" @mouseleave="hideDetail(1)">
+          <li @mouseenter="showDetail(0)" >
             <span class="nav-side-item">家用电器</span>
           </li>
           <li @mouseenter="showDetail(1)" @mouseleave="hideDetail(1)">
@@ -106,12 +106,12 @@
     </div>
     <!-- 导航伸展-->
     <transition name="fade">
-      <div class="detail-item-panel panel-1" :duration="{ enter: 100, leave: 100 }" v-show="panel1" @mouseenter="showDetail(1)" ref="itemPanel1" @mouseleave="hideDetail(1)">
+      <div class="detail-item-panel panel-1" :duration="{ enter: 100, leave: 100 }" v-show="panel" @mouseenter="showDetail(1)" ref="itemPanel1" @mouseleave="hideDetail(1)">
         <div class="nav-detail-item">
-          <span v-for="(item, index) in panelData1.navTags" :key="index">{{item}} > </span>
+          <span v-for="(item, index) in panelData.navTags" :key="index">{{item}} > </span>
         </div>
         <ul>
-          <li v-for="(items, index) in panelData1.classNav" :key="index" class="detail-item-row">
+          <li v-for="(items, index) in panelData.navItems" :key="index" class="detail-item-row">
             <span class="detail-item-title">{{items.title}}
               <span class="glyphicon glyphicon-menu-right"></span>
             </span>
@@ -128,71 +128,16 @@
 <script>
 import store from '@/vuex/store';
 import { mapState } from 'vuex';
+import {getAllCategoryNavList} from '@/api/category';
+
 export default {
   name: 'IndexNav',
   data () {
     return {
-      panel1: false,
-      nav: [
-        '秒杀',
-        '优惠券',
-        'PLUS会员',
-        '品牌闪购',
-        '拍卖',
-        '时尚',
-        '超市',
-        '生鲜',
-        '全球购'
-      ],
-      panelData1: {
-        navTags: [ '清洁用品', '美妆商城', '美妆馆', '妆比社', '全球购美妆', '宠物馆' ],
-        classNav: [
-          {
-            title: '面部护肤',
-            tags: [ '补水保湿', '卸妆', '洁面', '爽肤水', '乳液面霜', '精华', '眼霜', '防晒', '面膜', '剃须', '套装' ]
-          },
-          {
-            title: '洗发护发',
-            tags: [ '洗发', '护发', '染发', '造型', '假发', '美发工具', '套装' ]
-          },
-          {
-            title: '身体护理',
-            tags: [ '补水保湿', '沐浴', '润肤', '精油', '颈部', '手足', '纤体塑形', '美胸', '套装' ]
-          },
-          {
-            title: '口腔护理',
-            tags: [ '牙膏/牙粉', '牙刷/牙线', '漱口水', '套装' ]
-          },
-          {
-            title: '女性护理',
-            tags: [ '卫生巾', '卫生护垫', '私密护理', '脱毛膏' ]
-          },
-          {
-            title: '香水彩妆',
-            tags: [ 'BB霜', '化妆棉', '女士香水', '男士香水', '底妆', '眉笔', '睫毛膏', '眼线', '眼影', '唇膏/彩' ]
-          },
-          {
-            title: '清洁用品',
-            tags: [ '纸品湿巾', '衣物清洁', '清洁工具', '家庭清洁', '一次性用品', '驱虫用品', '皮具护理' ]
-          },
-          {
-            title: '宠物生活',
-            tags: [ '水族世界', '狗粮', '猫粮', '猫狗罐头', '狗零食', '猫零食', '医疗保健', '宠物玩具', '宠物服饰' ]
-          },
-          {
-            title: '香水彩妆',
-            tags: [ 'BB霜', '化妆棉', '女士香水', '男士香水', '底妆', '眉笔', '睫毛膏', '眼线', '眼影', '唇膏/彩' ]
-          },
-          {
-            title: '清洁用品',
-            tags: [ '纸品湿巾', '衣物清洁', '清洁工具', '家庭清洁', '一次性用品', '驱虫用品', '皮具护理' ]
-          },
-          {
-            title: '宠物生活',
-            tags: [ '水族世界', '狗粮', '猫粮', '猫狗罐头', '狗零食', '猫零食', '医疗保健', '宠物玩具', '宠物服饰' ]
-          }
-        ]
-      }
+      panel: false,
+      navItems: [],
+      panelData: {},
+      panelDatas: []
     };
   },
   computed: {
@@ -200,13 +145,71 @@ export default {
   },
   methods: {
     showDetail (index) {
-      this.panel1 = true;
+      this.panel = true;
+      if (this.panelDatas.length > index) {
+        this.panelData = this.panelDatas[index];
+      }
     },
     hideDetail (index) {
-      this.panel1 = false;
+      this.panel = false;
+      this.panelData = {};
     }
   },
   mounted () {
+    this.navItems = ['秒杀', '优惠券', 'PLUS会员', '品牌闪购', '拍卖', '时尚', '超市', '生鲜', '全球购'];
+
+    getAllCategoryNavList(null).then(response => {
+      this.panelDatas=response;
+    });
+    // {
+    //   navTags: [ '清洁用品', '美妆商城', '美妆馆', '妆比社', '全球购美妆', '宠物馆' ],
+    //   navItems: [
+    //     {
+    //       title: '面部护肤',
+    //       tags: [ '补水保湿', '卸妆', '洁面', '爽肤水', '乳液面霜', '精华', '眼霜', '防晒', '面膜', '剃须', '套装' ]
+    //     },
+    //     {
+    //       title: '洗发护发',
+    //       tags: [ '洗发', '护发', '染发', '造型', '假发', '美发工具', '套装' ]
+    //     },
+    //     {
+    //       title: '身体护理',
+    //       tags: [ '补水保湿', '沐浴', '润肤', '精油', '颈部', '手足', '纤体塑形', '美胸', '套装' ]
+    //     },
+    //     {
+    //       title: '口腔护理',
+    //       tags: [ '牙膏/牙粉', '牙刷/牙线', '漱口水', '套装' ]
+    //     },
+    //     {
+    //       title: '女性护理',
+    //       tags: [ '卫生巾', '卫生护垫', '私密护理', '脱毛膏' ]
+    //     },
+    //     {
+    //       title: '香水彩妆',
+    //       tags: [ 'BB霜', '化妆棉', '女士香水', '男士香水', '底妆', '眉笔', '睫毛膏', '眼线', '眼影', '唇膏/彩' ]
+    //     },
+    //     {
+    //       title: '清洁用品',
+    //       tags: [ '纸品湿巾', '衣物清洁', '清洁工具', '家庭清洁', '一次性用品', '驱虫用品', '皮具护理' ]
+    //     },
+    //     {
+    //       title: '宠物生活',
+    //       tags: [ '水族世界', '狗粮', '猫粮', '猫狗罐头', '狗零食', '猫零食', '医疗保健', '宠物玩具', '宠物服饰' ]
+    //     },
+    //     {
+    //       title: '香水彩妆',
+    //       tags: [ 'BB霜', '化妆棉', '女士香水', '男士香水', '底妆', '眉笔', '睫毛膏', '眼线', '眼影', '唇膏/彩' ]
+    //     },
+    //     {
+    //       title: '清洁用品',
+    //       tags: [ '纸品湿巾', '衣物清洁', '清洁工具', '家庭清洁', '一次性用品', '驱虫用品', '皮具护理' ]
+    //     },
+    //     {
+    //       title: '宠物生活',
+    //       tags: [ '水族世界', '狗粮', '猫粮', '猫狗罐头', '狗零食', '猫零食', '医疗保健', '宠物玩具', '宠物服饰' ]
+    //     }
+    //   ]
+    // });
     // this.$refs.itemPanel1.style.left =
     //   this.$refs.navSide.offsetLeft + this.$refs.navSide.offsetWidth + 'px';
     // this.$refs.itemPanel2.style.left =
@@ -299,14 +302,13 @@ export default {
 .nav-show-img:nth-child(2) {
   margin-left: 12px;
 }
-/*显示商品*/
-.content {
-  width: 100%;
-}
 /*显示商品详细信息*/
 .detail-item-panel {
   width: 815px;
-  height: 485px;
+  height: 490px;
+
+  margin-left: 14%;
+  margin-top: 2px;
   background-color: #fff;
   position: absolute;
   top: 168px;

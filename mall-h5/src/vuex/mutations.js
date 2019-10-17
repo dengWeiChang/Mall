@@ -43,7 +43,7 @@ export const REDUCE_SECKILLS_TIME = state => {
     state.seckills.deadline.minute--;
     if (state.seckills.deadline.minute === -1) {
       state.seckills.deadline.minute = 59;
-      state.seckills.deadline.hour--;
+      state.seckills.deadline.hours--;
     }
   }
 };

@@ -1,5 +1,6 @@
 package com.dedu.mall.service;
 
+import com.dedu.mall.model.mysql.CategoryNavVo;
 import com.dedu.mall.model.mysql.CategorySelectorVo;
 import com.dedu.mall.model.mysql.CategoryVo;
 
@@ -15,4 +16,6 @@ public interface CategoryService {
     boolean removeCategoryById(Long id);
 
     boolean addCategory(CategoryVo request);
+
+    List<CategoryNavVo> getAllCategoryNavList();
 }

@@ -20,6 +20,26 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+//**********************************分割线，以下为H5前台接口*******************************************
+    /**
+     * 获取所有类目列表
+     * @return
+     */
+    @GetMapping("/h5/list")
+    @ApiOperation(value = "查询所有H5导航类目列表-dedu", notes = "类目")
+    @ApiImplicitParams({})
+    public Result getAllCategoryNavList() {
+        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), categoryService.getAllCategoryNavList());
+    }
+
+
+
+
+
+
+
+//**********************************分割线，以下为运营后台接口*******************************************
+
     /**
      * 获取所有类目树形结构
      * @param parentId
