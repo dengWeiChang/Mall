@@ -207,20 +207,20 @@ export default {
     }
   },
   mounted () {
-    this.$refs.itemPanel1.style.left =
-      this.$refs.navSide.offsetLeft + this.$refs.navSide.offsetWidth + 'px';
-    this.$refs.itemPanel2.style.left =
-      this.$refs.navSide.offsetLeft + this.$refs.navSide.offsetWidth + 'px';
-    this.$refs.itemPanel1.style.top = this.$refs.navSide.offsetTop + 'px';
-    this.$refs.itemPanel2.style.top = this.$refs.navSide.offsetTop + 'px';
+    // this.$refs.itemPanel1.style.left =
+    //   this.$refs.navSide.offsetLeft + this.$refs.navSide.offsetWidth + 'px';
+    // this.$refs.itemPanel2.style.left =
+    //   this.$refs.navSide.offsetLeft + this.$refs.navSide.offsetWidth + 'px';
+    // this.$refs.itemPanel1.style.top = this.$refs.navSide.offsetTop + 'px';
+    // this.$refs.itemPanel2.style.top = this.$refs.navSide.offsetTop + 'px';
   },
   updated () {
-    this.$refs.itemPanel1.style.left =
-      this.$refs.navSide.offsetLeft + this.$refs.navSide.offsetWidth + 'px';
-    this.$refs.itemPanel2.style.left =
-      this.$refs.navSide.offsetLeft + this.$refs.navSide.offsetWidth + 'px';
-    this.$refs.itemPanel1.style.top = this.$refs.navSide.offsetTop + 'px';
-    this.$refs.itemPanel2.style.top = this.$refs.navSide.offsetTop + 'px';
+    // this.$refs.itemPanel1.style.left =
+    //   this.$refs.navSide.offsetLeft + this.$refs.navSide.offsetWidth + 'px';
+    // this.$refs.itemPanel2.style.left =
+    //   this.$refs.navSide.offsetLeft + this.$refs.navSide.offsetWidth + 'px';
+    // this.$refs.itemPanel1.style.top = this.$refs.navSide.offsetTop + 'px';
+    // this.$refs.itemPanel2.style.top = this.$refs.navSide.offsetTop + 'px';
   },
   store
 };

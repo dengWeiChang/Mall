@@ -1,29 +1,29 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Index from '@/components/Index';
-const Login = resolve => require(['@/components/Login'], resolve);
-const SignUp = resolve => require(['@/components/SignUp'], resolve);
-const CheckPhone = resolve => require(['@/components/signUp/CheckPhone'], resolve);
-const InputInfo = resolve => require(['@/components/signUp/InputInfo'], resolve);
-const SignUpDone = resolve => require(['@/components/signUp/SignUpDone'], resolve);
-const GoodsList = resolve => require(['@/components/GoodsList'], resolve);
-const GoodsDetail = resolve => require(['@/components/GoodsDetail'], resolve);
-const ShoppingCart = resolve => require(['@/components/ShoppingCart'], resolve);
-const Order = resolve => require(['@/components/Order'], resolve);
-const Pay = resolve => require(['@/components/Pay'], resolve);
-const PayDone = resolve => require(['@/components/PayDone'], resolve);
-const Freeback = resolve => require(['@/components/Freeback'], resolve);
-const Home = resolve => require(['@/components/Home'], resolve);
+const Login = resolve => require(['@/components/login/Login'], resolve);
+const SignUp = resolve => require(['@/components/register/Register'], resolve);
+const CheckPhone = resolve => require(['@/components/register/CheckPhone'], resolve);
+const InputInfo = resolve => require(['@/components/register/InputInfo'], resolve);
+const SignUpDone = resolve => require(['@/components/register/RegisterDone'], resolve);
+const GoodsList = resolve => require(['@/components/goods/GoodsList'], resolve);
+const GoodsDetail = resolve => require(['@/components/goods/GoodsDetail'], resolve);
+const ShoppingCart = resolve => require(['@/components/cart/ShopCart'], resolve);
+const Order = resolve => require(['@/components/cart/ShopCartOrder'], resolve);
+const Pay = resolve => require(['@/components/pay/Pay'], resolve);
+const PayDone = resolve => require(['@/components/pay/PayDone'], resolve);
+const Freeback = resolve => require(['@/components/freeback/Freeback'], resolve);
+const Home = resolve => require(['@/components/home/Home'], resolve);
 const MyAddress = resolve => require(['@/components/home/MyAddress'], resolve);
 const AddAddress = resolve => require(['@/components/home/AddAddress'], resolve);
 const MyOrder = resolve => require(['@/components/home/MyOrder'], resolve);
 const MyShoppingCart = resolve => require(['@/components/home/MyShoppingCart'], resolve);
-const Merchant = resolve => require(['@/components/Merchant'], resolve);
+const Merchant = resolve => require(['@/components/shop/Shop'], resolve);
 
 Vue.use(Router);
 
 export default new Router({
-	mode:'history',
+  mode: 'history',
   routes: [
     {
       path: '/', // 首页
