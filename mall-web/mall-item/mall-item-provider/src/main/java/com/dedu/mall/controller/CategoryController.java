@@ -22,7 +22,7 @@ public class CategoryController {
 
 //**********************************分割线，以下为H5前台接口*******************************************
     /**
-     * 获取所有类目列表
+     * 获取所有导航类目列表
      * @return
      */
     @GetMapping("/h5/list")
@@ -30,6 +30,17 @@ public class CategoryController {
     @ApiImplicitParams({})
     public Result getAllCategoryNavList() {
         return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), categoryService.getAllCategoryNavList());
+    }
+
+    /**
+     * 获取轮播(营销)图片
+     * @return
+     */
+    @GetMapping("/h5/picture/list")
+    @ApiOperation(value = "查询所有导航营销图片-dedu", notes = "图片")
+    @ApiImplicitParams({})
+    public Result getAllNavigationPictureList() {
+        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), categoryService.getAllNavPictureList());
     }
 
 

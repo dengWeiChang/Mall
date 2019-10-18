@@ -45,6 +45,21 @@ public class CatetorySerImpl extends ServiceImpl<CategoryMapper, CategoryPo> imp
     }
 
     @Override
+    public NavPictureVo getAllNavPictureList() {
+        List<String> carouselItems = new ArrayList<>();
+        carouselItems.add("static/img/navigation/1.jpg");
+        carouselItems.add("static/img/navigation/2.jpg");
+        carouselItems.add("static/img/navigation/3.jpg");
+        carouselItems.add("static/img/navigation/4.jpg");
+        carouselItems.add("static/img/navigation/5.jpg");
+        carouselItems.add("static/img/navigation/5.jpg");
+        List<String> activity = new ArrayList<>();
+        activity.add("static/img/navigation/nav_showimg1.jpg");
+        activity.add("static/img/navigation/nav_showimg2.jpg");
+        return NavPictureVo.builder().carouselItems(carouselItems).activity(activity).build();
+    }
+
+    @Override
     public List<CategoryVo> getAllCategoryTreeByParentId(Integer parentId) {
         //查询所有顶级类目
         // 第一层类目

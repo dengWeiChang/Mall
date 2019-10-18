@@ -3,6 +3,7 @@ package com.dedu.mall.service;
 import com.dedu.mall.model.mysql.CategoryNavVo;
 import com.dedu.mall.model.mysql.CategorySelectorVo;
 import com.dedu.mall.model.mysql.CategoryVo;
+import com.dedu.mall.model.mysql.NavPictureVo;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface CategoryService {
     boolean addCategory(CategoryVo request);
 
     List<CategoryNavVo> getAllCategoryNavList();
+
+    NavPictureVo getAllNavPictureList();
 }

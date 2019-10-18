@@ -1,222 +1,55 @@
-// 获取秒杀数据
-export const loadSeckillsInfo = ({ commit }) => {
-  return new Promise((resolve, reject) => {
-    const data = [
-      {
-        intro: '【赠小风扇】维他 柠檬茶250ml*32盒 礼品装 整箱',
-        img: 'static/img/index/seckill/seckill-item1.jpg',
-        price: 71.9,
-        realPrice: 89.6
-      },
-      {
-        intro: 'Kindle Paperwhite 全新升级版6英寸护眼非反光电子墨水',
-        img: 'static/img/index/seckill/seckill-item2.jpg',
-        price: 989.0,
-        realPrice: 1299.0
-      },
-      {
-        intro: '粮悦 大吃兄糯米锅巴 安徽特产锅巴糯米原味400g*2盒',
-        img: 'static/img/index/seckill/seckill-item3.jpg',
-        price: 21.8,
-        realPrice: 49.0
-      },
-      {
-        intro: '【京东超市】清风（APP）抽纸 原木纯品金装系列 3层',
-        img: 'static/img/index/seckill/seckill-item4.jpg',
-        price: 49.9,
-        realPrice: 59.0
-      },
-      {
-        intro: 'NIKE耐克 男子休闲鞋 AIR MAX 90 ESSENTIAL 气垫',
-        img: 'static/img/index/seckill/seckill-item5.jpg',
-        price: 559.9,
-        realPrice: 759.9
-      },
-      {
-        intro: '【京东超市】清风（APP）抽纸 原木纯品金装系列 3层',
-        img: 'static/img/index/seckill/seckill-item4.jpg',
-        price: 49.9,
-        realPrice: 59.0
-      }
-    ];
-    const date = new Date();
-    const hours = date.getHours();
-    const minute = date.getMinutes();
-    const seconds = date.getSeconds();
-    console.log([hours, minute, seconds]);
-    // 距离开始秒杀时间
-    const deadline = {
-      hours: 1,
-      minute: 38,
-      seconds: 36
-    };
-    commit('SET_SECKILLS_INFO', [data, deadline]);
-  });
-};
+import {getAllNavigationPictureList} from '@/api/category';
+import {getSeckillInfoList, getSpecialByType} from '@/api/market';
 
 // 获取轮播(营销)图片
 export const loadCarouselItems = ({ commit }) => {
   return new Promise((resolve, reject) => {
     const data = {
-      carouselItems: [
-        'static/img/navigation/1.jpg',
-        'static/img/navigation/2.jpg',
-        'static/img/navigation/3.jpg',
-        'static/img/navigation/4.jpg',
-        'static/img/navigation/5.jpg'
-      ],
-      activity: [
-        'static/img/navigation/nav_showimg1.jpg',
-        'static/img/navigation/nav_showimg2.jpg'
-      ]
+      carouselItems: [],
+      activity: []
     };
-    commit('SET_CAROUSELITEMS_INFO', data);
+    getAllNavigationPictureList(null).then(response => {
+      data.carouselItems = response.carouselItems;
+      data.activity = response.activity;
+      commit('SET_CAROUSELITEMS_INFO', data);
+    });
   });
 };
+
+// 获取秒杀数据
+export const loadSeckillsInfo = ({ commit }) => {
+  return new Promise((resolve, reject) => {
+    getSeckillInfoList(null).then(response => {
+      const data = response.info;
+      // 距离开始秒杀时间
+      const deadline = {
+        hours: response.hours,
+        minute: response.minute,
+        seconds: response.seconds
+      };
+      commit('SET_SECKILLS_INFO', [data, deadline]);
+    });
+  });
+};
+
 
 // 加载电脑专栏数据
 export const loadComputer = ({ commit }) => {
   return new Promise((resolve, reject) => {
-    const computer = {
-      title: '电脑数码',
-      link: [ '电脑馆', '游戏极品', '装机大师', '职场焕新', '女神频道', '虚拟现实', '二合一平板', '电子教育', '万物周刊' ],
-      detail: [
-        {
-          bigImg: 'static/img/index/computer/item-computer-1.jpg',
-          itemFour: [
-            {
-              title: '电脑馆',
-              intro: '笔记本999元限量秒！',
-              img: 'static/img/index/computer/item-computer-2.jpg'
-            },
-            {
-              title: '外设装备',
-              intro: '1000减618',
-              img: 'static/img/index/computer/item-computer-1-3.jpg'
-            },
-            {
-              title: '电脑配件',
-              intro: '联合满减最高省618',
-              img: 'static/img/index/computer/item-computer-1-4.jpg'
-            },
-            {
-              title: '办公生活',
-              intro: '5折神券 精品文具',
-              img: 'static/img/index/computer/item-computer-1-5.jpg'
-            }
-          ],
-          itemContent: [
-            'static/img/index/computer/item-computer-1-6.jpg',
-            'static/img/index/computer/item-computer-1-7.jpg',
-            'static/img/index/computer/item-computer-1-8.jpg'
-          ]
-        },
-        {
-          bigImg: 'static/img/index/computer/item-computer-2-1.jpg',
-          itemFour: [
-            {
-              title: '平板电脑',
-              intro: '爆款平板12期免息',
-              img: 'static/img/index/computer/item-computer-2-2.jpg'
-            },
-            {
-              title: '智能酷玩',
-              intro: '抢999减666神券',
-              img: 'static/img/index/computer/item-computer-2-3.jpg'
-            },
-            {
-              title: '娱乐影音',
-              intro: '大牌耳机低至5折',
-              img: 'static/img/index/computer/item-computer-2-4.jpg'
-            },
-            {
-              title: '摄影摄像',
-              intro: '大牌相机5折抢',
-              img: 'static/img/index/computer/item-computer-2-5.jpg'
-            }
-          ],
-          itemContent: [
-            'static/img/index/computer/item-computer-2-6.jpg',
-            'static/img/index/computer/item-computer-2-7.jpg',
-            'static/img/index/computer/item-computer-2-8.jpg'
-          ]
-        }
-      ]
-    };
-    commit('SET_COMPUTER_INFO', computer);
+    getSpecialByType(1).then(response => {
+      const computer = response;
+      commit('SET_COMPUTER_INFO', computer);
+    });
   });
 };
 
 // 加载爱吃专栏数据
 export const loadEat = ({ commit }) => {
   return new Promise((resolve, reject) => {
-    const eat = {
-      title: '爱吃',
-      link: [ '休闲零食', '坚果', '牛奶', '饮料冲调', '食用油', '大米', '白酒', '红酒', '烧烤食材', '牛排', '樱桃' ],
-      detail: [
-        {
-          bigImg: 'static/img/index/eat/item-eat-1-1.jpg',
-          itemFour: [
-            {
-              title: '粮油调味',
-              intro: '买2免1',
-              img: 'static/img/index/eat/item-eat-1-2.jpg'
-            },
-            {
-              title: '饮料冲调',
-              intro: '第二件半价',
-              img: 'static/img/index/eat/item-eat-1-3.jpg'
-            },
-            {
-              title: '休闲零食',
-              intro: '满99减40',
-              img: 'static/img/index/eat/item-eat-1-4.jpg'
-            },
-            {
-              title: '中外名酒',
-              intro: '满199减100',
-              img: 'static/img/index/eat/item-eat-1-5.jpg'
-            }
-          ],
-          itemContent: [
-            'static/img/index/eat/item-eat-1-6.jpg',
-            'static/img/index/eat/item-eat-1-7.jpg',
-            'static/img/index/eat/item-eat-1-8.jpg'
-          ]
-        },
-        {
-          bigImg: 'static/img/index/eat/item-eat-2-1.jpg',
-          itemFour: [
-            {
-              title: '东家菜',
-              intro: '丰富好味',
-              img: 'static/img/index/eat/item-eat-2-2.jpg'
-            },
-            {
-              title: '东家菜',
-              intro: '丰富好味',
-              img: 'static/img/index/eat/item-eat-2-2.jpg'
-            },
-            {
-              title: '东家菜',
-              intro: '丰富好味',
-              img: 'static/img/index/eat/item-eat-2-2.jpg'
-            },
-            {
-              title: '东家菜',
-              intro: '丰富好味',
-              img: 'static/img/index/eat/item-eat-2-2.jpg'
-            }
-          ],
-          itemContent: [
-            'static/img/index/eat/item-eat-2-6.jpg',
-            'static/img/index/eat/item-eat-2-7.jpg',
-            'static/img/index/eat/item-eat-2-8.jpg'
-          ]
-        }
-      ]
-    };
-    commit('SET_EAT_INFO', eat);
+    getSpecialByType(2).then(response => {
+      const eat = response;
+      commit('SET_EAT_INFO', eat);
+    });
   });
 };
 
