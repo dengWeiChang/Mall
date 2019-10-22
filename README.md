@@ -7,7 +7,7 @@
 
 ## 2. mall-manage 运营后台管理
 
-## 3. mall-h5 安卓/IOS应用
+## 3. mall-h5 门户网页
 
 ## 4. mall-pc 前端门户网站
 
