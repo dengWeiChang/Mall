@@ -85,6 +85,25 @@ public class GoodsSerImpl implements GoodsService {
         return true;
     }
 
+    @Override
+    public List<GoodsNavVo> queryGoodsNavByCategoryId(Long id) {
+        List<GoodsNavVo> result = new ArrayList<>();
+        String[] g1Arr = {"华为(HUAWEI)1", "三星(SAMSUNG)", "MATE", "摩斯维(msvii)", "OPPO", "莫凡(Mofi)", "耐尔金(NILLKIN)", "洛克(ROCK)", "亿色(ESR)", "Apple", "优加"};
+        GoodsNavVo g1 = GoodsNavVo.builder().navName("品牌").navValues(CollectionUtils.arrayToList(g1Arr)).build();
+        String[] g2Arr = {"手机保护套", "苹果周边", "手机贴膜", "移动电源", "创意配件", "手机耳机", "手机支架"};
+        GoodsNavVo g2 = GoodsNavVo.builder().navName("手机配件").navValues(CollectionUtils.arrayToList(g2Arr)).build();
+        String[] g3Arr = {"软壳", "硬壳", "翻盖式", "边框", "运动臂包", "钱包式", "定制", "防水袋", "布袋", "其他"};
+        GoodsNavVo g3 = GoodsNavVo.builder().navName("款式").navValues(CollectionUtils.arrayToList(g3Arr)).build();
+        String[] g4Arr = {"塑料/PC", "硅胶", "金属", "电镀", "真皮", "树脂", "木质", "镶钻", "液态硅胶", "TPU"};
+        GoodsNavVo g4 = GoodsNavVo.builder().navName("材质").navValues(CollectionUtils.arrayToList(g4Arr)).build();
+
+        result.add(g1);
+        result.add(g2);
+        result.add(g3);
+        result.add(g4);
+        return result;
+    }
+
     /**
      * 获取规格参数值主键，并使用,分隔
      * @param tempCache
