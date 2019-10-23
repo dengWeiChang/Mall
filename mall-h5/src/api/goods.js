@@ -18,10 +18,10 @@ export function getGoodsNavByCategoryId(type) {
  * 商品列表及广告推荐
  * @param id
  */
-export function getGoodsListByCategoryId(type) {
+export function getGoodsListByCategoryId(id) {
   return http({
     baseURL: url,
-    url:'/api/goods/list/category/' + type,
+    url:'/api/goods/list/category/' + id,
     method:'get'
   })
 }
