@@ -13,3 +13,15 @@ export function getGoodsNavByCategoryId(type) {
     method:'get'
   })
 }
+
+/**
+ * 商品列表及广告推荐
+ * @param id
+ */
+export function getGoodsListByCategoryId(type) {
+  return http({
+    baseURL: url,
+    url:'/api/goods/list/category/' + type,
+    method:'get'
+  })
+}
