@@ -2,14 +2,13 @@
 ====================================
 ## 1. mall-web 应用后台服务支撑
 #### 1.1 Nacos Server  √
-#### 1.2 Nacos Client
+#### 1.2 Nacos Client  √
 
 
 ## 2. mall-manage 运营后台管理
 
-## 3. mall-h5 安卓/IOS应用
+## 3. mall-h5 门户网页
 
 ## 4. mall-pc 前端门户网站
-https://github.com/PowerDos/Mall-Vue/blob/master/README-ZH.md
 
 ## 5. mall-mini 微信小程序
