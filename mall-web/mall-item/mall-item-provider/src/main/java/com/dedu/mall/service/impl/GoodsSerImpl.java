@@ -1,5 +1,7 @@
 package com.dedu.mall.service.impl;
 
+import com.dedu.mall.model.Result;
+import com.dedu.mall.model.h5.GoodsRspVo;
 import com.dedu.mall.model.mysql.*;
 import com.dedu.mall.service.*;
 import lombok.extern.slf4j.Slf4j;
@@ -101,6 +103,33 @@ public class GoodsSerImpl implements GoodsService {
         result.add(g2);
         result.add(g3);
         result.add(g4);
+        return result;
+    }
+
+    /**
+     * 根据类目查询商品列表和广告列表
+     * @param id
+     * @return
+     */
+    @Override
+    public GoodsListVo queryGoodsListByCategoryId(Long id) {
+        List<GoodsRspVo> adList = new ArrayList<>(6);
+        adList.add(GoodsRspVo.builder().img("static/img/goodsList/item-as-img-1.jpg").price(new Double("39.9")).intro("SKSK 苹果7/7plus手机壳 iPhone 7 Plus保护套全包硬").num(3140).sale(new Double("9000")).build());
+        adList.add(GoodsRspVo.builder().img("static/img/goodsList/item-as-img-2.jpg").price(new Double("49.9")).intro("狮普 苹果7/7 Plus手机壳 电镀 超薄 全包 防摔 保护外").num(1160).sale(new Double("5900")).build());
+        adList.add(GoodsRspVo.builder().img("static/img/goodsList/item-as-img-1.jpg").price(new Double("59.9")).intro("SKSK 苹果7/7plus手机壳 iPhone 7 Plus保护套全包硬").num(5160).sale(new Double("8800")).build());
+        adList.add(GoodsRspVo.builder().img("static/img/goodsList/item-as-img-2.jpg").price(new Double("69.9")).intro("狮普 苹果7/7 Plus手机壳 电镀 超薄 全包 防摔 保护外").num(6160).sale(new Double("7700")).build());
+        adList.add(GoodsRspVo.builder().img("static/img/goodsList/item-as-img-1.jpg").price(new Double("79.9")).intro("SKSK 苹果7/7plus手机壳 iPhone 7 Plus保护套全包硬").num(7160).sale(new Double("6600")).build());
+        adList.add(GoodsRspVo.builder().img("static/img/goodsList/item-as-img-2.jpg").price(new Double("89.9")).intro("狮普 苹果7/7 Plus手机壳 电镀 超薄 全包 防摔 保护外").num(9160).sale(new Double("5500")).build());
+        List<GoodsRspVo> goodsList = new ArrayList<>();
+        goodsList.add(GoodsRspVo.builder().img("static/img/goodsList/item-show-1.jpg").price(new Double("89.9")).intro("狮普 苹果7/7 Plus手机壳 电镀 超薄 全包 防摔 保护外").remarks(9000).shopName("歌乐力手配专营店").sale(new Double("5500")).build());
+        goodsList.add(GoodsRspVo.builder().img("static/img/goodsList/item-show-2.jpg").price(new Double("89.9")).intro("狮普 苹果7/7 Plus手机壳 电镀 超薄 全包 防摔 保护外").remarks(9000).shopName("BIAZE官方旗舰店").sale(new Double("5500")).build());
+        goodsList.add(GoodsRspVo.builder().img("static/img/goodsList/item-show-3.jpg").price(new Double("89.9")).intro("狮普 苹果7/7 Plus手机壳 电镀 超薄 全包 防摔 保护外").remarks(9000).shopName("歌乐力手配专营店").sale(new Double("5500")).build());
+        goodsList.add(GoodsRspVo.builder().img("static/img/goodsList/item-show-4.jpg").price(new Double("89.9")).intro("狮普 苹果7/7 Plus手机壳 电镀 超薄 全包 防摔 保护外").remarks(9000).shopName("BIAZE官方旗舰店").sale(new Double("5500")).build());
+        goodsList.add(GoodsRspVo.builder().img("static/img/goodsList/item-show-5.jpg").price(new Double("89.9")).intro("狮普 苹果7/7 Plus手机壳 电镀 超薄 全包 防摔 保护外").remarks(9000).shopName("歌乐力手配专营店").sale(new Double("5500")).build());
+        goodsList.add(GoodsRspVo.builder().img("static/img/goodsList/item-show-6.jpg").price(new Double("89.9")).intro("狮普 苹果7/7 Plus手机壳 电镀 超薄 全包 防摔 保护外").remarks(9000).shopName("monqiqi旗舰店").sale(new Double("5500")).build());
+        goodsList.add(GoodsRspVo.builder().img("static/img/goodsList/item-show-7.jpg").price(new Double("89.9")).intro("狮普 苹果7/7 Plus手机壳 电镀 超薄 全包 防摔 保护外").remarks(9000).shopName("BIAZE官方旗舰店").sale(new Double("5500")).build());
+        goodsList.add(GoodsRspVo.builder().img("static/img/goodsList/item-show-8.jpg").price(new Double("89.9")).intro("狮普 苹果7/7 Plus手机壳 电镀 超薄 全包 防摔 保护外").remarks(9000).shopName("monqiqi旗舰店").sale(new Double("5500")).build());
+        GoodsListVo result = GoodsListVo.builder().advertisingList(adList).goodsList(goodsList).build();
         return result;
     }
 

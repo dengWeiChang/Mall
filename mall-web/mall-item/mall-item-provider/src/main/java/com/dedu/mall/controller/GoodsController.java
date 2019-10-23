@@ -36,13 +36,13 @@ public class GoodsController {
         return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), goodsService.queryGoodsNavByCategoryId(id));
     }
 
-    @GetMapping("/nav/category/{id}")
+    @GetMapping("/list/category/{id}")
     @ApiOperation(value = "根据类目Id查询商品列表导航头信息-dedu", notes = "商品")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", dataType = "long", name = "id", value = "类目主键id", required = true)
     })
     public Result queryGoodsListByCategoryId(@PathVariable Long id) throws Exception {
-        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), goodsService.queryGoodsNavByCategoryId(id));
+        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), goodsService.queryGoodsListByCategoryId(id));
     }
 
 

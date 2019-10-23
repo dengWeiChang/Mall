@@ -261,7 +261,7 @@ export const loadGoodsList = ({ commit }) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const data = {
-        asItems: [
+        advertisingList: [
           {
             img: 'static/img/goodsList/item-as-img-1.jpg',
             price: 39.9,

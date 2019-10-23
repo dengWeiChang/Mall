@@ -27,7 +27,7 @@
             <span>商品精选</span>
             <span>广告</span>
           </div>
-          <div class="item-as" v-for="(item,index) in asItems" :key="index">
+          <div class="item-as" v-for="(item,index) in advertisingList" :key="index">
             <div class="item-as-img">
               <img :src="item.img" alt="">
             </div>
@@ -118,7 +118,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['asItems', 'isLoading']),
+    ...mapState(['advertisingList', 'isLoading']),
     ...mapGetters(['orderGoodsList'])
   },
   methods: {
