@@ -1,6 +1,7 @@
 package com.dedu.mall.service.impl;
 
 import com.dedu.mall.model.Result;
+import com.dedu.mall.model.h5.GoodsDetailRspVo;
 import com.dedu.mall.model.h5.GoodsRspVo;
 import com.dedu.mall.model.mysql.*;
 import com.dedu.mall.service.*;
@@ -131,6 +132,11 @@ public class GoodsSerImpl implements GoodsService {
         goodsList.add(GoodsRspVo.builder().img("static/img/goodsList/item-show-8.jpg").price(new Double("89.9")).intro("狮普 苹果7/7 Plus手机壳 电镀 超薄 全包 防摔 保护外").remarks(9000).shopName("monqiqi旗舰店").sale(new Double("5500")).build());
         GoodsListVo result = GoodsListVo.builder().advertisingList(adList).goodsList(goodsList).build();
         return result;
+    }
+
+    @Override
+    public GoodsDetailRspVo queryGoodsById(Long id) {
+        return null;
     }
 
     /**
