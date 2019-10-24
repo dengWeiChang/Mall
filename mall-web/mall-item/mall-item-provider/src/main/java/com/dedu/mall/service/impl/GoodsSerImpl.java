@@ -1,6 +1,8 @@
 package com.dedu.mall.service.impl;
 
 import com.dedu.mall.model.Result;
+import com.dedu.mall.model.h5.CommentInfoVo;
+import com.dedu.mall.model.h5.CommentVo;
 import com.dedu.mall.model.h5.GoodsDetailRspVo;
 import com.dedu.mall.model.h5.GoodsRspVo;
 import com.dedu.mall.model.mysql.*;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -136,7 +139,110 @@ public class GoodsSerImpl implements GoodsService {
 
     @Override
     public GoodsDetailRspVo queryGoodsById(Long id) {
-        return null;
+        //商品预览图
+        String[] goodsImgArr = {"static/img/goodsDetail/item-detail-1.jpg", "static/img/goodsDetail/item-detail-2.jpg", "static/img/goodsDetail/item-detail-3.jpg", "static/img/goodsDetail/item-detail-4.jpg"};
+        List<String> goodsImg = CollectionUtils.arrayToList(goodsImgArr);
+
+        String title = "苹果8/7手机壳iPhone7 Plus保护壳全包防摔磨砂硬外壳";
+        // 标题下小标题
+        String[] tagsArr = {"满69-20元", "关注产品★送钢化膜", "BIT配次日达"};
+        List<String> tags = CollectionUtils.arrayToList(tagsArr);
+        //优惠价
+        String[] discountArr = {"满148减10", "满218减20", "满288减30"};
+        List<String> discount = CollectionUtils.arrayToList(discountArr);
+        //促销标签
+        String[] promotionArr = {"跨店满减", "多买优惠"};
+        List<String> promotion = CollectionUtils.arrayToList(promotionArr);
+        //评价条数
+        Integer remarksNum = 6000;
+        //销售商品
+        List<List<GoodsRspVo>> setMeal = new ArrayList<>();
+        List<GoodsRspVo> sale1 = new ArrayList<>(4);
+        sale1.add(GoodsRspVo.builder().img("static/img/goodsDetail/pack/1.jpg").intro("4.7英寸-深邃蓝").price(128.0).build());
+        sale1.add(GoodsRspVo.builder().img("static/img/goodsDetail/pack/2.jpg").intro("4.7英寸-星空黑").price(228.0).build());
+        sale1.add(GoodsRspVo.builder().img("static/img/goodsDetail/pack/3.jpg").intro("5.5英寸-香槟金").price(1328.0).build());
+        List<GoodsRspVo> sale2 = new ArrayList<>(4);
+        sale2.add(GoodsRspVo.builder().img("static/img/goodsDetail/pack/4.jpg").intro("4.7英寸-深邃蓝").price(128.0).build());
+        sale2.add(GoodsRspVo.builder().img("static/img/goodsDetail/pack/5.jpg").intro("4.7英寸-星空黑").price(228.0).build());
+        sale2.add(GoodsRspVo.builder().img("static/img/goodsDetail/pack/6.jpg").intro("5.5英寸-香槟金").price(1328.0).build());
+        List<GoodsRspVo> sale3 = new ArrayList<>(4);
+        sale3.add(GoodsRspVo.builder().img("static/img/goodsDetail/pack/7.jpg").intro("4.7英寸-深邃蓝").price(128.0).build());
+        sale3.add(GoodsRspVo.builder().img("static/img/goodsDetail/pack/8.jpg").intro("4.7英寸-星空黑").price(228.0).build());
+        sale3.add(GoodsRspVo.builder().img("static/img/goodsDetail/pack/9.jpg").intro("5.5英寸-香槟金").price(1328.0).build());
+        setMeal.add(sale1);
+        setMeal.add(sale2);
+        setMeal.add(sale3);
+        List<GoodsRspVo> hot = new ArrayList<>();
+        hot.add(GoodsRspVo.builder().img("static/img/goodsDetail/hot/1.jpg").price(128.0).sale(165076.0).build());
+        hot.add(GoodsRspVo.builder().img("static/img/goodsDetail/hot/2.jpg").price(128.0).sale(165076.0).build());
+        hot.add(GoodsRspVo.builder().img("static/img/goodsDetail/hot/3.jpg").price(128.0).sale(165076.0).build());
+        hot.add(GoodsRspVo.builder().img("static/img/goodsDetail/hot/4.jpg").price(128.0).sale(165076.0).build());
+        hot.add(GoodsRspVo.builder().img("static/img/goodsDetail/hot/5.jpg").price(128.0).sale(165076.0).build());
+        // 商品介绍图
+        String[] goodsDetailArr = {"static/img/goodsDetail/intro/1.jpg",
+                "static/img/goodsDetail/intro/2.jpg",
+                "static/img/goodsDetail/intro/3.jpg",
+                "static/img/goodsDetail/intro/4.jpg"};
+        List<String> goodsDetail = CollectionUtils.arrayToList(goodsDetailArr);
+        // 规格参数
+        List<SpecialItemVo> specs = new ArrayList<>();
+        specs.add(SpecialItemVo.builder().title("商品名称").content("iPhone 7手机壳").build());
+        specs.add(SpecialItemVo.builder().title("商品编号").content("10435663237").build());
+        // 商品评价
+            // 好评率
+        Integer goodAnalyse = 10;
+            // 评价标签
+        String[] remarkTagsArr = {"颜色可人", "实惠优选", "严丝合缝", "极致轻薄", "质量没话说", "比定做还合适", "完美品质", "正品行货"};
+        List<String> remarkTags = CollectionUtils.arrayToList(remarkTagsArr);
+            // 各评价数量
+        Integer[] remarksNumDetailArr = {2000, 3000, 900, 1};
+        List<Integer> remarksNumDetail = CollectionUtils.arrayToList(remarksNumDetailArr);
+            // 评价列表
+        List<CommentVo> detail = new ArrayList<>();
+        detail.add(CommentVo.builder().username("p****1").values(3.5).content("颜色很好看，质量也不错！，还送了个指环，想不到哦！").goods("4.7英寸-深邃蓝").create_at(LocalDateTime.of(2019,10,24,10,24)).build());
+        detail.add(CommentVo.builder().username("14****1").values(5.0).content("手感没的说，是硬壳，后背带有磨砂手感。很不错，很喜欢，还加送了钢化膜，支架环，物超所值，准备再买一个。").goods("4.7英寸-玫瑰金").create_at(LocalDateTime.of(2019,10,24,10,24)).build());
+        detail.add(CommentVo.builder().username("3****z").values(7.0).content("相当轻薄，店家还送了一大堆配件，*元非常值得！").goods("4.7英寸-深邃蓝").create_at(LocalDateTime.of(2019,10,24,10,24)).build());
+        detail.add(CommentVo.builder().username("gd****c").values(8.0).content("就是我想要的手机壳，壳子很薄，手感不错，就像没装手机壳一样，想要裸机手感的赶快下手了。").goods("4.7英寸-中国红").create_at(LocalDateTime.of(2019,10,24,10,24)).build());
+        detail.add(CommentVo.builder().username("r****b").values(10.0).content("磨砂的，相当漂亮，尺寸非常合适！精工细作！").goods("5.5英寸-星空黑").create_at(LocalDateTime.of(2019,10,24,10,24)).build());
+        CommentInfoVo commentInfo = CommentInfoVo.builder()
+                .goodAnalyse(goodAnalyse)
+                .remarksTags(remarkTags)
+                .remarksNumDetail(remarksNumDetail)
+                .detail(detail)
+                .build();
+        //结果组装
+        GoodsDetailRspVo result = GoodsDetailRspVo.builder()
+                .goodsImg(goodsImg)
+                .title(title)
+                .tags(tags)
+                .discount(discount)
+                .promotion(promotion)
+                .remarksNum(remarksNum)
+                .setMeal(setMeal)
+                .hot(hot)
+                .goodsDetail(goodsDetail)
+                .param(specs)
+                .remarks(commentInfo)
+                .build();
+        return result;
+    }
+
+    @Override
+    public List<List<GoodsRspVo>> queryRecommendGoodsList() {
+        List<List<GoodsRspVo>> result = new ArrayList<>(2);
+        List<GoodsRspVo> recommend1 = new ArrayList<>();
+        recommend1.add(GoodsRspVo.builder().img("static/img/otherBuy/1.jpg").intro("iPhone7/6s/8钢化膜苹果7Plus全屏全覆盖3D抗蓝").price(29.00).build());
+        recommend1.add(GoodsRspVo.builder().img("static/img/otherBuy/2.jpg").intro("苹果数据线 苹果iPhoneX/6s/7plus/8充电线").price(36.00).build());
+        recommend1.add(GoodsRspVo.builder().img("static/img/otherBuy/3.jpg").intro("苹果8/7/6/6s钢化膜 iphone8/7/6s/6钢化玻璃").price(19.00).build());
+        recommend1.add(GoodsRspVo.builder().img("static/img/otherBuy/4.jpg").intro("iPhone6s/7钢化膜苹果8 Plus手机膜抗蓝光非全屏").price(280.0).build());
+        List<GoodsRspVo> recommend2 = new ArrayList<>();
+        recommend2.add(GoodsRspVo.builder().img("static/img/otherBuy/5.jpg").intro("苹果6s手机壳iPhone6s Plus保护壳防摔全").price(28.0).build());
+        recommend2.add(GoodsRspVo.builder().img("static/img/otherBuy/6.jpg").intro("iPhone7/8手机壳手机套防摔磨砂保护壳星空黑☆全包保护").price(30.0).build());
+        recommend2.add(GoodsRspVo.builder().img("static/img/otherBuy/7.jpg").intro("数据线 适用于苹果iPhone 6s/6plus/7plus/8/X").price(18.00).build());
+        recommend2.add(GoodsRspVo.builder().img("static/img/otherBuy/8.jpg").intro( "iPhone8/7/6S/6钢化膜 苹果8/7/6s/6玻璃膜 手机高").price(15.00).build());
+        result.add(recommend1);
+        result.add(recommend2);
+        return result;
     }
 
     /**

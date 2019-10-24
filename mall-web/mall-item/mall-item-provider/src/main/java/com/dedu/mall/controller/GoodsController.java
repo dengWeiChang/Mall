@@ -48,10 +48,17 @@ public class GoodsController {
     @GetMapping("/{id}")
     @ApiOperation(value = "根据商品Id查询商品详情信息-dedu", notes = "商品")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "path", dataType = "long", name = "id", value = "类目主键id", required = true)
+            @ApiImplicitParam(paramType = "path", dataType = "long", name = "id", value = "商品主键id", required = true)
     })
     public Result queryGoodsById(@PathVariable Long id) throws Exception {
         return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), goodsService.queryGoodsById(id));
+    }
+
+    @GetMapping("/recommend")
+    @ApiOperation(value = "查询推荐商品-dedu", notes = "商品")
+    @ApiImplicitParams({})
+    public Result queryRecommendGoodsList() throws Exception {
+        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), goodsService.queryRecommendGoodsList());
     }
 
 

@@ -15,4 +15,5 @@ public class SpecialItemVo {
     private String title;
     private String intro;
     private String img;
+    private String content;
 }
