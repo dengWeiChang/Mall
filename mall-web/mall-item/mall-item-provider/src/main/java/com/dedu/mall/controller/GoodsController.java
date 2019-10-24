@@ -45,6 +45,15 @@ public class GoodsController {
         return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), goodsService.queryGoodsListByCategoryId(id));
     }
 
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据商品Id查询商品详情信息-dedu", notes = "商品")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", dataType = "long", name = "id", value = "类目主键id", required = true)
+    })
+    public Result queryGoodsById(@PathVariable Long id) throws Exception {
+        return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), goodsService.queryGoodsById(id));
+    }
+
 
 
     //**********************************分割线，以下为管理平台接口*******************************************
