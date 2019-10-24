@@ -133,7 +133,7 @@ export const loadGoodsInfo = ({ commit }) => {
         hot: [
           {
             img: 'static/img/goodsDetail/hot/1.jpg',
-            price: 28.0,
+            price: 128.0,
             sale: 165076
           },
           {
