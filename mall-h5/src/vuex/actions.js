@@ -231,7 +231,7 @@ export const loadGoodsInfo = ({ commit }) => {
               create_at: '2018-05-15 09:20'
             },
             {
-              username: '12****1',
+              username: '14****1',
               values: 5,
               content: '手感没的说，是硬壳，后背带有磨砂手感。很不错，很喜欢，还加送了钢化膜，支架环，物超所值，准备再买一个。很满意。物流很快。很愉快的一次购物！',
               goods: '5.5英寸-玫瑰金',
