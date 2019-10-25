@@ -45,6 +45,12 @@ public class GoodsController {
         return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), goodsService.queryGoodsListByCategoryId(id));
     }
 
+    /**
+     * 商品详情
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/{id}")
     @ApiOperation(value = "根据商品Id查询商品详情信息-dedu", notes = "商品")
     @ApiImplicitParams({
@@ -54,6 +60,11 @@ public class GoodsController {
         return Result.build(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getDesc(), goodsService.queryGoodsById(id));
     }
 
+    /**
+     * 加入购物车后商品推荐
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/recommend")
     @ApiOperation(value = "查询推荐商品-dedu", notes = "商品")
     @ApiImplicitParams({})

@@ -136,7 +136,6 @@ export default {
   methods: {
     ...mapActions(['loadAddress']),
     select (selection, row) {
-      console.log(selection);
       this.goodsCheckList = selection;
     },
     changeAddress (data) {

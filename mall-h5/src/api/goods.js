@@ -37,3 +37,15 @@ export function getGoodsById(id) {
     method:'get'
   })
 }
+
+/**
+ * 加入购物车后商品推荐
+ * @param id
+ */
+export function getRecommendGoods() {
+  return http({
+    baseURL: url,
+    url:'/api/goods/recommend',
+    method:'get'
+  })
+}

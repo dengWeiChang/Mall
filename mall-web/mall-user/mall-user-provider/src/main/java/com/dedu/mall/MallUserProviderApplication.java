@@ -8,10 +8,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableSwagger2
 @EnableDiscoveryClient
-public class MallCartApplication {
+public class MallUserProviderApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MallCartApplication.class, args);
+        SpringApplication.run(MallUserProviderApplication.class, args);
     }
 
 }
