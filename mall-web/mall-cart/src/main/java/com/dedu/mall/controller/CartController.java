@@ -17,7 +17,6 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    //**********************************分割线，以下为H5前台接口********************************************
     @GetMapping("/{userId}")
     @ApiOperation(value = "根据用户Id查询购物车列表-dedu", notes = "购物车")
     @ApiImplicitParams({
