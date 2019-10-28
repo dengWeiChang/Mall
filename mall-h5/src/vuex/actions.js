@@ -1,7 +1,7 @@
 import {getAllNavigationPictureList} from '@/api/category';
 import {getGoodsListByCategoryId, getGoodsById, getRecommendGoods} from '@/api/goods';
 import {getSeckillInfoList, getSpecialByType} from '@/api/market';
-import {getUserDeliverAddress} from '@/api/user';
+import {getUserDeliverAddress, loginUser} from '@/api/user';
 import {getUserShopCartByUserId} from '@/api/cart';
 
 // 获取轮播(营销)图片
@@ -118,8 +118,6 @@ export const loadAddress = ({ commit }) => {
 export const loadShoppingCart = ({ commit }) => {
   return new Promise((resolve, reject) => {
     getUserShopCartByUserId(1).then(response => {
-      console.log(1111)
-      console.log(response)
       const data = response;
       commit('SET_SHOPPING_CART', data);
     });
@@ -142,27 +140,31 @@ export const addSignUpUser = ({ commit }, data) => {
 // 用户登录
 export const login = ({ commit }, data) => {
   return new Promise((resolve, reject) => {
-    if (data.username === 'Dedu' && data.password === '123456') {
-      localStorage.setItem('loginInfo', JSON.stringify(data));
-      commit('SET_USER_LOGIN_INFO', data);
-      resolve(true);
-      return true;
-    }
-    const userArr = localStorage.getItem('users');
-    console.log(userArr);
-    if (userArr) {
-      const users = JSON.parse(userArr);
-      for (const item of users) {
-        if (item.username === data.username) {
-          localStorage.setItem('loginInfo', JSON.stringify(item));
-          commit('SET_USER_LOGIN_INFO', item);
-          resolve(true);
-          break;
+    //  login
+
+    loginUser({username:data.username, password:data.password}).then(response => {
+      if (response) {
+        localStorage.setItem('loginInfo', JSON.stringify(data));
+        commit('SET_USER_LOGIN_INFO', data);
+        resolve(true);
+        return true;
+      } else {
+        const userArr = localStorage.getItem('users');
+        if (userArr) {
+          const users = JSON.parse(userArr);
+          for (const item of users) {
+            if (item.username === data.username) {
+              localStorage.setItem('loginInfo', JSON.stringify(item));
+              commit('SET_USER_LOGIN_INFO', item);
+              resolve(true);
+              break;
+            }
+          }
+        } else {
+          resolve(false);
         }
       }
-    } else {
-      resolve(false);
-    }
+    });
   });
 };
 

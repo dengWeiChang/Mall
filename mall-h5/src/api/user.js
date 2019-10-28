@@ -14,3 +14,16 @@ export function getUserDeliverAddress(params) {
     params: params
   })
 }
+
+/**
+ * 用户登录
+ * @param datas
+ */
+export function loginUser(datas) {
+  return http({
+    baseURL: url,
+    url:'/api/user/',
+    method:'post',
+    data:datas
+  })
+}

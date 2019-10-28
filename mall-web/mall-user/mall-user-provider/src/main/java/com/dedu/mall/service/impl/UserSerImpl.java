@@ -1,11 +1,13 @@
 package com.dedu.mall.service.impl;
 
 import com.dedu.mall.model.DeliveryAddress;
+import com.dedu.mall.model.LoginUserVo;
 import com.dedu.mall.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserSerImpl implements UserService {
@@ -23,5 +25,14 @@ public class UserSerImpl implements UserService {
                 .postalcode("123456")
                 .build());
         return result;
+    }
+
+    @Override
+    public Boolean loginUserByUsernameAndPassword(LoginUserVo loginUser) {
+        if (Objects.equals("Dedu", loginUser.getUsername()) && Objects.equals("Aa123456", loginUser.getPassword())) {
+            return Boolean.TRUE;
+        } else {
+            return Boolean.FALSE;
+        }
     }
 }
